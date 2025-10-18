@@ -1,0 +1,71 @@
+/* =========================
+   CTA Contactanos
+   ========================= */
+.cta-contacto {
+  display: grid;
+  place-items: center;
+}
+
+.cta-card {
+  width: 100%;
+  max-width: 980px;
+  text-align: center;
+  color: #fff;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-radius: 16px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+  background: radial-gradient(1200px 400px at 10% -20%, rgba(255,213,0,0.18), transparent 60%),
+              linear-gradient(135deg, #0058a9, #004AAD);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cta-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+}
+
+.cta-title {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  margin: 0 0 .25rem 0;
+}
+
+.cta-subtitle {
+  margin: 0 0 1rem 0;
+  opacity: .95;
+}
+
+.cta-actions {
+  display: flex;
+  gap: .75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Botón principal */
+.btn-cta {
+  padding: .75rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .12s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+  background: #FFD500;
+  color: #0b1220;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+  background: #ffdf33;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cta-title { font-size: clamp(1.1rem, 4.5vw, 1.35rem); }
+  .cta-subtitle { font-size: clamp(.95rem, 3.8vw, 1.05rem); }
+}

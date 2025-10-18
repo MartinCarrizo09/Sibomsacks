@@ -1,0 +1,423 @@
+/* =========================
+   HERO / CARROUSEL FULL-WIDTH
+   ========================= */
+.hero-carousel-full {
+  position: relative;
+  width: 100%;
+  /* Espacio en blanco debajo del header - ajustado para que se vea como en la imagen 2 */
+  margin-top: clamp(30px, 4vh, 60px);
+}
+
+.hero-slide {
+  position: relative;
+  height: clamp(300px, 60vh, 550px);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #001c4a;
+  /* Eliminamos transition aquí para evitar conflictos con Bootstrap */
+}
+
+.hero-slide .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 28, 74, 0.5);
+  /* Sin transition para evitar conflictos */
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: clamp(50px, 12vh, 80px);
+  left: clamp(20px, 8vw, 80px);
+  color: #fff;
+  max-width: 550px;
+  z-index: 2;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  /* Framer Motion maneja las transiciones del caption */
+}
+
+.carousel-caption h1 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  /* Framer Motion maneja las animaciones del texto */
+}
+
+.carousel-caption p {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  margin-bottom: 1.5rem;
+  /* Framer Motion maneja las animaciones del texto */
+}
+
+.hero-btn {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  background: #ffcc00;
+  color: #000;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease; /* Transición más rápida para hover */
+}
+
+.hero-btn:hover {
+  background: #e6b800;
+  transform: translateY(-2px);
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .hero-carousel-full {
+    /* En móvil reducimos el margin-top pero mantenemos algo de espacio */
+    margin-top: clamp(15px, 3vh, 25px);
+  }
+  
+  .carousel-caption {
+    left: 20px;
+    right: 20px;
+    bottom: 50px;
+    text-align: left;
+  }
+}
+
+/* Ajuste específico para tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hero-carousel-full {
+    margin-top: clamp(35px, 5vh, 50px);
+  }
+}
+
+/* 🔹 Indicadores circulares */
+.carousel-indicators.custom-indicators {
+  bottom: 20px;
+  margin: 0;
+  z-index: 15;
+}
+
+.carousel-indicators.custom-indicators [data-bs-target] {
+  width: 14px;
+  height: 14px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  transition: all 0.3s ease; /* Transición más rápida */
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.carousel-indicators.custom-indicators .active {
+  background-color: #fff;
+  transform: scale(1.2);
+}
+
+.carousel-indicators.custom-indicators [data-bs-target]:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* =========================
+   CARDS INFORMATIVAS
+   ========================= */
+.informacion {
+  background: #f8f9fa;
+}
+
+.informacion h2 {
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  margin-bottom: clamp(18px, 4vw, 30px);
+  font-weight: 600;
+  color: #001c4a;
+  /* Framer Motion maneja las animaciones */
+}
+
+.imagenes-contenedor {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(20px, 3vw, 40px);
+}
+
+.imagen-item {
+  width: clamp(300px, 30vw, 360px);
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  text-decoration: none;
+  /* Framer Motion maneja hover y animaciones */
+}
+
+.imagen-item a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.imagen-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.imagen-item:hover img {
+  transform: scale(1.02);
+}
+
+.info {
+  padding: 1.2rem;
+  color: #333;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #001c4a;
+}
+
+.info p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.beneficios-btn {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background: #ffcc00;
+  color: #000;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  align-self: center;
+}
+
+.beneficios-btn:hover {
+  background: #e6b800;
+  transform: translateY(-2px);
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .imagen-item {
+    width: 100%;
+    max-width: 360px;
+  }
+}
+
+/* =========================
+   CERTIFICACIONES
+   ========================= */
+.Certificados {
+  background: #fff;
+}
+
+.Certificados h2 {
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  font-weight: 700;
+  color: #001c4a;
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(20px, 2.5vw, 30px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .cert-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+@media (min-width: 1200px) {
+  .cert-grid { 
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}
+
+.cert-card {
+  background: #f7f9fc;
+  border: 1px solid #e6ecf5;
+  border-radius: 14px;
+  padding: clamp(20px, 2vw, 24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  transition: box-shadow 0.3s ease;
+  /* Framer Motion maneja hover y animaciones */
+}
+
+.cert-card:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.cert-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  margin-bottom: 15px;
+}
+
+.cert-logo img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.cert-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cert-title {
+  margin: 0 0 12px;
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  font-weight: 800;
+  color: #0f1e3a;
+  line-height: 1.3;
+}
+
+.cert-text {
+  font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  line-height: 1.5;
+  color: #2e3b52;
+  margin: 0;
+}
+
+/* =========================
+   EMPRESAS (logos clientes)
+   ========================= */
+.Empresas {
+  padding: clamp(40px, 6vw, 60px) 0;
+  text-align: center;
+  background: #f8f9fa;
+  overflow: hidden; /* Para evitar que las animaciones se salgan del contenedor */
+}
+
+.Empresas h2 {
+  color: #001c4a;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.Empresas-Content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(20px, 3vw, 35px);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.empresa-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Framer Motion maneja hover y animaciones de flotación */
+}
+
+.empresa-item img {
+  height: clamp(45px, 5vw, 65px);
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  border-radius: 8px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  transition: filter 0.4s ease;
+  /* Agregamos will-change para optimizar las animaciones */
+  will-change: transform, filter;
+}
+
+.empresa-item:hover img {
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+}
+
+@media (max-width: 576px) {
+  .Empresas-Content {
+    gap: 15px;
+  }
+  
+  .empresa-item img {
+    height: 40px;
+  }
+  
+  /* En móvil reducimos las animaciones de flotación */
+  .empresa-item {
+    transform: none !important;
+  }
+}
+
+/* Mejora para dispositivos con animaciones reducidas */
+@media (prefers-reduced-motion: reduce) {
+  .empresa-item {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* =========================
+   MEJORAS GENERALES
+   ========================= */
+
+/* Suavizar scrolling para navegación */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mejorar accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus states mejorados */
+.hero-btn:focus,
+.beneficios-btn:focus {
+  outline: 2px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+.carousel-indicators [data-bs-target]:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* =========================
+   PRINT STYLES
+   ========================= */
+@media print {
+  .hero-carousel-full { height: auto; }
+  .hero-slide { height: auto; }
+  .overlay { display: none; }
+  .carousel-indicators { display: none; }
+}

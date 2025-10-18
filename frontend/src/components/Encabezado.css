@@ -1,0 +1,322 @@
+/* Altura global del header: disponible en todo el sitio */
+:root { --nav-h: clamp(64px, 10vw, 110px); }
+
+/* =========================
+   NAVBAR vivo (animaciones + CTA)
+   ========================= */
+.navbar {
+  /* NO redefinir --nav-h acá */
+  background-color: #004aad;
+  padding: 0 clamp(12px, 2vw, 16px);
+  display: flex;
+  justify-content: center;
+  align-items: center;                 /* asegura centrado vertical del contenido */
+  width: 100%;                         /* evita "saltos" en sticky */
+  min-height: var(--nav-h);            /* reserva altura consistente */
+
+  /* sticky para que no tape contenido al hacer scroll/cambiar de página */
+  position: sticky;
+  position: -webkit-sticky;            /* fix Safari */
+  top: 0;
+  z-index: 1000;
+
+  transition: background-color .25s ease, box-shadow .25s ease, transform .25s ease, opacity .25s ease;
+  transform: translateY(0);
+  opacity: 1;
+  will-change: transform, opacity;     /* microperf */
+}
+
+/* animación de entrada */
+.navbar.enter {
+  animation: slideFadeDown .6s ease-out both;
+}
+@keyframes slideFadeDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);      opacity: 1; }
+}
+
+.navbar.scrolled {
+  background-color: #003b88;
+  box-shadow: 0 8px 22px rgba(0,0,0,.15);
+}
+
+.navbar__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: clamp(1024px, 90vw, 1200px);
+  width: 100%;
+  height: var(--nav-h);
+  gap: clamp(8px, 2vw, 16px);
+}
+
+/* ===== Lado izquierdo: logo y marca ===== */
+.navbar__left {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.5vw, 12px);
+}
+
+.navbar__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(8px, 1.5vw, 12px);
+  text-decoration: none;
+  margin-left: clamp(6px, 1vw, 12px);
+}
+.navbar__logo img {
+  height: clamp(40px, 6vw, 60px);
+  width: auto;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.1);
+  transition: transform .25s ease;
+}
+.navbar__logo:hover img { transform: translateY(-2px); }
+
+.navbar__brand {
+  font-size: clamp(1rem, 2.2vw, 1.4rem);
+  font-weight: 800;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+/* ===== CTA ===== */
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #FFD500;
+  color: #0b1422 !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,.12);
+  border: 1px solid rgba(0,0,0,.06);
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.btn-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.16);
+  filter: brightness(1.02);
+}
+
+.navbar__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===== Botón hamburguesa ===== */
+.navbar__toggle {
+  display: none;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.18);
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  line-height: 0;
+  transition: transform .2s ease, background .2s ease;
+  touch-action: manipulation;          /* mejora respuesta táctil */
+}
+.navbar__toggle:hover { transform: translateY(-1px); background: rgba(255,255,255,.12); }
+
+.hb-line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  margin: 4px 0;
+  transition: transform .25s ease, opacity .2s ease;
+}
+.navbar__toggle.is-open .hb-line:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.navbar__toggle.is-open .hb-line:nth-child(2) { opacity: 0; }
+.navbar__toggle.is-open .hb-line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Accesibilidad focus */
+.navbar__toggle:focus-visible,
+.navbar__menu a:focus-visible,
+.navbar__logo:focus-visible,
+.btn-cta:focus-visible {
+  outline: 2px solid #e6b800;
+  outline-offset: 2px;
+}
+
+/* ===== Menú desktop ===== */
+.navbar__menu {
+  display: flex;
+  gap: clamp(8px, 1.8vw, 16px);
+  align-items: center;
+}
+.navbar__menu a {
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 8px 4px;
+  display: block;                      /* mejor área clickeable */
+  transition: color .2s ease;
+}
+
+/* subrayado animado */
+.navbar__menu a .underline {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: #ffd500;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .navbar__menu a:hover { color: #ffd500; }
+  .navbar__menu a:hover .underline { transform: scaleX(1); }
+}
+.navbar__menu a.active { color: #ffd500; }
+.navbar__menu a.active .underline { transform: scaleX(1); }
+
+/* =========================
+   Responsive
+   ========================= */
+
+/* Mobile: menú off-canvas + CTA dentro */
+@media (max-width: 768px) {
+  .navbar__toggle { display: inline-block; }
+
+  .navbar__menu {
+    position: absolute;
+    left: 0;
+    top: var(--nav-h);
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #004aad;
+    padding: 0 clamp(16px, 4vw, 24px); /* Más padding para el botón */
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 12px 22px rgba(0,0,0,.18);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(-8px);
+    transition: opacity .25s ease, transform .25s ease, max-height .3s ease;
+    z-index: 999;
+    pointer-events: none;              /* evita clicks cuando está oculto */
+  }
+  .navbar__menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 70vh; /* Más altura para que quepa el botón */
+    pointer-events: auto;
+  }
+
+  .navbar__menu a {
+    width: 100%;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,.18);
+  }
+  .navbar__menu a:last-child { border-bottom: none; }
+
+  /* CTA mobile dentro del menú - MEJORADO PARA MÓVILES */
+  .btn-cta--mobile {
+    display: inline-flex;
+    width: calc(100% - 8px); /* Deja un pequeño margen interno */
+    margin: 16px 4px 24px 4px; /* MÁS margen inferior para que no se corte */
+    padding: 14px 16px;
+    font-size: clamp(0.9rem, 3.2vw, 1rem);
+    font-weight: 700;
+    text-align: center;
+    border-radius: 10px;
+    min-height: 48px; /* Asegura área táctil mínima */
+    box-sizing: border-box;
+    flex-shrink: 0; /* Evita que se comprima */
+  }
+  
+  .btn-cta--desktop { display: none !important; }
+
+  .navbar__overlay {
+    position: fixed;
+    inset: var(--nav-h) 0 0 0;
+    background: rgba(0,0,0,.28);
+    backdrop-filter: blur(2px);
+    z-index: 998;
+  }
+
+  /* bloquea scroll del body cuando el menú está abierto (agregar .no-scroll al <body> por JS) */
+  body.no-scroll { overflow: hidden; }
+}
+
+/* Mejoras específicas para móviles muy pequeños */
+@media (max-width: 480px) {
+  .navbar__brand {
+    font-size: clamp(0.85rem, 4vw, 1.1rem);
+  }
+  
+  .navbar__logo img {
+    height: clamp(32px, 8vw, 48px);
+  }
+  
+  .btn-cta--mobile {
+    font-size: 0.95rem;
+    padding: 12px 14px;
+    margin: 14px 4px 16px 4px;
+    width: calc(100% - 8px);
+  }
+  
+  .navbar__menu a {
+    font-size: clamp(0.9rem, 4vw, 1rem);
+    padding: clamp(10px, 3vw, 14px) 0;
+  }
+}
+
+/* Mejoras para móviles extra pequeños */
+@media (max-width: 360px) {
+  .navbar__container {
+    padding: 0 clamp(8px, 2vw, 12px);
+  }
+  
+  .navbar__menu {
+    padding: 0 20px; /* Padding fijo más generoso */
+  }
+  
+  .btn-cta--mobile {
+    font-size: 0.9rem;
+    padding: 12px 14px;
+    margin: 12px 4px 14px 4px;
+    min-height: 44px;
+    width: calc(100% - 8px);
+  }
+}
+
+/* Desktop: CTA fuera del menú */
+@media (min-width: 769px) {
+  .btn-cta--desktop { display: inline-flex; }
+  .btn-cta--mobile  { display: none !important; }
+}
+
+/* Alturas bajas */
+@media (max-height: 540px) and (orientation: landscape) {
+  .navbar__menu.show { max-height: 60vh; }
+  .btn-cta--mobile { margin: 12px 4px 20px 4px; }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar__menu,
+  .navbar__menu a,
+  .navbar__menu a .underline,
+  .hb-line {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Print */
+@media print {
+  .navbar, .navbar__menu { display: none !important; }
+}

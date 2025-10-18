@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sibomsacks-1-ytfc.onrender.com/sitemap.xml
