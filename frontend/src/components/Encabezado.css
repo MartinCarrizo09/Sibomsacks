@@ -7,7 +7,9 @@
 .navbar {
   /* NO redefinir --nav-h acá */
   background-color: #004aad;
-  padding: 0 clamp(12px, 2vw, 16px);
+  /* Fondo a todo el ancho, contenido alineado con el de la home:
+     el margen del marco se suma al margen lateral normal. */
+  padding: 0 calc(var(--site-frame, 0px) + clamp(16px, 4.2vw, 60px));
   display: flex;
   justify-content: center;
   align-items: center;                 /* asegura centrado vertical del contenido */
@@ -44,7 +46,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: clamp(1024px, 90vw, 1200px);
   width: 100%;
   height: var(--nav-h);
   gap: clamp(8px, 2vw, 16px);
@@ -62,7 +63,6 @@
   align-items: center;
   gap: clamp(8px, 1.5vw, 12px);
   text-decoration: none;
-  margin-left: clamp(6px, 1vw, 12px);
 }
 .navbar__logo img {
   height: clamp(40px, 6vw, 60px);
@@ -320,3 +320,7 @@
 @media print {
   .navbar, .navbar__menu { display: none !important; }
 }
+
+/* Área táctil mínima de 44px en la navegación (WCAG 2.5.8) */
+.navbar__logo { min-height: 44px; display: inline-flex; align-items: center; }
+.navbar__menu a { min-height: 44px; display: inline-flex; align-items: center; }

@@ -73,6 +73,12 @@ const Beneficios = () => {
 
   return (
     <>
+      {/* Las tres tarjetas del hero son pares entre sí, así que el título
+          de la página va accesible pero sin duplicar peso visual. */}
+      <h1 className="sr-only">
+        Beneficios de los Big Bags Sibom Sacks para agricultura, industria y minería
+      </h1>
+
       {/* HERO con 3 tarjetas */}
       <section className="hero-section" style={{ marginTop: 0 }}>
         <div className="hero-card agricultura-bg">

@@ -1,47 +1,57 @@
 import "../components/PiePagina.css";
-import { FaMobileAlt, FaEnvelope, FaClock } from "react-icons/fa";
+import { FaMobileAlt, FaWhatsapp, FaClock } from "react-icons/fa";
 
 const year = new Date().getFullYear();
 
+const WHATSAPP_TEL = "5493516622764";
+const WHATSAPP_MSG =
+  "Hola, me gustaría recibir asesoramiento sobre Big Bags. Los contacto desde la web. ¡Gracias!";
+
 function PiePagina() {
+  const whatsappHref = `https://wa.me/${WHATSAPP_TEL}?text=${encodeURIComponent(WHATSAPP_MSG)}`;
+
   return (
     <footer className="footer" role="contentinfo" itemScope itemType="https://schema.org/Organization">
+      <meta itemProp="name" content="Sibom Sacks SRL" />
+
       <div className="container text-white py-4">
+        <h2 className="sr-only">Datos de contacto</h2>
+
         <div className="row text-center justify-content-center g-4 small-footer">
 
           {/* Teléfono móvil */}
-          <div className="col-6 col-md-3" itemProp="contactPoint" itemScope itemType="https://schema.org/ContactPoint">
+          <div className="col-12 col-sm-4" itemProp="contactPoint" itemScope itemType="https://schema.org/ContactPoint">
             <FaMobileAlt className="icono-footer" aria-hidden="true" />
-            <h6 className="fw-bold mt-2">Móvil</h6>
+            <h3 className="footer-titulo">Teléfono</h3>
             <address className="mb-0 not-italic">
-              <a href="tel:+54351155081014" className="link-light d-block" itemProp="telephone">
+              <a href="tel:+543511155081014" className="footer-link" itemProp="telephone">
                 (0351) 155 081 014
               </a>
-              {/* Eliminá esta línea si es placeholder */}
-              {/* <a href="tel:+54NNNNNNNNNNN" className="link-light d-block">(NNNN) NNN NNN NNN</a> */}
             </address>
           </div>
 
-          {/* Email */}
-          <div className="col-6 col-md-3" itemProp="contactPoint" itemScope itemType="https://schema.org/ContactPoint">
-            <FaEnvelope className="icono-footer" aria-hidden="true" />
-            <h6 className="fw-bold mt-2">E-mail</h6>
-            <address className="mb-0 not-italic">
-              <a href="mailto:contacto@empresaindustrial.com" className="link-light d-block" itemProp="email">
-                contacto@empresaindustrial.com
+          {/* WhatsApp */}
+          <div className="col-12 col-sm-4">
+            <FaWhatsapp className="icono-footer" aria-hidden="true" />
+            <h3 className="footer-titulo">WhatsApp</h3>
+            <p className="mb-0">
+              <a
+                href={whatsappHref}
+                className="footer-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Escribinos ahora
               </a>
-              <a href="mailto:logistica@empresaindustrial.com" className="link-light d-block" itemProp="email">
-                logistica@empresaindustrial.com
-              </a>
-            </address>
+            </p>
           </div>
 
           {/* Horario */}
-          <div className="col-6 col-md-3">
+          <div className="col-12 col-sm-4">
             <FaClock className="icono-footer" aria-hidden="true" />
-            <h6 className="fw-bold mt-2">Horario</h6>
-            <p className="mb-0">Lunes a Viernes</p>
-            <time className="mb-0 d-block" dateTime="08:00-15:30">
+            <h3 className="footer-titulo">Horario</h3>
+            <p className="mb-0">Lunes a viernes</p>
+            <time className="mb-0 d-block" dateTime="08:00">
               8:00 a 15:30 hs.
             </time>
           </div>
@@ -49,7 +59,7 @@ function PiePagina() {
       </div>
 
       <div className="footer-copy text-center mt-3">
-        <p className="mb-0 small">© {year} Sibom Sacks SRL. Todos los derechos reservados.</p>
+        <p className="mb-0">© {year} Sibom Sacks SRL. Todos los derechos reservados.</p>
       </div>
     </footer>
   );

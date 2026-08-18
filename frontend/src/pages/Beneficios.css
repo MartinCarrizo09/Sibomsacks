@@ -104,9 +104,9 @@
 }
 
 /* Imágenes de fondo hero */
-.agricultura-bg { background-image: url("/images/agricultura.jpg"); }
-.industria-bg   { background-image: url("/images/industry.jpg"); }
-.mineria-bg     { background-image: url("/images/mineria.jpg"); }
+.agricultura-bg { background-image: url("/images/agricultura.webp"); }
+.industria-bg   { background-image: url("/images/industry.webp"); }
+.mineria-bg     { background-image: url("/images/mineria.webp"); }
 
 /* =========================
    CONTENEDOR PRINCIPAL

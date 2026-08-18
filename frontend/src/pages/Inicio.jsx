@@ -1,348 +1,276 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useMotionSafe } from "../hooks/useMotionSafe.js";
 import "./Inicio.css";
 
+/**
+ * Datos de la tira bajo el hero.
+ * Solo cifras verificables contra el catálogo y las certificaciones reales.
+ */
+const DATOS = [
+  { valor: "6", detalle: "Modelos de serie" },
+  { valor: "3", detalle: "Certificaciones" },
+  { valor: "UV", detalle: "Tratamiento en la rafia" },
+  { valor: "100%", detalle: "Producción argentina" },
+];
+
+const SECTORES = [
+  {
+    n: "01",
+    titulo: "Agricultura",
+    texto:
+      "Granos, semillas y fertilizantes. Barrera contra humedad y protección UV para acopio prolongado a la intemperie.",
+    img: "/images/agricultura.webp",
+    w: 800,
+    h: 600,
+    alt: "Big Bag izado con grúa sobre un cultivo",
+    icono: (
+      <svg width="28" height="28" viewBox="0 0 26 26" fill="none" stroke="#ffcc00" strokeWidth="1.6" aria-hidden="true">
+        <path d="M13 23v-11" />
+        <path d="M13 15c0-3 2.6-5 5.5-5C18.5 13 15.9 15 13 15z" fill="#ffcc00" stroke="none" />
+        <path d="M13 15c0-3-2.6-5-5.5-5C7.5 13 10.1 15 13 15z" />
+      </svg>
+    ),
+  },
+  {
+    n: "02",
+    titulo: "Industria",
+    texto:
+      "Reutilizables para materiales a granel. Reducen el costo de embalaje por tonelada frente al saco tradicional.",
+    img: "/images/industry.webp",
+    w: 996,
+    h: 612,
+    alt: "Depósito con Big Bags almacenados en estantería industrial",
+    icono: (
+      <svg width="28" height="28" viewBox="0 0 26 26" fill="none" stroke="#ffcc00" strokeWidth="1.6" aria-hidden="true">
+        <rect x="3" y="12" width="6" height="11" />
+        <rect x="10" y="6" width="6" height="17" fill="#ffcc00" stroke="none" />
+        <rect x="17" y="15" width="5" height="8" />
+      </svg>
+    ),
+  },
+  {
+    n: "03",
+    titulo: "Minería",
+    texto:
+      "Cargas pesadas y abrasivas. Costura reforzada y tejido de alto gramaje para operación en entornos extremos.",
+    img: "/images/mineria.webp",
+    w: 700,
+    h: 434,
+    alt: "Big Bags en acopio a la intemperie junto a una pila de material",
+    icono: (
+      <svg width="28" height="28" viewBox="0 0 26 26" fill="none" stroke="#ffcc00" strokeWidth="1.6" aria-hidden="true">
+        <path d="M2 22l7-13 4 6 3-4 8 11z" />
+        <path d="M9 9l4 6" stroke="#ffcc00" strokeWidth="2.8" />
+      </svg>
+    ),
+  },
+];
+
+const CERTIFICADOS = [
+  {
+    titulo: "EFIBCA 006",
+    texto: "Rendimiento validado junto a laboratorios de Alemania y Escocia.",
+    icono: (
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#ffcc00" strokeWidth="1.4" aria-hidden="true">
+        <circle cx="15" cy="12" r="8" />
+        <path d="M10 19l-2 9 7-3.4 7 3.4-2-9" />
+        <path d="M11 12l3 3 5-5.5" stroke="#fff" strokeWidth="2" />
+      </svg>
+    ),
+  },
+  {
+    titulo: "INTI · ISO 7500-1",
+    texto: "Certificado de calibración con anexo A validado.",
+    icono: (
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#ffcc00" strokeWidth="1.4" aria-hidden="true">
+        <rect x="3" y="6" width="24" height="18" />
+        <path d="M9 19l5-6 3.5 3.5L22 10" stroke="#fff" strokeWidth="2" />
+      </svg>
+    ),
+  },
+  {
+    titulo: "I.N.A.L. 870/08",
+    texto: "Apto para el transporte de productos alimenticios.",
+    icono: (
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#ffcc00" strokeWidth="1.4" aria-hidden="true">
+        <path d="M15 2l11 5v9c0 7-5.5 10.5-11 12-5.5-1.5-11-5-11-12V7z" />
+        <path d="M10 15l3.5 3.5L21 10" stroke="#fff" strokeWidth="2" />
+      </svg>
+    ),
+  },
+];
+
+const CLIENTES = [
+  { src: "/images/egran.webp", w: 153, h: 98, alt: "Egran" },
+  { src: "/images/caima.webp", w: 155, h: 77, alt: "Caima" },
+  { src: "/images/plasticosbv.webp", w: 162, h: 163, alt: "Plásticos BV" },
+  { src: "/images/pirquitas.webp", w: 200, h: 200, alt: "Pirquitas" },
+  { src: "/images/biofarma.webp", w: 83, h: 88, alt: "Biofarma" },
+  { src: "/images/donadelmo.webp", w: 127, h: 104, alt: "Don Adelmo" },
+  { src: "/images/tapi.webp", w: 139, h: 80, alt: "Tapi" },
+  { src: "/images/cerrito.webp", w: 171, h: 147, alt: "Cerrito" },
+];
+
 function Inicio() {
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const carouselRef = useRef(null);
+  const { reducir, cardVariant, staggerContainer } = useMotionSafe();
 
-  // Detecta mobile
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Instancia ÚNICA del Carousel + cleanup
-  useEffect(() => {
-    const el = carouselRef.current;
-    if (!el || !window.bootstrap?.Carousel) return;
-
-    // Si ya había una instancia, la limpiamos
-    const prev = window.bootstrap.Carousel.getInstance(el);
-    if (prev) prev.dispose();
-
-    const inst = new window.bootstrap.Carousel(el, {
-      interval: 8000,
-      ride: false,       // nada de data-ride, lo controlamos por JS
-      pause: false,
-      touch: true,
-      wrap: true,
-      keyboard: true,
-    });
-
-    const onSlid = (e) => setActiveSlide(e.to ?? 0);
-    el.addEventListener("slid.bs.carousel", onSlid);
-
-    inst.cycle(); // arrancar
-
-    return () => {
-      el.removeEventListener("slid.bs.carousel", onSlid);
-      try { inst.dispose(); } catch {}
-    };
-  }, []);
-
-  // Dispose explícito al navegar desde el botón del hero
-  const teardownCarousel = useCallback(() => {
-    const el = carouselRef.current;
-    const inst = el ? window.bootstrap?.Carousel?.getInstance(el) : null;
-    if (inst) {
-      try { inst.dispose(); } catch {}
-    }
-  }, []);
-
-  // Animaciones
-  const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
-  };
-
-  const cardVariant = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  };
-
-  const slideData = [
-    {
-      img: "/images/slide1MaquinadeCoser.png",
-      title: "Fabricamos Big Bags industriales de máxima resistencia",
-      text: "Soluciones de embalaje confiables para transporte y almacenamiento seguro de productos a granel.",
-      btn: "Ver catálogo",
-      link: "/productos",
-    },
-    {
-      img: "/images/Slide2BBags.png",
-      title: "Optimizá tu logística con nuestros Big Bags certificados",
-      text: "Diseñados para mejorar la eficiencia en el transporte y reducir costos operativos.",
-      btn: "Explorar productos",  
-      link: "/productos",
-    },
-    {
-      img: "/images/slide3Apiladas.png",
-      title: "Big Bags resistentes para agricultura, industria y minería",
-      text: "Calidad garantizada para proteger su carga y maximizar la seguridad en cada envío.",
-      btn: "Solicitar cotización",
-      link: "/contacto",
-    },
-  ];
-
-  const cardData = [
-    {
-      img: "/images/agricultura.jpg",
-      alt: "Big Bags para Agricultura",
-      title: "Agricultura",
-      text: "Big Bags ideales para almacenar y transportar granos, semillas y fertilizantes de manera segura.",
-      link: "/beneficios",
-    },
-    {
-      img: "/images/industry.jpg",
-      alt: "Big Bags para Industria",
-      title: "Industria",
-      text: "Soluciones resistentes y reutilizables para materiales a granel, reduciendo costos de embalaje.",
-      link: "/beneficios",
-    },
-    {
-      img: "/images/mineria.jpg",
-      alt: "Big Bags para Minería",
-      title: "Minería",
-      text: "Big Bags diseñados para cargas pesadas, garantizando seguridad y resistencia en entornos extremos.",
-      link: "/beneficios",
-    },
-  ];
-
-  const certData = [
-    {
-      img: "/images/logoCertFlex.png",
-      alt: "Certificación EFIBCA Big Bags",
-      title: "Test de rendimiento para contenedores flexibles",
-      text: "Certificación internacional EFIBCA Standard 006, en conjunto con laboratorios de Alemania y Escocia.",
-    },
-    {
-      img: "/images/certInti.png",
-      alt: "Certificado de calibración INTI",
-      title: "Certificado de Calibración INTI",
-      text: "Cumplimiento ISO 7500-1 + ANEXO A, validado por el Instituto Nacional de Tecnología Industrial.",
-    },
-    {
-      img: "/images/certInal.png",
-      alt: "Certificación INAL Big Bags alimentos",
-      title: "Apto para productos alimenticios",
-      text: "Certificación I.N.A.L. Nº 870/08, garantizando inocuidad en el transporte de alimentos.",
-    },
-  ];
-
-  const empresaData = [
-    { src: "/images/egran.png", alt: "Cliente Egran" },
-    { src: "/images/caima.png", alt: "Cliente Caima" },
-    { src: "/images/plasticosbv.png", alt: "Cliente Plásticos BV" },
-    { src: "/images/pirquitas.jpeg", alt: "Cliente Pirquitas" },
-    { src: "/images/biofarma.jpg", alt: "Cliente Biofarma" },
-    { src: "/images/donadelmo.png", alt: "Cliente Don Adelmo" },
-    { src: "/images/tapi.png", alt: "Cliente Tapi" },
-    { src: "/images/cerrito.png", alt: "Cliente Cerrito" },
-  ];
-
-  const inViewOrImmediate = (isForMobileImmediate = false) =>
-    isForMobileImmediate && isMobile
-      ? { animate: "show" }
-      : { whileInView: "show", viewport: { once: true, amount: 0.2 } };
+  // Se anima al montar la página, no al entrar en el viewport: el contenido
+  // de estas secciones es información del negocio, no un adorno, así que
+  // nunca debe depender de un scroll para volverse visible.
+  const subir = reducir
+    ? { hidden: { opacity: 1 }, show: { opacity: 1 } }
+    : {
+        hidden: { opacity: 0, y: 34 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+      };
 
   return (
-    <>
-      {/* HERO / CARRUSEL */}
-      <section className="hero-carousel-full">
-        <div
-          id="heroCarousel"
-          ref={carouselRef}
-          className="carousel slide"
-          data-bs-touch="true"
-          /* importante: SIN data-bs-ride y SIN data-bs-interval */
-        >
-          <div className="carousel-indicators custom-indicators">
-            {slideData.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                data-bs-target="#heroCarousel"
-                data-bs-slide-to={i}
-                className={i === 0 ? "active" : ""}
-                aria-current={i === 0 ? "true" : undefined}
-                aria-label={`Slide ${i + 1}`}
-              />
-            ))}
-          </div>
+    <div className="home">
+      {/* ================= HERO ================= */}
+      <section className="hm-hero">
+        <div className="hm-hero__bg" />
+        <div className="hm-hero__velo" />
+        <div className="hm-hero__trama" />
 
-          <div className="carousel-inner">
-            {slideData.map((slide, idx) => (
-              <div
-                key={idx}
-                className={`carousel-item hero-slide ${idx === 0 ? "active" : ""}`}
-                style={{ backgroundImage: `url('${slide.img}')` }}
-              >
-                <div className="overlay" />
-                <div className="carousel-caption text-start">
-                  <motion.h1
-                    key={`h1-${idx}`}
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={activeSlide === idx ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-                    transition={{ duration: 0.8, delay: 0.1 }}
-                  >
-                    {slide.title}
-                  </motion.h1>
-                  <motion.p
-                    key={`p-${idx}`}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={activeSlide === idx ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
-                  >
-                    {slide.text}
-                  </motion.p>
-                  <motion.div
-                    key={`btn-${idx}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={activeSlide === idx ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                  >
-                    <Link to={slide.link} className="hero-btn" onClick={teardownCarousel}>
-                      {slide.btn}
-                    </Link>
-                  </motion.div>
-                </div>
-              </div>
-            ))}
+        <div className="hm-hero__in">
+          <p className="hm-eyebrow">
+            <span className="hm-eyebrow__linea" aria-hidden="true" />
+            Contenedores flexibles · Desde Córdoba al país
+          </p>
+
+          <h1 className="hm-titulo">
+            <span className="hm-titulo__ln">
+              <span>Sostenemos</span>
+            </span>
+            <span className="hm-titulo__ln">
+              <span className="hm-titulo__calado">Toneladas</span>
+            </span>
+          </h1>
+
+          <p className="hm-hero__texto">
+            Big Bags de rafia de polipropileno con tratamiento UV, ensayados bajo
+            norma EFIBCA 006 antes de salir de planta.
+          </p>
+
+          <div className="hm-hero__acciones">
+            <Link to="/contacto" className="hm-btn hm-btn--primario">
+              Solicitar cotización
+            </Link>
+            <Link to="/productos" className="hm-btn hm-btn--texto">
+              Ver los 6 modelos <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </div>
+
+        <p className="hm-scroll" aria-hidden="true">
+          Seguí bajando
+          <svg width="14" height="30" viewBox="0 0 14 30" fill="none" stroke="currentColor">
+            <path d="M7 0v26M2 21l5 5 5-5" />
+          </svg>
+        </p>
       </section>
 
-      {/* CARDS INFORMATIVAS */}
-      <motion.section
-        className="informacion py-5 text-center"
-        variants={fadeUp}
+      {/* ================= TIRA DE DATOS ================= */}
+      <motion.ul
+        className="hm-tira"
+        variants={staggerContainer}
         initial="hidden"
-        {...inViewOrImmediate(true)}
+        animate="show"
       >
-        <motion.h2 variants={cardVariant}>
-          Big Bags de alta resistencia para potenciar su negocio con seguridad y confianza.
-        </motion.h2>
+        {DATOS.map((d) => (
+          <motion.li key={d.detalle} variants={cardVariant}>
+            <b>{d.valor}</b>
+            <span>{d.detalle}</span>
+          </motion.li>
+        ))}
+      </motion.ul>
 
-        <motion.div 
-          className="imagenes-contenedor mt-4"
-          variants={staggerContainer}
-          initial="hidden"
-          {...inViewOrImmediate(true)}
-        >
-          {cardData.map((card, idx) => (
-            <motion.div
-              key={idx}
-              className="imagen-item shadow"
-              variants={cardVariant}
-              whileHover={{ scale: 1.05, transition: { duration: 0.3, ease: "easeOut" } }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link to={card.link}>
-                <img src={card.img} alt={card.alt} />
-                <div className="info fijo">
-                  <h3>{card.title}</h3>
-                  <p>{card.text}</p>
-                  <span className="beneficios-btn">Ver beneficios</span>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.section>
+      {/* ================= SECTORES ================= */}
+      <section className="hm-sectores" aria-labelledby="hm-sectores-tit">
+        <h2 id="hm-sectores-tit" className="sr-only">
+          Industrias donde se usan nuestros Big Bags
+        </h2>
 
-      {/* CERTIFICACIONES */}
-      <motion.section
-        className="Certificados py-5"
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <div className="container">
-          <motion.h2 className="text-center mb-4" variants={cardVariant}>
-            Certificaciones
-          </motion.h2>
-
-          <motion.div
-            className="cert-grid"
-            variants={staggerContainer}
+        {SECTORES.map((s) => (
+          <motion.article
+            key={s.n}
+            className="hm-fila"
+            variants={subir}
             initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
+            animate="show"
           >
-            {certData.map((cert, idx) => (
-              <motion.article
-                key={idx}
-                className="cert-card"
-                variants={cardVariant}
-                whileHover={{ scale: 1.03, transition: { duration: 0.3, ease: "easeOut" } }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <div className="cert-logo">
-                  <img src={cert.img} alt={cert.alt} />
-                </div>
-                <div className="cert-body">
-                  <h3 className="cert-title">{cert.title}</h3>
-                  <p className="cert-text">{cert.text}</p>
-                </div>
-              </motion.article>
-            ))}
-          </motion.div>
-        </div>
+            <span className="hm-fila__num" aria-hidden="true">
+              {s.n}
+            </span>
+
+            <div className="hm-fila__texto">
+              <h3>
+                {s.icono}
+                {s.titulo}
+              </h3>
+              <p>{s.texto}</p>
+              <Link to="/beneficios" className="hm-fila__link">
+                Ver beneficios <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+
+            <div className="hm-fila__img">
+              <img src={s.img} alt={s.alt} width={s.w} height={s.h} loading="lazy" />
+            </div>
+          </motion.article>
+        ))}
+      </section>
+
+      {/* ================= CERTIFICACIONES ================= */}
+      <motion.section
+        className="hm-cert"
+        aria-labelledby="hm-cert-tit"
+        variants={subir}
+        initial="hidden"
+        animate="show"
+      >
+        <h2 id="hm-cert-tit" className="hm-cert__tit">
+          Ensayado,<br />no prometido
+        </h2>
+        <ul className="hm-cert__lista">
+          {CERTIFICADOS.map((c) => (
+            <li key={c.titulo}>
+              {c.icono}
+              <div>
+                <h3>{c.titulo}</h3>
+                <p>{c.texto}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </motion.section>
 
-      {/* EMPRESAS */}
-      <motion.section
-        className="Empresas py-5"
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <motion.h2 className="text-center mb-4" variants={cardVariant}>
-          Empresas que confían en nosotros
-        </motion.h2>
-
-        <motion.div
-          className="Empresas-Content d-flex flex-wrap justify-content-center gap-4 align-items-center"
+      {/* ================= CLIENTES ================= */}
+      <section className="hm-clientes" aria-labelledby="hm-clientes-tit">
+        <h2 id="hm-clientes-tit" className="hm-clientes__lb">
+          Nos eligen
+        </h2>
+        <motion.ul
+          className="hm-clientes__grid"
           variants={staggerContainer}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          animate="show"
         >
-          {empresaData.map((empresa, idx) => (
-            <motion.div
-              key={idx}
-              className="empresa-item normal"
+          {CLIENTES.map((c) => (
+            <motion.li
+              key={c.alt}
+              className="hm-cliente"
               variants={cardVariant}
-              whileHover={{ scale: 1.15, y: -5, transition: { duration: 0.3, ease: "easeOut" } }}
-              whileTap={{ scale: 0.95 }}
-              animate={{
-                y: [0, -3, 0],
-                transition: {
-                  duration: 3 + idx * 0.2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: idx * 0.3,
-                },
-              }}
+              whileHover={reducir ? undefined : { y: -4 }}
             >
-              <img src={empresa.src} alt={empresa.alt} />
-            </motion.div>
+              <img src={c.src} alt={`Cliente ${c.alt}`} width={c.w} height={c.h} loading="lazy" />
+            </motion.li>
           ))}
-        </motion.div>
-      </motion.section>
-    </>
+        </motion.ul>
+      </section>
+    </div>
   );
 }
 

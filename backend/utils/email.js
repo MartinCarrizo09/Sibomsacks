@@ -2,12 +2,24 @@
 import nodemailer from "nodemailer";
 import { Provincia, Sector } from "../models/index.js";
 
-// Configurar transportador SMTP con Gmail
+// Configurar transportador SMTP con Gmail.
+// Las credenciales se leen de variables de entorno, nunca del codigo fuente.
+const SMTP_USER = process.env.SMTP_USER;
+const SMTP_PASS = process.env.SMTP_PASS;
+const CONTACT_TO = process.env.CONTACT_TO || SMTP_USER;
+
+if (!SMTP_USER || !SMTP_PASS) {
+  console.warn(
+    "⚠️  SMTP_USER / SMTP_PASS no configurados: el formulario de contacto " +
+    "guardara los mensajes pero no enviara correos."
+  );
+}
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "mtmartincarrizo@gmail.com",
-    pass: "ajrr hrvb fguj abah" 
+    user: SMTP_USER,
+    pass: SMTP_PASS
   }
 });
 
@@ -64,10 +76,15 @@ Sector: ${sectorNombre}
 Mensaje: ${mensaje}
   `;
 
+  if (!SMTP_USER || !SMTP_PASS) {
+    console.warn("⚠️  Correo omitido: faltan SMTP_USER / SMTP_PASS.");
+    return;
+  }
+
   try {
     const info = await transporter.sendMail({
-      from: `"Formulario Web" <mtmartincarrizo@gmail.com>`,
-      to: "mtmartincarrizo@gmail.com", // Cambialo si querés otro destino
+      from: `"Formulario Web" <${SMTP_USER}>`,
+      to: CONTACT_TO,
       replyTo: correo,
       subject: "📩 Nuevo mensaje de contacto desde la web",
       text,

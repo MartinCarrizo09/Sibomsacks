@@ -1,0 +1,154 @@
+/* ---------- Filtros ---------- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-3) var(--e-6);
+  padding: var(--e-4) 0 var(--e-5);
+  margin-bottom: var(--e-5);
+  border-bottom: 1px solid var(--borde);
+}
+
+.filtros__grupo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.filtros__lb {
+  font-family: var(--fuente-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tinta-3);
+  margin-right: var(--e-1);
+}
+
+.chip {
+  min-height: 40px;
+  padding-inline: var(--e-4);
+  background: var(--superficie);
+  border: 1.5px solid var(--borde);
+  border-radius: var(--r-full);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--tinta-2);
+  cursor: pointer;
+  transition: border-color var(--vel) var(--curva),
+              background-color var(--vel) var(--curva),
+              color var(--vel) var(--curva);
+}
+.chip:hover { border-color: var(--borde-fuerte); }
+.chip--on {
+  background: var(--azul);
+  border-color: var(--azul);
+  color: var(--n-0);
+}
+
+.filtros__conteo {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  font-size: var(--t-sm);
+  color: var(--tinta-3);
+}
+
+.filtros__limpiar {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: var(--t-sm);
+  font-weight: 700;
+  color: var(--azul);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* ---------- Grilla ---------- */
+.catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--e-5);
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: border-color var(--vel) var(--curva),
+              box-shadow var(--vel) var(--curva),
+              transform var(--vel) var(--curva);
+}
+.tarjeta:hover {
+  border-color: var(--azul);
+  box-shadow: var(--sombra-2);
+  transform: translateY(-3px);
+}
+
+.tarjeta__fig {
+  background: var(--fondo-alt);
+  padding: var(--e-4);
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tarjeta__fig img {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tarjeta__cuerpo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--e-4) var(--e-5) var(--e-5);
+}
+
+.tarjeta__nombre { font-size: var(--t-md); }
+
+.tarjeta__tipo {
+  margin-top: var(--e-1);
+  font-size: var(--t-sm);
+  color: var(--tinta-2);
+}
+
+/* Los dos ejes, siempre visibles: es lo que diferencia un modelo de otro */
+.tarjeta__ejes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--e-2);
+  margin: var(--e-4) 0 0;
+}
+.tarjeta__ejes dt {
+  font-family: var(--fuente-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tinta-3);
+}
+.tarjeta__ejes dd {
+  margin: 2px 0 0;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.tarjeta__ver {
+  margin-top: auto;
+  padding-top: var(--e-4);
+  font-size: var(--t-sm);
+  font-weight: 700;
+  color: var(--azul);
+}
+
+@media (max-width: 620px) {
+  .filtros__conteo { margin-left: 0; width: 100%; }
+}

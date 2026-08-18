@@ -5,12 +5,12 @@ import productoService from "../services/productos.service.js"; // ← con .js
 import "./DetalleProducto.css";
 
 const imagenesPorModelo = {
-  1: "valvuladecargaydescarga.png",
-  2: "polleradecierrrevalvuladedescarga.png",
-  3: "bocaabiertavalvuladedescarga.png",
-  4: "valvuladecargafondociego.png",
-  5: "polleradecierrefondociego.png",
-  6: "bocaabiertafondociego.png",
+  1: "valvuladecargaydescarga.webp",
+  2: "polleradecierrrevalvuladedescarga.webp",
+  3: "bocaabiertavalvuladedescarga.webp",
+  4: "valvuladecargafondociego.webp",
+  5: "polleradecierrefondociego.webp",
+  6: "bocaabiertafondociego.webp",
 };
 
 const informacionAdicionalPorModelo = {
@@ -20,6 +20,15 @@ const informacionAdicionalPorModelo = {
   4: { titulo: "VÁLVULA DE CARGA CON FONDO CIEGO", superSacksTubular: { caracteristicas: ["Sin costura lateral", "Ancho estándar de 90cm x 90 cm", "Altura adaptable al pedido"] }, superSacksPlano: { caracteristicas: ["4 costuras laterales", "Ancho variable según pedido", "Altura variable según pedido"] } },
   5: { titulo: "POLLERA DE CIERRE CON FONDO CIEGO", superSacksTubular: { caracteristicas: ["Sin costura lateral", "Ancho estándar de 90cm x 90 cm", "Altura adaptable al pedido"] }, superSacksPlano: { caracteristicas: ["4 costuras laterales", "Ancho variable según pedido", "Altura variable según pedido"] } },
   6: { titulo: "BOCA ABIERTA CON FONDO CIEGO", superSacksTubular: { caracteristicas: ["Sin costura lateral", "Ancho estándar de 90cm x 90 cm", "Altura adaptable al pedido"] }, superSacksPlano: { caracteristicas: ["4 costuras laterales", "Ancho variable según pedido", "Altura variable según pedido"] } }
+};
+
+const dimensionesPorModelo = {
+  1: { w: 277, h: 357 },
+  2: { w: 316, h: 358 },
+  3: { w: 303, h: 368 },
+  4: { w: 316, h: 342 },
+  5: { w: 303, h: 376 },
+  6: { w: 297, h: 335 },
 };
 
 const fadeUp = {
@@ -48,9 +57,10 @@ const ProductoDetalle = () => {
   }
 
   const modelo = producto.caracteristicasGenerales?.id_tipo;
-  const nombreImagen = imagenesPorModelo[modelo] || "default.png";
+  const nombreImagen = imagenesPorModelo[modelo] || "default.webp";
   const imagenSrc = `/images/${nombreImagen}`;
   const infoAdicional = informacionAdicionalPorModelo[modelo];
+  const dim = dimensionesPorModelo[modelo] || { w: 300, h: 355 };
 
   return (
     <motion.section
@@ -62,14 +72,16 @@ const ProductoDetalle = () => {
       <div className="row">
         {/* Columna izquierda - Imagen */}
         <motion.div className="col-md-6" variants={fadeUp}>
-          <h2 className="mb-2 mt-0" style={{ color: "#004aad" }}>
+          <h1 className="mb-2 mt-0 detalle-titulo" style={{ color: "#004aad" }}>
             MODELO SS {modelo}
-          </h2>
+          </h1>
           <div className="text-center mb-4">
             <motion.img
               src={imagenSrc}
               alt={producto.caracteristicasGenerales?.producto_nombre}
-              style={{ maxHeight: "400px", objectFit: "contain", width: "100%", maxWidth: "400px" }}
+              width={dim.w}
+              height={dim.h}
+              style={{ maxHeight: "400px", objectFit: "contain", width: "100%", maxWidth: "400px", height: "auto" }}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}

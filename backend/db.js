@@ -7,6 +7,9 @@ import { format } from "sql-formatter";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Directorio de las bases SQLite. En Railway apunta al volumen montado.
+const DATA_DIR = process.env.SQLITE_DATA_DIR || path.join(__dirname, "data");
+
 // Logger SQL personalizado
 const customLogger = (label) => (sql) => {
   try {
@@ -25,14 +28,14 @@ const customLogger = (label) => (sql) => {
 // Conexión para productos
 const dbProductos = new Sequelize({
   dialect: "sqlite",
-  storage: path.join(__dirname, "data", "producto.sqlite"),
+  storage: path.join(DATA_DIR, "producto.sqlite"),
   logging: customLogger("SQL Productos"),
 });
 
 // Conexión para contactos
 const dbContactos = new Sequelize({
   dialect: "sqlite",
-  storage: path.join(__dirname, "data", "contacto.sqlite"),
+  storage: path.join(DATA_DIR, "contacto.sqlite"),
   logging: customLogger("SQL Contactos"),
 });
 

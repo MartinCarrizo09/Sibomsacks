@@ -1,423 +1,530 @@
-/* =========================
-   HERO / CARROUSEL FULL-WIDTH
-   ========================= */
-.hero-carousel-full {
-  position: relative;
-  width: 100%;
-  /* Espacio en blanco debajo del header - ajustado para que se vea como en la imagen 2 */
-  margin-top: clamp(30px, 4vh, 60px);
-}
+/* =========================================================
+   HOME — dirección "cinematográfica"
+   Anton + Barlow sobre azul marino, amarillo como único acento.
+   ========================================================= */
 
-.hero-slide {
-  position: relative;
-  height: clamp(300px, 60vh, 550px);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: #001c4a;
-  /* Eliminamos transition aquí para evitar conflictos con Bootstrap */
-}
+.home {
+  --hm-navy: #001c4a;
+  --hm-fondo: #0c2c5c;      /* antes #00102c: navy más liviano, menos cerrado */
+  --hm-fondo-2: #143a72;    /* antes #001636 */
+  --hm-fondo-rgb: 12, 44, 92;
+  --hm-blue: #1e6fd9;       /* antes #004aad: más luminoso sobre el fondo claro */
+  --hm-yellow: #ffcc00;
+  --hm-texto: #d3ddf0;      /* antes #b8c8e2: más contraste en texto secundario */
+  --hm-tenue: rgba(255, 255, 255, 0.14);
 
-.hero-slide .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 28, 74, 0.5);
-  /* Sin transition para evitar conflictos */
-}
+  --hm-anton: Anton, "Arial Narrow", Impact, sans-serif;
+  --hm-body: Barlow, "Segoe UI", system-ui, sans-serif;
 
-.carousel-caption {
-  position: absolute;
-  bottom: clamp(50px, 12vh, 80px);
-  left: clamp(20px, 8vw, 80px);
+  /* Compensa el padding horizontal de .main-layout para ir a sangre. */
+  --hm-sangria: calc(-1 * clamp(12px, 2.5vw, 32px));
+  /* Margen lateral del contenido: el normal más el marco, de modo que los
+     fondos lleguen al borde pero el texto no se estire en monitores grandes. */
+  --hm-borde: calc(var(--site-frame, 0px) + clamp(20px, 4.2vw, 60px));
+
+  background: var(--hm-fondo);
   color: #fff;
-  max-width: 550px;
-  z-index: 2;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  /* Framer Motion maneja las transiciones del caption */
+  font-family: var(--hm-body);
+  margin: 0 var(--hm-sangria);
+  /* La sección de clientes ya trae su propio padding inferior; se cancela
+     el de .main-layout para que el navy llegue justo hasta el footer. */
+  margin-bottom: calc(-1 * var(--main-pb, 0px));
 }
 
-.carousel-caption h1 {
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-  font-weight: 700;
-  margin-bottom: 1rem;
-  /* Framer Motion maneja las animaciones del texto */
-}
-
-.carousel-caption p {
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  margin-bottom: 1.5rem;
-  /* Framer Motion maneja las animaciones del texto */
-}
-
-.hero-btn {
-  display: inline-block;
-  padding: 0.6rem 1.5rem;
-  background: #ffcc00;
-  color: #000;
-  font-weight: 600;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.3s ease; /* Transición más rápida para hover */
-}
-
-.hero-btn:hover {
-  background: #e6b800;
-  transform: translateY(-2px);
-  color: #000;
-}
-
-@media (max-width: 768px) {
-  .hero-carousel-full {
-    /* En móvil reducimos el margin-top pero mantenemos algo de espacio */
-    margin-top: clamp(15px, 3vh, 25px);
-  }
-  
-  .carousel-caption {
-    left: 20px;
-    right: 20px;
-    bottom: 50px;
-    text-align: left;
-  }
-}
-
-/* Ajuste específico para tablets */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .hero-carousel-full {
-    margin-top: clamp(35px, 5vh, 50px);
-  }
-}
-
-/* 🔹 Indicadores circulares */
-.carousel-indicators.custom-indicators {
-  bottom: 20px;
-  margin: 0;
-  z-index: 15;
-}
-
-.carousel-indicators.custom-indicators [data-bs-target] {
-  width: 14px;
-  height: 14px;
-  margin: 0 5px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: none;
-  transition: all 0.3s ease; /* Transición más rápida */
-  touch-action: manipulation;
-  cursor: pointer;
-}
-
-.carousel-indicators.custom-indicators .active {
-  background-color: #fff;
-  transform: scale(1.2);
-}
-
-.carousel-indicators.custom-indicators [data-bs-target]:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-}
-
-/* =========================
-   CARDS INFORMATIVAS
-   ========================= */
-.informacion {
-  background: #f8f9fa;
-}
-
-.informacion h2 {
-  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
-  margin-bottom: clamp(18px, 4vw, 30px);
-  font-weight: 600;
-  color: #001c4a;
-  /* Framer Motion maneja las animaciones */
-}
-
-.imagenes-contenedor {
+/* ---------- HERO ---------- */
+.hm-hero {
+  position: relative;
+  min-height: clamp(460px, 78vh, 660px);
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: clamp(20px, 3vw, 40px);
-}
-
-.imagen-item {
-  width: clamp(300px, 30vw, 360px);
-  background: #fff;
-  border-radius: 12px;
   overflow: hidden;
+}
+
+.hm-hero__bg,
+.hm-hero__velo,
+.hm-hero__trama {
+  position: absolute;
+  inset: 0;
+}
+
+.hm-hero__bg {
+  background: url("/images/slide3Apiladas.webp") center / cover no-repeat;
+  filter: saturate(0.72);
+  transform: scale(1.08);
+  animation: hm-asentar 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes hm-asentar {
+  to { transform: scale(1); }
+}
+
+.hm-hero__velo {
+  background: linear-gradient(
+    100deg,
+    rgba(var(--hm-fondo-rgb), 0.95) 22%,
+    rgba(var(--hm-fondo-rgb), 0.58) 58%,
+    rgba(30, 111, 217, 0.4)
+  );
+}
+
+.hm-hero__trama {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.028) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+.hm-hero__in {
+  position: relative;
+  z-index: 3;
+  padding: clamp(48px, 8vw, 90px) var(--hm-borde) clamp(40px, 6vw, 64px);
+  /* El tope es sobre el CONTENIDO: como box-sizing es border-box, hay que
+     sumarle los dos márgenes, si no el marco le come ancho al título. */
+  max-width: calc(1000px + var(--hm-borde) * 2);
+}
+
+.hm-eyebrow {
   display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  text-decoration: none;
-  /* Framer Motion maneja hover y animaciones */
-}
-
-.imagen-item a {
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.imagen-item img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.imagen-item:hover img {
-  transform: scale(1.02);
-}
-
-.info {
-  padding: 1.2rem;
-  color: #333;
-  text-align: center;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.info h3 {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #001c4a;
-}
-
-.info p {
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-  line-height: 1.5;
-  flex: 1;
-}
-
-.beneficios-btn {
-  display: inline-block;
-  padding: 0.5rem 1.2rem;
-  background: #ffcc00;
-  color: #000;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 18px;
+  font-size: clamp(10px, 1.1vw, 11.5px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--hm-yellow);
   font-weight: 600;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  align-self: center;
 }
 
-.beneficios-btn:hover {
-  background: #e6b800;
-  transform: translateY(-2px);
-  color: #000;
+.hm-eyebrow__linea {
+  display: block;
+  width: 0;
+  height: 3px;
+  flex: none;
+  background: var(--hm-yellow);
+  animation: hm-trazo 0.9s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes hm-trazo {
+  to { width: clamp(34px, 5vw, 56px); }
 }
 
-@media (max-width: 768px) {
-  .imagen-item {
-    width: 100%;
-    max-width: 360px;
-  }
-}
-
-/* =========================
-   CERTIFICACIONES
-   ========================= */
-.Certificados {
-  background: #fff;
-}
-
-.Certificados h2 {
-  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
-  font-weight: 700;
-  color: #001c4a;
-}
-
-.cert-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(20px, 2.5vw, 30px);
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  .cert-grid { 
-    grid-template-columns: repeat(2, 1fr); 
-  }
-}
-
-@media (min-width: 1200px) {
-  .cert-grid { 
-    grid-template-columns: repeat(3, 1fr); 
-  }
-}
-
-.cert-card {
-  background: #f7f9fc;
-  border: 1px solid #e6ecf5;
-  border-radius: 14px;
-  padding: clamp(20px, 2vw, 24px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  height: 100%;
-  transition: box-shadow 0.3s ease;
-  /* Framer Motion maneja hover y animaciones */
-}
-
-.cert-card:hover {
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-}
-
-.cert-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100px;
-  margin-bottom: 15px;
-}
-
-.cert-logo img {
-  max-height: 100%;
-  max-width: 100%;
-  width: auto;
-  object-fit: contain;
-}
-
-.cert-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.cert-title {
-  margin: 0 0 12px;
-  font-size: clamp(0.95rem, 2vw, 1.05rem);
-  font-weight: 800;
-  color: #0f1e3a;
-  line-height: 1.3;
-}
-
-.cert-text {
-  font-size: clamp(0.85rem, 1.8vw, 0.95rem);
-  line-height: 1.5;
-  color: #2e3b52;
+.hm-titulo {
+  font-family: var(--hm-anton);
+  font-weight: 400;
+  font-size: clamp(46px, 8.4vw, 118px);
+  line-height: 0.85;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
   margin: 0;
 }
 
-/* =========================
-   EMPRESAS (logos clientes)
-   ========================= */
-.Empresas {
-  padding: clamp(40px, 6vw, 60px) 0;
-  text-align: center;
-  background: #f8f9fa;
-  overflow: hidden; /* Para evitar que las animaciones se salgan del contenedor */
+.hm-titulo__ln {
+  display: block;
+  overflow: hidden;
 }
 
-.Empresas h2 {
-  color: #001c4a;
+.hm-titulo__ln > span {
+  display: block;
+  transform: translateY(105%);
+  animation: hm-subir 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hm-titulo__ln:nth-of-type(1) > span { animation-delay: 0.15s; }
+.hm-titulo__ln:nth-of-type(2) > span { animation-delay: 0.3s; }
+@keyframes hm-subir {
+  to { transform: translateY(0); }
+}
+
+.hm-titulo__calado {
+  -webkit-text-stroke: 2px var(--hm-yellow);
+  color: transparent;
+}
+
+.hm-hero__texto {
+  margin: clamp(18px, 2.6vw, 26px) 0 0;
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.62;
+  max-width: 47ch;
+  color: #cddaf0;
+  font-weight: 300;
+  opacity: 0;
+  animation: hm-aparecer 0.8s 0.7s forwards;
+}
+@keyframes hm-aparecer {
+  to { opacity: 1; }
+}
+
+.hm-hero__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  align-items: center;
+  margin-top: clamp(24px, 3.4vw, 34px);
+  opacity: 0;
+  animation: hm-aparecer 0.8s 0.85s forwards;
+}
+
+.hm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s,
+    background-color 0.25s, color 0.25s;
+}
+
+.hm-btn--primario {
+  background: var(--hm-yellow);
+  color: var(--hm-navy);
+  font-family: var(--hm-anton);
+  font-size: clamp(13px, 1.3vw, 15px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 clamp(22px, 3vw, 32px);
+}
+.hm-btn--primario:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+  color: var(--hm-navy);
+}
+
+.hm-btn--texto {
+  color: #fff;
+  font-size: clamp(11px, 1.15vw, 12px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
   font-weight: 600;
-  margin-bottom: 2rem;
+  padding: 0 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+}
+.hm-btn--texto:hover { color: var(--hm-yellow); border-bottom-color: var(--hm-yellow); }
+
+.hm-btn:focus-visible,
+.hm-fila__link:focus-visible {
+  outline: 3px solid var(--hm-yellow);
+  outline-offset: 3px;
 }
 
-.Empresas-Content {
+/* Queda sobre la zona clara de la foto, donde el velo casi no cubre: sin
+   una base propia el texto blanco al 60% era ilegible. La cápsula garantiza
+   contraste sin robarle protagonismo al hero. */
+.hm-scroll {
+  position: absolute;
+  right: var(--hm-borde);
+  bottom: 30px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 9px 16px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(var(--hm-fondo-rgb), 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+}
+.hm-scroll svg {
+  stroke: var(--hm-yellow);
+  animation: hm-latir 2.4s ease-in-out infinite;
+}
+@keyframes hm-latir {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* ---------- TIRA DE DATOS ---------- */
+.hm-tira {
+  list-style: none;
+  margin: 0;
+  /* La banda amarilla llega a los bordes; las cuatro celdas quedan dentro
+     del ancho máximo del sitio. */
+  padding: 0 var(--site-frame, 0px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--hm-yellow);
+  color: var(--hm-navy);
+}
+
+.hm-tira li {
+  padding: clamp(16px, 2.2vw, 22px) clamp(14px, 2vw, 30px);
+  border-right: 1px solid rgba(0, 28, 74, 0.2);
+}
+.hm-tira li:last-child { border-right: 0; }
+
+.hm-tira b {
+  display: block;
+  font-family: var(--hm-anton);
+  font-weight: 400;
+  font-size: clamp(26px, 3.4vw, 36px);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.hm-tira span {
+  font-size: clamp(9.5px, 1vw, 11px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ---------- FILAS DE SECTORES ---------- */
+.hm-sectores { padding-top: 6px; }
+
+.hm-fila {
+  display: grid;
+  grid-template-columns: clamp(70px, 8vw, 110px) 1fr 1.15fr;
+  align-items: center;
+  gap: clamp(18px, 3vw, 36px);
+  padding: clamp(26px, 3.6vw, 38px) var(--hm-borde);
+  border-bottom: 1px solid var(--hm-tenue);
+  position: relative;
+}
+
+.hm-fila__num {
+  font-family: var(--hm-anton);
+  font-size: clamp(34px, 5vw, 58px);
+  color: transparent;
+  -webkit-text-stroke: 1.4px rgba(255, 255, 255, 0.32);
+  line-height: 1;
+  transition: -webkit-text-stroke-color 0.35s;
+}
+.hm-fila:hover .hm-fila__num { -webkit-text-stroke-color: var(--hm-yellow); }
+
+.hm-fila__texto h3 {
+  font-family: var(--hm-anton);
+  font-weight: 400;
+  font-size: clamp(22px, 3.2vw, 34px);
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-transform: none;
+}
+.hm-fila__texto h3 svg { flex: none; }
+
+.hm-fila__texto p {
+  margin: 0;
+  font-size: clamp(13.5px, 1.4vw, 14.5px);
+  line-height: 1.65;
+  color: var(--hm-texto);
+  font-weight: 300;
+  max-width: 52ch;
+}
+
+.hm-fila__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  margin-top: 4px;
+  color: var(--hm-yellow);
+  font-size: 11.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-decoration: none;
+}
+.hm-fila__link span { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+.hm-fila__link:hover span { transform: translateX(5px); }
+
+.hm-fila__img {
+  height: clamp(160px, 22vw, 250px);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+/* Velo angosto solo en el borde de unión con el texto; el resto de la
+   foto queda a color natural en vez de lavado de navy (más realismo). */
+.hm-fila__img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(var(--hm-fondo-rgb), 0.75), transparent 20%);
+}
+.hm-fila__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.1) contrast(1.03);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hm-fila:hover .hm-fila__img img { transform: scale(1.06); }
+
+/* ---------- CERTIFICACIONES ---------- */
+.hm-cert {
+  background: var(--hm-fondo-2);
+  padding: clamp(28px, 4.4vw, 44px) var(--hm-borde);
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(22px, 3.6vw, 42px);
+  align-items: center;
+}
+
+.hm-cert__tit {
+  font-family: var(--hm-anton);
+  font-weight: 400;
+  font-size: clamp(20px, 2.4vw, 24px);
+  line-height: 1.1;
+  max-width: 9ch;
+  color: var(--hm-yellow);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hm-cert__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(18px, 2.6vw, 34px);
+  flex: 1;
+}
+
+.hm-cert__lista li {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+}
+.hm-cert__lista svg { flex: none; }
+
+.hm-cert__lista h3 {
+  font-family: var(--hm-anton);
+  font-weight: 400;
+  font-size: clamp(14px, 1.4vw, 15px);
+  margin: 0 0 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hm-cert__lista p {
+  margin: 0;
+  font-size: clamp(12px, 1.25vw, 12.5px);
+  color: #b7c6e3;
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+/* ---------- CLIENTES ---------- */
+.hm-clientes {
+  padding: clamp(18px, 2.4vw, 24px) 0 clamp(28px, 4vw, 40px);
+  border-top: 1px solid var(--hm-tenue);
+  overflow: hidden;
+}
+
+.hm-clientes__lb {
+  margin: 0 0 16px;
+  padding: 0 var(--hm-borde);
+  font-family: var(--hm-body);
+  font-size: 10.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Grilla fija, sin desplazamiento: nunca hay un punto de reinicio que
+   pueda mostrar un salto o un hueco vacío. La entrada en cascada al
+   cargar la página es la animación. */
+.hm-clientes__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--hm-borde);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: clamp(20px, 3vw, 35px);
-  max-width: 1000px;
-  margin: 0 auto;
+  gap: clamp(14px, 1.8vw, 20px);
 }
 
-.empresa-item {
+/* Tarjeta de tamaño fijo: los logos tienen proporciones muy distintas
+   entre sí, así que cada uno se centra dentro de la misma caja en vez
+   de estirarse a una altura común. */
+.hm-cliente {
+  flex: none;
+  width: clamp(108px, 11vw, 138px);
+  height: clamp(56px, 6vw, 68px);
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Framer Motion maneja hover y animaciones de flotación */
-}
-
-.empresa-item img {
-  height: clamp(45px, 5vw, 65px);
-  width: auto;
-  max-width: 120px;
-  object-fit: contain;
+  background: rgba(255, 255, 255, 0.94);
   border-radius: 8px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-  transition: filter 0.4s ease;
-  /* Agregamos will-change para optimizar las animaciones */
-  will-change: transform, filter;
+  padding: 10px 16px;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: box-shadow 0.25s ease;
+}
+.hm-cliente:hover { box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28); }
+
+.hm-cliente img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.82;
+  transition: filter 0.25s, opacity 0.25s;
+}
+.hm-cliente:hover img { filter: none; opacity: 1; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .hm-tira { grid-template-columns: repeat(2, 1fr); }
+  .hm-tira li:nth-child(2) { border-right: 0; }
+  .hm-tira li:nth-child(-n + 2) { border-bottom: 1px solid rgba(0, 28, 74, 0.2); }
+
+  .hm-fila {
+    grid-template-columns: clamp(56px, 12vw, 70px) 1fr;
+    align-items: start;
+  }
+  .hm-fila__img {
+    grid-column: 1 / -1;
+    height: clamp(180px, 46vw, 280px);
+  }
+  .hm-fila__img::after {
+    background: linear-gradient(0deg, rgba(var(--hm-fondo-rgb), 0.55), transparent 30%);
+  }
 }
 
-.empresa-item:hover img {
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+@media (max-width: 560px) {
+  .hm-hero__velo {
+    background: linear-gradient(
+      170deg,
+      rgba(var(--hm-fondo-rgb), 0.86) 30%,
+      rgba(var(--hm-fondo-rgb), 0.92)
+    );
+  }
+  .hm-scroll { display: none; }
+  .hm-hero__acciones .hm-btn { width: 100%; }
+  .hm-cert__tit { max-width: none; }
 }
 
-@media (max-width: 576px) {
-  .Empresas-Content {
-    gap: 15px;
-  }
-  
-  .empresa-item img {
-    height: 40px;
-  }
-  
-  /* En móvil reducimos las animaciones de flotación */
-  .empresa-item {
-    transform: none !important;
-  }
-}
-
-/* Mejora para dispositivos con animaciones reducidas */
+/* ---------- MENOS MOVIMIENTO ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .empresa-item {
-    animation: none !important;
-    transform: none !important;
+  .hm-hero__bg,
+  .hm-titulo__ln > span,
+  .hm-eyebrow__linea,
+  .hm-hero__texto,
+  .hm-hero__acciones,
+  .hm-scroll svg {
+    animation: none;
   }
-}
-
-/* =========================
-   MEJORAS GENERALES
-   ========================= */
-
-/* Suavizar scrolling para navegación */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Mejorar accesibilidad */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Focus states mejorados */
-.hero-btn:focus,
-.beneficios-btn:focus {
-  outline: 2px solid #ffcc00;
-  outline-offset: 2px;
-}
-
-.carousel-indicators [data-bs-target]:focus {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
-}
-
-/* =========================
-   PRINT STYLES
-   ========================= */
-@media print {
-  .hero-carousel-full { height: auto; }
-  .hero-slide { height: auto; }
-  .overlay { display: none; }
-  .carousel-indicators { display: none; }
+  .hm-hero__bg { transform: none; }
+  .hm-titulo__ln > span { transform: none; }
+  .hm-eyebrow__linea { width: clamp(34px, 5vw, 56px); }
+  .hm-hero__texto,
+  .hm-hero__acciones { opacity: 1; }
+  .hm-btn,
+  .hm-fila__img img,
+  .hm-fila__num,
+  .hm-fila__link span,
+  .hm-cliente,
+  .hm-cliente img { transition: none; }
 }

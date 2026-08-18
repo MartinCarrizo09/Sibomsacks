@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import "./Encabezado.css";
 
-const logo = "/images/icono.png";
+const logo = "/images/icono.webp";
 
 function Encabezado() {
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -68,7 +68,7 @@ function Encabezado() {
         {/* Logo */}
         <div className="navbar__left">
           <Link to="/inicio" className="navbar__logo" onClick={cerrarMenu}>
-            <img src={logo} alt="Sibom Sacks Logo" />
+            <img src={logo} alt="Sibom Sacks Logo" width={103} height={92} />
             <span className="navbar__brand">SIBOM SACKS</span>
           </Link>
         </div>

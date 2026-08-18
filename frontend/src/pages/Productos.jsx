@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from "react";
 import productoService from "../services/productos.service.js";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Productos.css";
 
 const imagenesPorModelo = {
-  1: "valvuladecargaydescarga.png",
-  2: "polleradecierrrevalvuladedescarga.png",
-  3: "bocaabiertavalvuladedescarga.png",
-  4: "valvuladecargafondociego.png",
-  5: "polleradecierrefondociego.png",
-  6: "bocaabiertafondociego.png",
+  1: "valvuladecargaydescarga.webp",
+  2: "polleradecierrrevalvuladedescarga.webp",
+  3: "bocaabiertavalvuladedescarga.webp",
+  4: "valvuladecargafondociego.webp",
+  5: "polleradecierrefondociego.webp",
+  6: "bocaabiertafondociego.webp",
+};
+
+const dimensionesPorModelo = {
+  1: { w: 277, h: 357 },
+  2: { w: 316, h: 358 },
+  3: { w: 303, h: 368 },
+  4: { w: 316, h: 342 },
+  5: { w: 303, h: 376 },
+  6: { w: 297, h: 335 },
 };
 
 const Productos = () => {
   const [productos, setProductos] = useState([]);
-  const navigate = useNavigate();
 
   const cargarProductos = async () => {
     try {
@@ -29,41 +37,33 @@ const Productos = () => {
     cargarProductos();
   }, []);
 
-  const irADetalle = (id) => navigate(`/productos/${id}`);
-  const onKeyOpen = (e, id) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      irADetalle(id);
-    }
-  };
-
   return (
     <section className="container pt-4 pb-5 productos-page">
-      <h2 className="mb-4 text-center fw-bold">Conocé nuestros productos</h2>
+      <h1 className="mb-4 text-center fw-bold productos-titulo">Conocé nuestros productos</h1>
 
       <div className="row g-4">
         {productos.map((producto) => {
           const modelo = producto.caracteristicasGenerales?.id_tipo;
-          const nombreImagen = imagenesPorModelo[modelo] || "default.png";
+          const nombreImagen = imagenesPorModelo[modelo] || "default.webp";
           const imagenSrc = `/images/${nombreImagen}`;
           const titulo =
             producto.caracteristicasGenerales?.producto_nombre || "Sin nombre";
           const tipo = producto.caracteristicasGenerales?.tipo || "N/A";
+          const dim = dimensionesPorModelo[modelo] || { w: 300, h: 355 };
 
           return (
             <div className="col-12 col-sm-6 col-lg-4" key={producto.id}>
-              <div
+              <Link
+                to={`/productos/${producto.id}`}
                 className="card product-card h-100 border-0 rounded shadow-sm"
-                role="button"
-                tabIndex={0}
                 aria-label={`Ver detalle de ${titulo}`}
-                onClick={() => irADetalle(producto.id)}
-                onKeyDown={(e) => onKeyOpen(e, producto.id)}
               >
                 <img
                   src={imagenSrc}
                   alt={`Big Bag modelo ${modelo} - ${titulo}`}
                   className="product-image"
+                  width={dim.w}
+                  height={dim.h}
                   loading="lazy"
                 />
 
@@ -78,7 +78,7 @@ const Productos = () => {
                     Ver detalle →
                   </span>
                 </div>
-              </div>
+              </Link>
             </div>
           );
         })}

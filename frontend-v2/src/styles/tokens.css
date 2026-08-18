@@ -1,0 +1,79 @@
+/* =========================================================
+   TOKENS — única fuente de verdad del diseño.
+   Si un color, tamaño o espaciado no está acá, no se usa.
+   ========================================================= */
+
+:root {
+  /* ---------- Marca ---------- */
+  --azul: #004aad;
+  --azul-800: #003a88;
+  --azul-900: #002a63;
+  --amarillo: #ffcc00;
+  --amarillo-oscuro: #e6b800;
+
+  /* ---------- Neutros (con sesgo azul, no grises puros) ---------- */
+  --n-0: #ffffff;
+  --n-50: #f6f8fb;
+  --n-100: #edf1f7;
+  --n-200: #dde4ee;
+  --n-300: #c4cfdf;
+  --n-500: #7a8899;
+  --n-700: #3f4d63;
+  --n-900: #16233a;
+
+  /* ---------- Roles semánticos ---------- */
+  --fondo: var(--n-0);
+  --fondo-alt: var(--n-50);      /* secciones alternadas */
+  --superficie: var(--n-0);      /* tarjetas */
+  --borde: var(--n-200);
+  --borde-fuerte: var(--n-300);
+  --tinta: var(--n-900);         /* texto principal */
+  --tinta-2: var(--n-700);       /* texto secundario */
+  --tinta-3: var(--n-500);       /* etiquetas, metadatos */
+  --accion: var(--azul);
+  --realce: var(--amarillo);
+
+  /* ---------- Tipografía ---------- */
+  --fuente: "Chivo", "Segoe UI", system-ui, sans-serif;
+  --fuente-mono: "Chivo Mono", ui-monospace, "SF Mono", Consolas, monospace;
+
+  /* Escala fluida: cada paso crece con la pantalla y frena en su techo */
+  --t-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --t-sm: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --t-base: clamp(0.95rem, 0.92rem + 0.2vw, 1.05rem);
+  --t-md: clamp(1.08rem, 1rem + 0.4vw, 1.25rem);
+  --t-lg: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+  --t-xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.6rem);
+  --t-2xl: clamp(2.2rem, 1.6rem + 2.8vw, 3.8rem);
+
+  /* ---------- Espaciado ---------- */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 24px;
+  --e-6: 32px;
+  --e-7: 48px;
+  --e-8: 64px;
+  --e-seccion: clamp(48px, 7vw, 96px);   /* separación vertical entre secciones */
+
+  /* ---------- Layout ---------- */
+  --ancho: 1200px;                        /* ancho del contenido */
+  --margen: clamp(16px, 4vw, 40px);       /* margen lateral */
+
+  /* ---------- Forma y profundidad ---------- */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+  --r-full: 999px;
+  --sombra-1: 0 1px 2px rgba(22, 35, 58, 0.06), 0 2px 8px rgba(22, 35, 58, 0.05);
+  --sombra-2: 0 8px 28px rgba(22, 35, 58, 0.12);
+
+  /* ---------- Movimiento ---------- */
+  --vel: 0.22s;
+  --curva: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --vel: 0.01ms; }
+}

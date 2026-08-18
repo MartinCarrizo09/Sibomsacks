@@ -1,0 +1,6 @@
+node_modules/
+.env
+.DS_Store
+
+# Mockups de diseño (pesados, no forman parte de la app)
+mockups-home/

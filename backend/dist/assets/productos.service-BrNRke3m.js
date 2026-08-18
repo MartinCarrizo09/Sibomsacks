@@ -1,0 +1,1 @@
+import{i as s}from"./axios.config-DzsuB2Y4.js";const t=async()=>(await s.get("/api/productos")).data,e=async o=>(await s.get(`/api/productos/${o}`)).data,a={obtenerTodos:t,obtenerPorId:e};export{a as p};

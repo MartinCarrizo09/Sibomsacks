@@ -113,3 +113,10 @@
 .product-card {
   animation: fadeUp 0.4s ease forwards;
 }
+/* La tarjeta ahora es un enlace real: hereda color y no lleva subrayado. */
+.product-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.product-card:hover { color: inherit; }

@@ -13,7 +13,6 @@
 html, body { height: 100%; margin: 0; }
 #root { min-height: 100dvh; display: flex; flex-direction: column; }
 main { flex: 1 0 auto; }              /* empuja el footer al fondo */
-body { overflow-x: hidden; }
 
 /* =========================
    FOOTER
@@ -33,20 +32,37 @@ body { overflow-x: hidden; }
 }
 
 /* Columnas centradas */
-.small-footer .col-6,
-.small-footer .col-md-3 {
+.small-footer [class*="col-"] {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 /* Titulares/párrafos */
-.small-footer h6 {
-  margin-top: clamp(4px, 1vw, 8px);
+.footer-titulo {
+  margin: clamp(4px, 1vw, 8px) 0 2px;
   font-weight: 700;
-  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  font-size: clamp(0.9rem, 1.4vw, 1rem);
 }
 .small-footer p { margin-bottom: 0; line-height: 1.4; }
+
+/* Área táctil mínima de 44px para los datos de contacto (WCAG 2.5.8) */
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 4px 10px;
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  font-weight: 600;
+  border-radius: 6px;
+  transition: background-color 0.18s ease;
+}
+.footer-link:hover { background: rgba(255, 255, 255, 0.12); text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-link { transition: none; }
+}
 
 /* =========================
    COPYRIGHT (SIN BANDA OSCURA)
@@ -60,8 +76,8 @@ body { overflow-x: hidden; }
 }
 .footer-copy p {
   margin: 0;
-  font-size: clamp(0.7rem, 1.2vw, 0.85rem);
-  opacity: .92;                      /* leve contraste, sin barra */
+  font-size: clamp(0.85rem, 1.2vw, 0.9rem);  /* nunca por debajo de 13.6px */
+  opacity: .92;
 }
 
 /* =========================

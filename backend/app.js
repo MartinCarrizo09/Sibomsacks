@@ -14,6 +14,14 @@ import contactoRoutes from "./routes/contacto.routes.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// URL publica del sitio. En Railway se resuelve sola con RAILWAY_PUBLIC_DOMAIN.
+const PUBLIC_BASE_URL = (
+  process.env.PUBLIC_BASE_URL ||
+  (process.env.RAILWAY_PUBLIC_DOMAIN
+    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+    : `http://localhost:${PORT}`)
+).replace(/\/+$/, "");
+
 // __dirname para ESModules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,40 +32,53 @@ app.get('/robots.txt', (req, res) => {
   res.send(`User-agent: *
 Allow: /
 
-Sitemap: https://sibomsacks-1-ytfc.onrender.com/sitemap.xml`);
+Sitemap: ${PUBLIC_BASE_URL}/sitemap.xml`);
 });
 
 // sitemap.xml dinámico
+const RUTAS_SITEMAP = [
+  "/",
+  "/productos",
+  "/productos/1",
+  "/productos/2",
+  "/productos/3",
+  "/productos/4",
+  "/productos/5",
+  "/productos/6",
+  "/contacto",
+  "/sobre-nosotros",
+  "/beneficios"
+];
+
 app.get('/sitemap.xml', (req, res) => {
+  const urls = RUTAS_SITEMAP
+    .map((ruta) => `  <url><loc>${PUBLIC_BASE_URL}${ruta === "/" ? "/" : ruta}</loc></url>`)
+    .join("\n");
+
   res.type('application/xml');
   res.send(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/</loc></url>
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/productos</loc></url>
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/productos/1</loc></url>
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/productos/2</loc></url>
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/productos/3</loc></url>
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/productos/4</loc></url>
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/productos/5</loc></url>
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/productos/6</loc></url>
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/contacto</loc></url>
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/sobre-nosotros</loc></url>
-  <url><loc>https://sibomsacks-1-ytfc.onrender.com/beneficios</loc></url>
+${urls}
 </urlset>`);
 });
 
 // Middlewares
+// Origenes permitidos: locales + el dominio publico propio + los que se agreguen
+// por la variable CORS_ORIGINS (separados por coma).
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://sibomsacks-1.onrender.com",
-  "https://sibomsacks.onrender.com",
-  "https://sibomsacks-1-ytfc.onrender.com"
+  "http://localhost:5173",   // frontend actual (Vite)
+  "http://localhost:5174",   // frontend-v2 (Vite)
+  "http://localhost:3000",
+  PUBLIC_BASE_URL,
+  ...(process.env.CORS_ORIGINS || "")
+    .split(",")
+    .map((o) => o.trim().replace(/\/+$/, ""))
+    .filter(Boolean)
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    console.log("🛰️ Origin recibido:", origin);
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(origin.replace(/\/+$/, ""))) {
       callback(null, true);
     } else {
       console.warn("❌ Origin bloqueado por CORS:", origin);
