@@ -4,7 +4,7 @@ import "./nosotros.css";
 
 /** Cifras de la empresa. */
 const CIFRAS = [
-  ["2015", "Año de fundación"],
+  ["2007", "Año de fundación"],
   ["65", "Clientes activos"],
   ["30+", "Personas en el equipo"],
   ["100%", "Producción propia"],
@@ -28,7 +28,7 @@ const PILARES = [
   {
     titulo: "Se fabrica a tu medida",
     texto:
-      "Los seis modelos de serie son el punto de partida. Ajustamos dimensiones, gramaje, forro y color según tu material y tu pallet.",
+      "Los modelos de serie son el punto de partida: no partimos de un producto estándar, partimos de tu proceso. Ajustamos dimensiones, gramaje, forro y color según tu material y tu pallet.",
   },
   {
     titulo: "Hablás con quien produce",
@@ -61,7 +61,7 @@ export default function Nosotros() {
       <section className="nos-hero">
         <Contenedor className="nos-hero__grid">
           <div>
-            <p className="etiqueta">Nosotros · Desde 2015</p>
+            <p className="etiqueta">Nosotros · Desde 2007</p>
             <h1>Fabricamos los bolsones que después tenemos que respaldar</h1>
             <p className="nos-hero__bajada">
               Sibom Sacks es una fábrica de Big Bags de rafia de polipropileno en

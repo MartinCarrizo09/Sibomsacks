@@ -5,7 +5,7 @@ import "./beneficios.css";
 /** Por qué conviene pasar a Big Bag, antes de elegir cuál. */
 const RAZONES = [
   ["Menos manipulación", "Una sola maniobra mueve lo que antes eran decenas de bolsas. Menos tiempos muertos y menos gente expuesta."],
-  ["Mejor uso del espacio", "Apilado estable y predecible: se aprovecha el alto del depósito y el volumen del camión."],
+  ["Mejor uso del espacio", "Se aprovecha mejor el volumen del camión y del depósito."],
   ["Menos pérdidas", "Cierres confiables y material resistente reducen roturas, derrames y mermas en el traslado."],
   ["Trazabilidad por bulto", "Cada bolsón se identifica y se sigue por lote, sin planillas paralelas."],
   ["Se adapta al proceso", "Distintas bocas y fondos según cómo cargás y cómo dosificás en planta."],
@@ -30,7 +30,7 @@ const SECTORES = [
       "Menos mermas durante cosecha y traslado",
       "Cargas y descargas más ágiles en campaña",
       "Identificación clara de lotes",
-      "Apilado estable y seguro en depósito",
+      "Menos mano de obra por tonelada movida",
     ],
   },
   {
@@ -54,8 +54,8 @@ const SECTORES = [
     puntos: [
       "Soporta materiales de alta exigencia",
       "Maniobras de izaje seguras",
-      "Control en trasvases y derrames",
-      "Comportamiento estable a la intemperie",
+      "Minimiza pérdidas por roturas o derrames",
+      "Costura reforzada y tejido de alto gramaje",
       "Menos bultos por tonelada movida",
     ],
   },

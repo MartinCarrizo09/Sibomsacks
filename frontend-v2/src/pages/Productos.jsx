@@ -44,7 +44,7 @@ export default function Productos() {
     <Seccion
       nivel="h1"
       eyebrow="Catálogo"
-      titulo="Los seis modelos de serie"
+      titulo="Nuestros modelos de serie"
       bajada="Todos comparten material, tejido y medidas. Cambian en cómo se cargan y cómo se descargan."
     >
       {estado === "cargando" && <Aviso>Cargando modelos…</Aviso>}

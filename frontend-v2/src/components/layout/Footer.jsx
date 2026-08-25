@@ -8,7 +8,7 @@ export default function Footer() {
 
   return (
     <footer className="pie" itemScope itemType="https://schema.org/Organization">
-      <meta itemProp="name" content="Sibom Sacks SRL" />
+      <meta itemProp="name" content="Lindor Sacks S.R.L." />
       <Contenedor>
         <div className="pie__grid">
           <div className="pie__marca">
@@ -38,7 +38,7 @@ export default function Footer() {
         </div>
 
         <p className="pie__legal">
-          © {anio} Sibom Sacks SRL. Todos los derechos reservados.
+          © {anio} Lindor Sacks S.R.L. Todos los derechos reservados.
         </p>
       </Contenedor>
     </footer>

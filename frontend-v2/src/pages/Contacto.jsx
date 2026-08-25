@@ -337,8 +337,8 @@ export default function Contacto() {
           <div className="tarjeta-cto tarjeta-cto--tip">
             <h2>¿No sabés qué modelo pedir?</h2>
             <p>
-              Elegí cómo cargás y cómo descargás, y el sitio te dice cuál de los
-              seis modelos corresponde.
+              Elegí cómo cargás y cómo descargás, y el sitio te dice cuál de
+              los modelos corresponde.
             </p>
             <Boton to="/#configurador" variante="secundario">
               Ir al configurador

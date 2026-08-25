@@ -9,10 +9,10 @@ import "./inicio.css";
 const SECTORES = [
   {
     nombre: "Agricultura",
-    texto: "Granos, semillas y fertilizantes. Tratamiento UV para acopio a la intemperie.",
+    texto: "Granos, semillas y fertilizantes. Tratamiento UV en la rafia.",
     img: "/images/agricultura.webp",
-    w: 800,
-    h: 600,
+    w: 1400,
+    h: 788,
   },
   {
     nombre: "Industria",
@@ -106,10 +106,10 @@ export default function Inicio() {
               sin lazy. Las dimensiones evitan el salto de layout. */}
           <figure className="hero__figura">
             <img
-              src="/images/Slide2BBags.webp"
-              alt="Big Bags de polipropileno cargados con material a granel"
-              width={1000}
-              height={667}
+              src="/images/heroPaletsLogo.webp"
+              alt="Big Bags sobre tarimas en planta, con el logo de Sibom Sacks"
+              width={1200}
+              height={1200}
               fetchPriority="high"
               decoding="async"
             />
@@ -131,8 +131,8 @@ export default function Inicio() {
       <Seccion
         id="configurador"
         eyebrow="Encontrá tu modelo"
-        titulo="Dos decisiones definen tu bolsón"
-        bajada="Nuestros seis modelos son la combinación de cómo se carga y cómo se descarga. Elegí una de cada columna."
+        titulo="Busquemos el modelo adecuado para tus necesidades"
+        bajada="Nuestros modelos de serie son la combinación de cómo se carga y cómo se descarga. Elegí una de cada columna."
       >
         {estado === "cargando" && <Aviso>Cargando modelos…</Aviso>}
         {estado === "error" && (
@@ -191,6 +191,53 @@ export default function Inicio() {
               <img src={c.src} alt={c.alt} width={c.w} height={c.h} loading="lazy" />
             </li>
           ))}
+        </ul>
+      </Seccion>
+
+      {/* ---------- ESPECIALES ---------- */}
+      {/* El bolsón común no se apila: sin carga que le dé forma pierde
+          estabilidad. En vez de omitir el tema, se orienta la consulta al
+          compartimentado, que sí lo permite. */}
+      <Seccion
+        id="especiales"
+        eyebrow="Fuera de serie"
+        titulo="Lo que fabricamos a pedido"
+        bajada="No todo entra en un modelo de serie. Estos se desarrollan según la operación de cada cliente."
+      >
+        <ul className="especiales">
+          <li className="especial">
+            <div className="especial__cuerpo">
+              <h3>¿Necesitás apilar?</h3>
+              <p>
+                El Big Bag común no está pensado para apilarse: sin carga que le
+                dé forma, pierde estabilidad. Para eso fabricamos el <b>Big Bag
+                compartimentado</b>, que mantiene la forma y permite el apilado.
+                Es un desarrollo propio y el producto en el que la planta se
+                especializa.
+              </p>
+              <Boton href={WHATSAPP_URL} variante="contorno">
+                Consultar por compartimentados
+              </Boton>
+            </div>
+          </li>
+
+          <li className="especial">
+            <img
+              src="/images/slingbag.webp"
+              alt="Eslingas de izaje elevando bolsas trabadas entre sí para cargar un barco"
+              width={1160}
+              height={653}
+              loading="lazy"
+            />
+            <div className="especial__cuerpo">
+              <h3>SlingBag</h3>
+              <p>
+                Eslingas de izaje, no bolsones. Levantan bolsas de 100 kg
+                trabadas entre sí, con la eslinga por debajo. Es el sistema que
+                se usa en muelles para carga y descarga.
+              </p>
+            </div>
+          </li>
         </ul>
       </Seccion>
 
