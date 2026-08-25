@@ -12,7 +12,7 @@ function PiePagina() {
 
   return (
     <footer className="footer" role="contentinfo" itemScope itemType="https://schema.org/Organization">
-      <meta itemProp="name" content="Sibom Sacks SRL" />
+      <meta itemProp="name" content="Lindor Sacks S.R.L." />
 
       <div className="container text-white py-4">
         <h2 className="sr-only">Datos de contacto</h2>
@@ -59,7 +59,7 @@ function PiePagina() {
       </div>
 
       <div className="footer-copy text-center mt-3">
-        <p className="mb-0">© {year} Sibom Sacks SRL. Todos los derechos reservados.</p>
+        <p className="mb-0">© {year} Lindor Sacks S.R.L. Todos los derechos reservados.</p>
       </div>
     </footer>
   );

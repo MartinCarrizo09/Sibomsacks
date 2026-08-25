@@ -16,7 +16,7 @@ const Beneficios = () => {
     "Flujo de trabajo más ordenado en campaña",
     "Cargas y descargas más ágiles",
     "Identificación clara de lotes",
-    "Apilado estable y seguro en depósito",
+    "Menos bultos por tonelada movida",
   ];
 
   const beneficiosIndustria = [
@@ -31,8 +31,8 @@ const Beneficios = () => {
   const beneficiosMineria = [
     "Soporta materiales de alta exigencia",
     "Maniobras de izaje seguras",
-    "Control en trasvases y derrames",
-    "Comportamiento estable a la intemperie",
+    "Minimiza pérdidas por roturas o derrames",
+    "Costura reforzada y tejido de alto gramaje",
     "Cierres confiables para el traslado",
     "Menos bultos por tonelada movida",
   ];
@@ -60,7 +60,7 @@ const Beneficios = () => {
     "Trazabilidad clara por bulto",
     "Aplicable a múltiples rubros",
     "Mejor relación volumen/espacio",
-    "Apilado seguro y predecible",
+    "Aprovechamiento del volumen del camión",
     "Flujo continuo de trabajo",
   ];
 
@@ -151,6 +151,26 @@ const Beneficios = () => {
                     </p>
                     <button className="cta-button" onClick={handleContactClick}>
                       Recibir asesoramiento
+                    </button>
+                  </div>
+                </div>
+
+                {/* El bolsón común no se apila: sin carga que le dé forma
+                    pierde estabilidad. En vez de omitir el tema, se orienta
+                    la consulta al compartimentado, que sí lo permite. */}
+                <div className="cta-box mt-4">
+                  <div className="cta-decoration-1" />
+                  <div className="cta-decoration-2" />
+                  <div className="cta-content">
+                    <h5 className="cta-title">¿Necesitás apilar?</h5>
+                    <p className="cta-text">
+                      El Big Bag común no está pensado para apilarse: sin carga
+                      que le dé forma, pierde estabilidad. Para eso fabricamos
+                      el Big Bag compartimentado, que mantiene la forma y
+                      permite el apilado.
+                    </p>
+                    <button className="cta-button" onClick={handleContactClick}>
+                      Consultar por compartimentados
                     </button>
                   </div>
                 </div>

@@ -49,7 +49,10 @@
 }
 
 .hm-hero__bg {
-  background: url("/images/slide3Apiladas.webp") center / cover no-repeat;
+  /* Foto propia de planta: hilera de bolsones sobre tarimas. Se recortó la
+     franja superior de la original, porque el logo impreso en el centro
+     chocaba con el título. */
+  background: url("/images/heroPalets.webp") center / cover no-repeat;
   filter: saturate(0.72);
   transform: scale(1.08);
   animation: hm-asentar 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -59,11 +62,12 @@
 }
 
 .hm-hero__velo {
+  /* Se abre hacia la derecha para dejar ver el logo impreso en la foto. */
   background: linear-gradient(
     100deg,
-    rgba(var(--hm-fondo-rgb), 0.95) 22%,
-    rgba(var(--hm-fondo-rgb), 0.58) 58%,
-    rgba(30, 111, 217, 0.4)
+    rgba(var(--hm-fondo-rgb), 0.95) 20%,
+    rgba(var(--hm-fondo-rgb), 0.5) 52%,
+    rgba(30, 111, 217, 0.22)
   );
 }
 

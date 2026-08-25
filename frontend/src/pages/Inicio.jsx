@@ -20,11 +20,11 @@ const SECTORES = [
     n: "01",
     titulo: "Agricultura",
     texto:
-      "Granos, semillas y fertilizantes. Barrera contra humedad y protección UV para acopio prolongado a la intemperie.",
+      "Granos, semillas y fertilizantes. Barrera contra humedad y protección UV en la rafia.",
     img: "/images/agricultura.webp",
-    w: 800,
-    h: 600,
-    alt: "Big Bag izado con grúa sobre un cultivo",
+    w: 1400,
+    h: 788,
+    alt: "Camión cargado con Big Bags de grano en el campo, junto a un tractor con pluma",
     icono: (
       <svg width="28" height="28" viewBox="0 0 26 26" fill="none" stroke="#ffcc00" strokeWidth="1.6" aria-hidden="true">
         <path d="M13 23v-11" />
@@ -58,7 +58,7 @@ const SECTORES = [
     img: "/images/mineria.webp",
     w: 700,
     h: 434,
-    alt: "Big Bags en acopio a la intemperie junto a una pila de material",
+    alt: "Big Bags de alto gramaje para cargas pesadas y abrasivas",
     icono: (
       <svg width="28" height="28" viewBox="0 0 26 26" fill="none" stroke="#ffcc00" strokeWidth="1.6" aria-hidden="true">
         <path d="M2 22l7-13 4 6 3-4 8 11z" />
@@ -159,7 +159,7 @@ function Inicio() {
               Solicitar cotización
             </Link>
             <Link to="/productos" className="hm-btn hm-btn--texto">
-              Ver los 6 modelos <span aria-hidden="true">→</span>
+              Ver los distintos modelos <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

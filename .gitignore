@@ -4,3 +4,6 @@ node_modules/
 
 # Mockups de diseño (pesados, no forman parte de la app)
 mockups-home/
+
+# Audios de feedback del cliente (privados, no van al repo)
+audios cliente/

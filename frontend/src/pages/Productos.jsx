@@ -39,7 +39,7 @@ const Productos = () => {
 
   return (
     <section className="container pt-4 pb-5 productos-page">
-      <h1 className="mb-4 text-center fw-bold productos-titulo">Conocé nuestros productos</h1>
+      <h1 className="mb-4 text-center fw-bold productos-titulo">Busquemos el modelo adecuado para tus necesidades</h1>
 
       <div className="row g-4">
         {productos.map((producto) => {
@@ -82,6 +82,54 @@ const Productos = () => {
             </div>
           );
         })}
+      </div>
+
+      {/* Fuera de los seis de serie: lo que se fabrica a pedido. El
+          compartimentado es el diferencial de la empresa, así que va primero. */}
+      <div className="productos-especiales mt-5 pt-4 border-top">
+        <h2 className="mb-2 text-center fw-bold productos-titulo">
+          Productos especiales
+        </h2>
+        <p className="text-center text-muted mb-4">
+          No todo entra en un modelo de serie. Estos se desarrollan según la
+          operación de cada cliente.
+        </p>
+
+        <div className="row g-4 justify-content-center">
+          <div className="col-12 col-lg-6">
+            <div className="card h-100 border-0 rounded shadow-sm">
+              <div className="card-body">
+                <h3 className="h5 fw-semibold mb-2">Big Bag compartimentado</h3>
+                <p className="text-muted mb-0">
+                  Mantiene la forma con la carga, lo que permite apilarlo — algo
+                  que el bolsón común no admite. Es un desarrollo propio y el
+                  producto en el que la planta se especializa.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-12 col-lg-6">
+            <div className="card h-100 border-0 rounded shadow-sm">
+              <img
+                src="/images/slingbag.webp"
+                alt="Eslingas de izaje elevando bolsas trabadas entre sí para cargar un barco"
+                className="card-img-top rounded-top"
+                width={1160}
+                height={653}
+                loading="lazy"
+              />
+              <div className="card-body">
+                <h3 className="h5 fw-semibold mb-2">SlingBag</h3>
+                <p className="text-muted mb-0">
+                  Eslingas de izaje, no bolsones. Levantan bolsas de 100 kg
+                  trabadas entre sí, con la eslinga por debajo. Es el sistema
+                  que se usa en muelles para carga y descarga.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

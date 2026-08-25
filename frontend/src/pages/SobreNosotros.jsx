@@ -72,7 +72,7 @@ const SobreNosotros = () => {
             <div className="col-lg-8 d-flex flex-column justify-content-center text-center">
               <div className="sn-hero-badge mb-3">
                 <span className="badge bg-warning text-dark px-3 py-2 rounded-pill">
-                  Líderes en Big Bags desde 2015
+                  Líderes en Big Bags desde 2007
                 </span>
               </div>
 
@@ -179,6 +179,11 @@ const SobreNosotros = () => {
               <p className="lead text-muted">
                 Nos diferenciamos por nuestro compromiso con la calidad, la
                 innovación y el servicio personalizado.
+              </p>
+              <p className="lead text-muted">
+                Desarrollamos junto a tu empresa el Big Bag que tu operación
+                necesita: no partimos de un producto estándar, partimos de tu
+                proceso.
               </p>
             </div>
           </div>
