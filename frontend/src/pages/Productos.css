@@ -120,3 +120,18 @@
   display: block;
 }
 .product-card:hover { color: inherit; }
+
+/* El título es largo: a tamaño fijo se come la pantalla en mobile. */
+.productos-titulo {
+  font-size: clamp(1.5rem, 5.2vw, 2.5rem);
+  text-wrap: balance;
+}
+
+/* La foto del SlingBag es ancha: se acota al contenedor por si el reset
+   de Bootstrap no llegara a aplicar. */
+.productos-especiales .card-img-top {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  max-height: 260px;
+}

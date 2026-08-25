@@ -498,11 +498,18 @@
 }
 
 @media (max-width: 560px) {
+  /* En vertical la foto entra muy recortada, así que se encuadra a la
+     derecha, donde están los bolsones iluminados. */
+  .hm-hero__bg { background-position: 72% center; }
+
+  /* El velo se aclara arriba para que la foto se vea, y se cierra abajo,
+     que es donde caen el texto y los botones. */
   .hm-hero__velo {
     background: linear-gradient(
       170deg,
-      rgba(var(--hm-fondo-rgb), 0.86) 30%,
-      rgba(var(--hm-fondo-rgb), 0.92)
+      rgba(var(--hm-fondo-rgb), 0.55) 18%,
+      rgba(var(--hm-fondo-rgb), 0.88) 58%,
+      rgba(var(--hm-fondo-rgb), 0.94)
     );
   }
   .hm-scroll { display: none; }

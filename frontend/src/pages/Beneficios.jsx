@@ -16,7 +16,7 @@ const Beneficios = () => {
     "Flujo de trabajo más ordenado en campaña",
     "Cargas y descargas más ágiles",
     "Identificación clara de lotes",
-    "Menos bultos por tonelada movida",
+    "Menos mano de obra por tonelada movida",
   ];
 
   const beneficiosIndustria = [
