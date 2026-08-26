@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import productoService from "../services/productos.service.js"; // ← con .js
 import "./DetalleProducto.css";
+import Cargando from "../components/Cargando.jsx";
 
 const imagenesPorModelo = {
   1: "valvuladecargaydescarga.webp",
@@ -53,7 +54,7 @@ const ProductoDetalle = () => {
   }, [id]);
 
   if (!producto) {
-    return <section className="container pt-4 pb-5">Cargando producto... ⏳</section>;
+    return <Cargando texto="Cargando producto" />;
   }
 
   const modelo = producto.caracteristicasGenerales?.id_tipo;

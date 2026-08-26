@@ -72,45 +72,65 @@ section, header, footer, .navbar, .hero-section, .Empresas, .Certificados { max-
 img, video, canvas { max-width: 100%; display: block; }
 .carousel, .carousel-inner { overflow: hidden; }
 
-/* ====== WhatsApp FAB (avanzado) ====== */
+/* ====== WhatsApp FAB ======
+   Variante navy con aro verde: se integra a la paleta del sitio en vez de
+   pegarse como un sticker sobre la foto. Al pasar el mouse se invierte. */
 .whatsapp-float {
   position: fixed;
-  /* Se suma el margen del marco para que quede sobre la columna del sitio
-     y no pegado al borde del navegador en pantallas anchas. */
+  /* Pegado al borde del navegador, NO a la columna del sitio: sumar
+     --site-frame lo empujaba hacia adentro y en pantallas anchas terminaba
+     flotando sobre el contenido. */
   inset: auto
-          calc(env(safe-area-inset-right, 0) + var(--site-frame, 0px) + clamp(12px, 2vw, 24px))
-          calc(env(safe-area-inset-bottom, 0) + clamp(12px, 2vw, 24px))
+          calc(env(safe-area-inset-right, 0px) + clamp(10px, 1.4vw, 20px))
+          calc(env(safe-area-inset-bottom, 0px) + clamp(12px, 2vw, 24px))
           auto;
   z-index: 999;
+  display: grid;
+  place-items: center;
+  width: clamp(52px, 5vw, 64px);
+  height: clamp(52px, 5vw, 64px);
+  border-radius: 50%;
+  background: #071638;
+  border: 1.5px solid #25d366;
+  color: #25d366;
+  box-shadow: 0 10px 26px -12px rgba(0, 0, 0, 0.75);
   cursor: pointer;
-  padding: clamp(6px, 1vw, 10px);
-  background: transparent;
-  border: 0;
-  line-height: 0;
-  transition: transform 0.18s ease-in-out, filter 0.18s ease-in-out;
   -webkit-tap-highlight-color: transparent;
-  contain: layout paint;
-  will-change: transform;
+  transition: background 0.25s ease, color 0.25s ease,
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* tamaño fluido del ícono */
-.whatsapp-float img {
-  width: clamp(44px, 6vw, 88px);
-  height: clamp(44px, 6vw, 88px);
+.whatsapp-float svg {
+  width: 52%;
+  height: 52%;
   display: block;
 }
 
-/* hover sólo en dispositivos con hover real */
+/* Llamada de atención espaciada: un latido corto cada 14 s. El resto del
+   tiempo el botón está quieto, para que no canse en una página larga. */
+@keyframes wa-latido {
+  0%, 88%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+  92% { transform: scale(1.09); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0.18); }
+  96% { transform: scale(1); box-shadow: 0 0 0 18px rgba(37, 211, 102, 0); }
+}
+.whatsapp-float { animation: wa-latido 14s ease-in-out infinite; }
+
 @media (hover: hover) and (pointer: fine) {
   .whatsapp-float:hover {
-    transform: scale(1.08);
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+    background: #25d366;
+    color: #071638;
+    transform: translateY(-3px);
+    animation: none;
   }
 }
 
-/* Accesibilidad: respetar reduce motion */
+.whatsapp-float:focus-visible {
+  outline: 2px solid #ffcc00;
+  outline-offset: 3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .whatsapp-float { transition: none; }
+  .whatsapp-float { transition: none; animation: none; }
 }
 
 /* Ocultar en impresión */
@@ -121,72 +141,69 @@ img, video, canvas { max-width: 100%; display: block; }
 @media (max-width: 360px) {
   .main-layout { padding: 0 12px 12px; } /* también sin top */
   .whatsapp-float {
-    inset: auto calc(env(safe-area-inset-right, 0) + var(--site-frame, 0px) + 12px)
+    inset: auto calc(env(safe-area-inset-right, 0px) + 12px)
                calc(env(safe-area-inset-bottom, 0) + 12px) auto;
   }
-  .whatsapp-float img { width: 44px; height: 44px; }
+  
 }
 
 /* SM — teléfonos comunes */
 @media (min-width: 361px) and (max-width: 480px) {
   .whatsapp-float {
-    inset: auto calc(env(safe-area-inset-right, 0) + var(--site-frame, 0px) + 14px)
+    inset: auto calc(env(safe-area-inset-right, 0px) + 14px)
                calc(env(safe-area-inset-bottom, 0) + 14px) auto;
   }
-  .whatsapp-float img { width: 52px; height: 52px; }
+  
 }
 
 /* MD — móviles grandes / tablets chicas */
 @media (min-width: 481px) and (max-width: 768px) {
   .whatsapp-float {
-    inset: auto calc(env(safe-area-inset-right, 0) + var(--site-frame, 0px) + 16px)
+    inset: auto calc(env(safe-area-inset-right, 0px) + 16px)
                calc(env(safe-area-inset-bottom, 0) + 16px) auto;
   }
-  .whatsapp-float img { width: 60px; height: 60px; }
+  
 }
 
 /* LG — tablets landscape / laptops chicos */
 @media (min-width: 769px) and (max-width: 1024px) {
   .whatsapp-float {
-    inset: auto calc(env(safe-area-inset-right, 0) + var(--site-frame, 0px) + 18px)
+    inset: auto calc(env(safe-area-inset-right, 0px) + 18px)
                calc(env(safe-area-inset-bottom, 0) + 18px) auto;
   }
-  .whatsapp-float img { width: 64px; height: 64px; }
+  
 }
 
 /* XL — laptops y desktops estándar */
 @media (min-width: 1025px) and (max-width: 1440px) {
   .whatsapp-float {
-    inset: auto calc(env(safe-area-inset-right, 0) + var(--site-frame, 0px) + 20px)
+    inset: auto calc(env(safe-area-inset-right, 0px) + 20px)
                calc(env(safe-area-inset-bottom, 0) + 20px) auto;
   }
-  .whatsapp-float img { width: 72px; height: 72px; }
+  
 }
 
 /* 2XL — pantallas grandes y ultra wide */
 @media (min-width: 1441px) {
   .whatsapp-float {
-    inset: auto calc(env(safe-area-inset-right, 0) + var(--site-frame, 0px) + 24px)
+    inset: auto calc(env(safe-area-inset-right, 0px) + 24px)
                calc(env(safe-area-inset-bottom, 0) + 24px) auto;
   }
-  .whatsapp-float img { width: 80px; height: 80px; }
+  
 }
 
 /* 4K+ — opcional */
 @media (min-width: 1921px) {
-  .whatsapp-float img { width: 88px; height: 88px; }
+  
 }
 
 /* ====== ALTOS MUY BAJOS (landscape con teclado o barras) ====== */
 @media (max-height: 540px) and (orientation: landscape) {
   .whatsapp-float {
-    inset: auto calc(env(safe-area-inset-right, 0) + var(--site-frame, 0px) + 12px)
+    inset: auto calc(env(safe-area-inset-right, 0px) + 12px)
                calc(env(safe-area-inset-bottom, 0) + 8px) auto;
   }
-  .whatsapp-float img {
-    width: clamp(40px, 8vh, 56px);
-    height: clamp(40px, 8vh, 56px);
-  }
+  
 }
 
 /* ====== SOPORTE VIEWPORT DINÁMICO ====== */
@@ -224,3 +241,4 @@ img, video, canvas { max-width: 100%; display: block; }
   color: #4a5a63;
   font-weight: 600;
 }
+

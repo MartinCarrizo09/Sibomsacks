@@ -1,5 +1,4 @@
 import "../components/PiePagina.css";
-import { FaMobileAlt, FaWhatsapp, FaClock } from "react-icons/fa";
 
 const year = new Date().getFullYear();
 
@@ -8,61 +7,85 @@ const WHATSAPP_MSG =
   "Hola, me gustaría recibir asesoramiento sobre Big Bags. Los contacto desde la web. ¡Gracias!";
 
 function PiePagina() {
-  const whatsappHref = `https://wa.me/${WHATSAPP_TEL}?text=${encodeURIComponent(WHATSAPP_MSG)}`;
+  const whatsappHref = `https://wa.me/${WHATSAPP_TEL}?text=${encodeURIComponent(
+    WHATSAPP_MSG
+  )}`;
 
   return (
-    <footer className="footer" role="contentinfo" itemScope itemType="https://schema.org/Organization">
+    <footer
+      className="footer"
+      role="contentinfo"
+      itemScope
+      itemType="https://schema.org/Organization"
+    >
       <meta itemProp="name" content="Lindor Sacks S.R.L." />
 
-      <div className="container text-white py-4">
+      <div className="footer__in">
         <h2 className="sr-only">Datos de contacto</h2>
 
-        <div className="row text-center justify-content-center g-4 small-footer">
+        <div className="footer__marca">
+          <span className="footer__lockup">
+            <img
+              className="footer__ico"
+              src="/images/icono.webp"
+              alt=""
+              width={103}
+              height={92}
+            />
+            <span className="footer__nombre">Sibom Sacks</span>
+          </span>
+          <p className="footer__claim">
+            Contenedores flexibles fabricados en Córdoba, para todo el país.
+          </p>
+        </div>
 
-          {/* Teléfono móvil */}
-          <div className="col-12 col-sm-4" itemProp="contactPoint" itemScope itemType="https://schema.org/ContactPoint">
-            <FaMobileAlt className="icono-footer" aria-hidden="true" />
-            <h3 className="footer-titulo">Teléfono</h3>
-            <address className="mb-0 not-italic">
-              <a href="tel:+543511155081014" className="footer-link" itemProp="telephone">
+        <ul className="footer__datos">
+          <li
+            itemProp="contactPoint"
+            itemScope
+            itemType="https://schema.org/ContactPoint"
+          >
+            <span className="footer__rubro">Teléfono</span>
+            <address className="not-italic">
+              <a
+                href="tel:+543511155081014"
+                className="footer__dato"
+                itemProp="telephone"
+              >
                 (0351) 155 081 014
               </a>
             </address>
-          </div>
+          </li>
 
-          {/* WhatsApp */}
-          <div className="col-12 col-sm-4">
-            <FaWhatsapp className="icono-footer" aria-hidden="true" />
-            <h3 className="footer-titulo">WhatsApp</h3>
-            <p className="mb-0">
-              <a
-                href={whatsappHref}
-                className="footer-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Escribinos ahora
-              </a>
+          <li>
+            <span className="footer__rubro">WhatsApp</span>
+            <a
+              href={whatsappHref}
+              className="footer__dato"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Escribinos ahora
+            </a>
+          </li>
+
+          <li>
+            <span className="footer__rubro">Horario</span>
+            <p className="footer__dato footer__dato--plano">
+              Lunes a viernes,{" "}
+              <time dateTime="08:00">8:00 a 15:30 hs.</time>
             </p>
-          </div>
-
-          {/* Horario */}
-          <div className="col-12 col-sm-4">
-            <FaClock className="icono-footer" aria-hidden="true" />
-            <h3 className="footer-titulo">Horario</h3>
-            <p className="mb-0">Lunes a viernes</p>
-            <time className="mb-0 d-block" dateTime="08:00">
-              8:00 a 15:30 hs.
-            </time>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
 
-      <div className="footer-copy text-center mt-3">
-        <p className="mb-0">© {year} Lindor Sacks S.R.L. Todos los derechos reservados.</p>
+      <div className="footer__legal">
+        <p>© {year} Lindor Sacks S.R.L. Todos los derechos reservados.</p>
+        <p>Córdoba, Argentina · Desde 2007</p>
       </div>
     </footer>
   );
 }
 
 export default PiePagina;
+

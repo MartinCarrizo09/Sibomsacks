@@ -6,10 +6,11 @@
    ========================= */
 .navbar {
   /* NO redefinir --nav-h acá */
-  background-color: #004aad;
-  /* Fondo a todo el ancho, contenido alineado con el de la home:
-     el margen del marco se suma al margen lateral normal. */
-  padding: 0 calc(var(--site-frame, 0px) + clamp(16px, 4.2vw, 60px));
+  background-color: #071638;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  /* A todo el ancho de la pantalla: el logo y el CTA van a los bordes, igual
+     que el hero, que tambien es a sangre. */
+  padding: 0 clamp(16px, 3vw, 44px);
   display: flex;
   justify-content: center;
   align-items: center;                 /* asegura centrado vertical del contenido */
@@ -38,8 +39,10 @@
 }
 
 .navbar.scrolled {
-  background-color: #003b88;
-  box-shadow: 0 8px 22px rgba(0,0,0,.15);
+  background-color: rgba(7, 22, 56, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
 }
 
 .navbar__container {
@@ -74,8 +77,9 @@
 .navbar__logo:hover img { transform: translateY(-2px); }
 
 .navbar__brand {
-  font-size: clamp(1rem, 2.2vw, 1.4rem);
-  font-weight: 800;
+  font-family: Anton, "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+  font-weight: 400;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: .02em;
@@ -87,15 +91,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
+  font-size: clamp(11px, 1vw, 12.5px);
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  padding: 10px 14px;
-  border-radius: 10px;
-  background: #FFD500;
-  color: #0b1422 !important;
-  box-shadow: 0 6px 14px rgba(0,0,0,.12);
-  border: 1px solid rgba(0,0,0,.06);
+  padding: 13px 22px;
+  border-radius: 2px;
+  background: #ffcc00;
+  color: #071638 !important;
+  box-shadow: none;
+  border: 0;
   transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
 }
 .btn-cta:hover {
@@ -156,9 +163,12 @@
 .navbar__menu a {
   position: relative;
   color: #fff;
-  font-weight: 700;
+  font-size: clamp(11px, 1vw, 12.5px);
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
   text-decoration: none;
-  padding: 8px 4px;
+  padding: 10px 4px;
   display: block;                      /* mejor área clickeable */
   transition: color .2s ease;
 }
@@ -168,16 +178,16 @@
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 2px;
-  background: #ffd500;
+  background: #ffcc00;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform .25s ease;
 }
 @media (hover: hover) and (pointer: fine) {
-  .navbar__menu a:hover { color: #ffd500; }
+  .navbar__menu a:hover { color: #ffcc00; }
   .navbar__menu a:hover .underline { transform: scaleX(1); }
 }
-.navbar__menu a.active { color: #ffd500; }
+.navbar__menu a.active { color: #ffcc00; }
 .navbar__menu a.active .underline { transform: scaleX(1); }
 
 /* =========================
@@ -195,7 +205,7 @@
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
-    background-color: #004aad;
+    background-color: #071638;
     padding: 0 clamp(16px, 4vw, 24px); /* Más padding para el botón */
     border-radius: 0 0 12px 12px;
     box-shadow: 0 12px 22px rgba(0,0,0,.18);
@@ -324,3 +334,7 @@
 /* Área táctil mínima de 44px en la navegación (WCAG 2.5.8) */
 .navbar__logo { min-height: 44px; display: inline-flex; align-items: center; }
 .navbar__menu a { min-height: 44px; display: inline-flex; align-items: center; }
+
+
+
+

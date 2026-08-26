@@ -1,0 +1,60 @@
+.cargando {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 2vw, 22px);
+  min-height: clamp(280px, 45vh, 460px);
+  padding: clamp(32px, 6vw, 72px) 20px;
+}
+
+.cargando__bolson {
+  position: relative;
+  width: clamp(72px, 8vw, 104px);
+  height: clamp(72px, 8vw, 104px);
+}
+
+.cargando__bolson svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cargando__base { stroke: rgba(12, 44, 92, 0.22); }
+
+/* El recorte revela de abajo hacia arriba siguiendo el contorno del bolson,
+   no un rectangulo por encima. */
+.cargando__carga {
+  stroke: #ffcc00;
+  clip-path: inset(100% 0 0 0);
+  animation: cargando-llenar 4.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes cargando-llenar {
+  0% { clip-path: inset(100% 0 0 0); }
+  58%, 74% { clip-path: inset(0 0 0 0); }
+  94%, 100% { clip-path: inset(100% 0 0 0); }
+}
+
+.cargando__txt {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6b7893;
+}
+
+/* Sobre fondo navy (rutas que cargan dentro de una seccion oscura). */
+.home .cargando__base,
+.cargando--oscuro .cargando__base { stroke: rgba(255, 255, 255, 0.28); }
+.home .cargando__txt,
+.cargando--oscuro .cargando__txt { color: rgba(255, 255, 255, 0.55); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cargando__carga { animation: none; clip-path: inset(35% 0 0 0); }
+}

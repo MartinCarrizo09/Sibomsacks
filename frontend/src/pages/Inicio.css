@@ -34,27 +34,94 @@
 /* ---------- HERO ---------- */
 .hm-hero {
   position: relative;
-  min-height: clamp(460px, 78vh, 660px);
+  /* Opcion 2 del diseno: degradado diagonal navy y, detras de la foto, una
+     cuña apenas mas clara. Va en el fondo del propio hero para que la cuña
+     quede DEBAJO de la foto y no le tiña el bolson. */
+  /* Geometria de la diagonal: la misma que la del primer filete amarillo.
+     El corrimiento es alto x tan(18deg) = 52.8vw x 0.3249. */
+  --hm-diag-x: 58%;
+  /* alto x tan(18deg): se calcula sobre el alto real del hero, asi el corte
+     y el filete amarillo no pueden desalinearse. */
+  --hm-diag: calc(var(--hm-hero-alto) * 0.3249);
+  /* Espesor del filete, medido en horizontal. */
+  --hm-filete: 2px;
+  background: linear-gradient(105deg, #071638 0%, #0c2c5c 56%, #164a92 100%);
+  /* La foto (1920x1125) ya trae el bolson a la derecha y el navy a la
+     izquierda para el texto: se usa a sangre, sin recuadros. El alto se ata
+     al ancho (~1.92:1) para que el recorte nunca toque las asas ni el pallet. */
+  --hm-tira-alto: clamp(72px, 6.6vw, 92px);
+  /* Ocupa la pantalla completa menos el header: ahora que hay indicador de
+     scroll, el corte del hero deja de ser la pista de que sigue habiendo
+     pagina. 100svh usa el viewport real del navegador movil. */
+  --hm-hero-alto: max(460px, calc(100svh - var(--nav-h, 0px)));
+  min-height: var(--hm-hero-alto);
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
 }
 
-.hm-hero__bg,
-.hm-hero__velo,
 .hm-hero__trama {
   position: absolute;
   inset: 0;
 }
 
+/* Hilera de bolsones: fondo del bloque de texto, cortada en diagonal justo
+   sobre el primer filete amarillo. Sin el logo estampado (se borro en el
+   procesado de la imagen). */
+.hm-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      105deg,
+      rgba(7, 22, 56, 0.76) 0%,
+      rgba(12, 44, 92, 0.62) 60%,
+      rgba(22, 74, 146, 0.46) 100%
+    ),
+    url("/images/fondoHilera.webp") left center / cover no-repeat;
+  clip-path: polygon(
+    0 0,
+    var(--hm-diag-x) 0,
+    calc(var(--hm-diag-x) - var(--hm-diag)) 100%,
+    0 100%
+  );
+}
+
+/* El velo acompaña a la foto, con el mismo recorte diagonal. */
+.hm-hero__velo {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(
+    var(--hm-diag-x) 0,
+    100% 0,
+    100% 100%,
+    calc(var(--hm-diag-x) - var(--hm-diag)) 100%
+  );
+}
+
 .hm-hero__bg {
-  /* Foto propia de planta: hilera de bolsones sobre tarimas. Se recortó la
-     franja superior de la original, porque el logo impreso en el centro
-     chocaba con el título. */
-  background: url("/images/heroPalets.webp") center / cover no-repeat;
+  position: absolute;
+  inset: 0;
+  /* Empieza justo donde termina la hilera: los dos planos encastran sobre la
+     diagonal, sin solaparse. */
+  clip-path: polygon(
+    var(--hm-diag-x) 0,
+    100% 0,
+    100% 100%,
+    calc(var(--hm-diag-x) - var(--hm-diag)) 100%
+  );
+}
+
+.hm-hero__bg {
+  /* Foto de producto anclada a la derecha, encuadrada por altura: el bolson
+     entra entero y el texto se queda con el navy de la izquierda. */
+  background: url("/images/heroBag.webp") right center / auto 100% no-repeat;
   filter: saturate(0.72);
-  transform: scale(1.08);
+  /* El asentado arranca apenas fuera de cuadro: con contain, un scale
+     grande recortaria la foto durante la animacion. */
+  transform: scale(1.035);
   animation: hm-asentar 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 @keyframes hm-asentar {
@@ -62,13 +129,22 @@
 }
 
 .hm-hero__velo {
-  /* Se abre hacia la derecha para dejar ver el logo impreso en la foto. */
-  background: linear-gradient(
-    100deg,
-    rgba(var(--hm-fondo-rgb), 0.95) 20%,
-    rgba(var(--hm-fondo-rgb), 0.5) 52%,
-    rgba(30, 111, 217, 0.22)
-  );
+  /* Dos capas: una lateral que asienta el texto sobre el navy de la foto y
+     otra al pie que le da contraste a los indicadores. */
+  background:
+    linear-gradient(
+      to top,
+      rgba(7, 22, 56, 0.5) 0,
+      rgba(7, 22, 56, 0) 140px
+    ),
+    linear-gradient(
+      to right,
+      rgba(7, 22, 56, 0.97) 0,
+      rgba(7, 22, 56, 0.9) 16%,
+      rgba(7, 22, 56, 0.45) 38%,
+      rgba(7, 22, 56, 0.12) 55%,
+      rgba(7, 22, 56, 0) 66%
+    );
 }
 
 .hm-hero__trama {
@@ -77,15 +153,62 @@
     rgba(255, 255, 255, 0.028) 0 1px,
     transparent 1px 3px
   );
+  overflow: hidden;
+}
+
+/* Los dos filetes amarillos en diagonal del frame: -18 grados, arrancando
+   al 69% del ancho. Van por encima de la foto. */
+.hm-hero__trama::before,
+.hm-hero__trama::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* Filete principal: banda diagonal apoyada exactamente sobre el corte. */
+.hm-hero__trama::before {
+  background: rgba(255, 204, 0, 0.55);
+  clip-path: polygon(
+    calc(var(--hm-diag-x) - var(--hm-filete)) 0,
+    var(--hm-diag-x) 0,
+    calc(var(--hm-diag-x) - var(--hm-diag)) 100%,
+    calc(var(--hm-diag-x) - var(--hm-diag) - var(--hm-filete)) 100%
+  );
+}
+
+/* Filete secundario: la misma diagonal, corrida 26px a la derecha. */
+.hm-hero__trama::after {
+  background: rgba(255, 204, 0, 0.24);
+  clip-path: polygon(
+    calc(var(--hm-diag-x) + 25px) 0,
+    calc(var(--hm-diag-x) + 26px) 0,
+    calc(var(--hm-diag-x) - var(--hm-diag) + 26px) 100%,
+    calc(var(--hm-diag-x) - var(--hm-diag) + 25px) 100%
+  );
 }
 
 .hm-hero__in {
   position: relative;
   z-index: 3;
-  padding: clamp(48px, 8vw, 90px) var(--hm-borde) clamp(40px, 6vw, 64px);
-  /* El tope es sobre el CONTENIDO: como box-sizing es border-box, hay que
-     sumarle los dos márgenes, si no el marco le come ancho al título. */
-  max-width: calc(1000px + var(--hm-borde) * 2);
+  padding: clamp(40px, 6.5vw, 74px) var(--hm-borde) clamp(32px, 4.5vw, 56px);
+  /* El texto vive en la mitad izquierda; la derecha es del bolson. */
+  max-width: calc(min(560px, 47vw) + var(--hm-borde) * 2);
+  /* Los margenes automaticos centran el texto en el espacio que queda y
+     empujan la barra de indicadores al pie del hero. */
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* Filete amarillo vertical junto al titulo. */
+.hm-hero__in::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--hm-borde) - 24px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: clamp(120px, 22vh, 200px);
+  background: var(--hm-yellow);
 }
 
 .hm-eyebrow {
@@ -101,6 +224,9 @@
 }
 
 .hm-eyebrow__linea {
+  /* El frame no lleva filete horizontal: ese rol lo cumple la barra
+     amarilla vertical del titulo. */
+  display: none;
   display: block;
   width: 0;
   height: 3px;
@@ -115,8 +241,8 @@
 .hm-titulo {
   font-family: var(--hm-anton);
   font-weight: 400;
-  font-size: clamp(46px, 8.4vw, 118px);
-  line-height: 0.85;
+  font-size: clamp(44px, 6.4vw, 100px);
+  line-height: 0.96;
   letter-spacing: -0.012em;
   text-transform: uppercase;
   margin: 0;
@@ -139,14 +265,13 @@
 }
 
 .hm-titulo__calado {
-  -webkit-text-stroke: 2px var(--hm-yellow);
-  color: transparent;
+  color: var(--hm-yellow);
 }
 
 .hm-hero__texto {
   margin: clamp(18px, 2.6vw, 26px) 0 0;
-  font-size: clamp(15px, 1.5vw, 18px);
-  line-height: 1.62;
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.65;
   max-width: 47ch;
   color: #cddaf0;
   font-weight: 300;
@@ -205,7 +330,7 @@
 .hm-btn--texto:hover { color: var(--hm-yellow); border-bottom-color: var(--hm-yellow); }
 
 .hm-btn:focus-visible,
-.hm-fila__link:focus-visible {
+.hm-sec__link:focus-visible {
   outline: 3px solid var(--hm-yellow);
   outline-offset: 3px;
 }
@@ -213,173 +338,299 @@
 /* Queda sobre la zona clara de la foto, donde el velo casi no cubre: sin
    una base propia el texto blanco al 60% era ilegible. La cápsula garantiza
    contraste sin robarle protagonismo al hero. */
-.hm-scroll {
-  position: absolute;
-  right: var(--hm-borde);
-  bottom: 30px;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-  padding: 9px 16px;
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #fff;
-  background: rgba(var(--hm-fondo-rgb), 0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-}
-.hm-scroll svg {
-  stroke: var(--hm-yellow);
-  animation: hm-latir 2.4s ease-in-out infinite;
-}
-@keyframes hm-latir {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(5px); }
-}
 
 /* ---------- TIRA DE DATOS ---------- */
+/* Indicadores al pie del hero: sobre la propia foto, separados por filetes
+   finos, sin la banda amarilla que antes cortaba la composicion. */
 .hm-tira {
+  position: relative;
+  z-index: 3;
   list-style: none;
   margin: 0;
-  /* La banda amarilla llega a los bordes; las cuatro celdas quedan dentro
-     del ancho máximo del sitio. */
-  padding: 0 var(--site-frame, 0px);
+  min-height: var(--hm-tira-alto);
+  align-content: center;
+  padding: clamp(12px, 1.6vw, 18px) var(--hm-borde);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(7, 22, 56, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  background: var(--hm-yellow);
-  color: var(--hm-navy);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.8vw, 26px);
+  color: #fff;
 }
 
 .hm-tira li {
-  padding: clamp(16px, 2.2vw, 22px) clamp(14px, 2vw, 30px);
-  border-right: 1px solid rgba(0, 28, 74, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: clamp(12px, 1.5vw, 22px);
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
 }
-.hm-tira li:last-child { border-right: 0; }
+.hm-tira li:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.hm-tira__ico {
+  display: flex;
+  flex: none;
+  color: var(--hm-yellow);
+}
+/* Los iconos acompanan el cuerpo de la cifra: el viewBox es 24 y el dibujo
+   no lo llena, asi que la caja va un poco mas grande que el font-size. */
+.hm-tira__ico svg {
+  width: clamp(27px, 2.9vw, 38px);
+  height: clamp(27px, 2.9vw, 38px);
+}
 
 .hm-tira b {
   display: block;
   font-family: var(--hm-anton);
   font-weight: 400;
-  font-size: clamp(26px, 3.4vw, 36px);
+  font-size: clamp(21px, 2.3vw, 30px);
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
-.hm-tira span {
-  font-size: clamp(9.5px, 1vw, 11px);
-  letter-spacing: 0.16em;
+.hm-tira__txt > span {
+  display: block;
+  margin-top: 3px;
+  font-size: clamp(9px, 0.9vw, 10.5px);
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   font-weight: 600;
+  color: var(--hm-texto);
 }
 
 /* ---------- FILAS DE SECTORES ---------- */
-.hm-sectores { padding-top: 6px; }
-
-.hm-fila {
-  display: grid;
-  grid-template-columns: clamp(70px, 8vw, 110px) 1fr 1.15fr;
-  align-items: center;
-  gap: clamp(18px, 3vw, 36px);
-  padding: clamp(26px, 3.6vw, 38px) var(--hm-borde);
-  border-bottom: 1px solid var(--hm-tenue);
-  position: relative;
-}
-
-.hm-fila__num {
-  font-family: var(--hm-anton);
-  font-size: clamp(34px, 5vw, 58px);
-  color: transparent;
-  -webkit-text-stroke: 1.4px rgba(255, 255, 255, 0.32);
-  line-height: 1;
-  transition: -webkit-text-stroke-color 0.35s;
-}
-.hm-fila:hover .hm-fila__num { -webkit-text-stroke-color: var(--hm-yellow); }
-
-.hm-fila__texto h3 {
-  font-family: var(--hm-anton);
-  font-weight: 400;
-  font-size: clamp(22px, 3.2vw, 34px);
-  margin: 0 0 8px;
+/* ---------- SECTORES (superficie clara) ----------
+   Rompe el navy continuo: el recorrido respira alternando fondo oscuro y
+   claro, y aca el navy pasa a ser color de texto. */
+.hm-sectores {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  text-transform: none;
-}
-.hm-fila__texto h3 svg { flex: none; }
-
-.hm-fila__texto p {
-  margin: 0;
-  font-size: clamp(13.5px, 1.4vw, 14.5px);
-  line-height: 1.65;
-  color: var(--hm-texto);
-  font-weight: 300;
-  max-width: 52ch;
+  flex-direction: column;
+  align-items: stretch;
+  background: #f4f6fa;
+  color: var(--hm-navy);
+  padding: clamp(56px, 7vw, 96px) var(--hm-borde) clamp(60px, 7.5vw, 104px);
 }
 
-.hm-fila__link {
-  display: inline-flex;
+/* Indicador de scroll (variante 03): un punto con halo baja por un riel
+   punteado. El punteado remite a la costura del bolson. */
+.hm-sigue {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(var(--hm-tira-alto) + clamp(2px, 0.6vw, 8px));
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 7px;
-  min-height: 44px;
-  margin-top: 4px;
-  color: var(--hm-yellow);
-  font-size: 11.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 600;
+  gap: 14px;
   text-decoration: none;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition: color 0.25s ease;
 }
-.hm-fila__link span { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
-.hm-fila__link:hover span { transform: translateX(5px); }
+.hm-sigue:hover { color: #fff; }
 
-.hm-fila__img {
-  height: clamp(160px, 22vw, 250px);
-  border-radius: 4px;
-  overflow: hidden;
+.hm-sigue__linea {
   position: relative;
+  display: block;
+  width: 2px;
+  height: clamp(26px, 4.5vh, 50px);
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.32) 0 3px,
+    transparent 3px 9px
+  );
 }
-/* Velo angosto solo en el borde de unión con el texto; el resto de la
-   foto queda a color natural en vez de lavado de navy (más realismo). */
-.hm-fila__img::after {
+/* El punto que desciende. */
+.hm-sigue__linea::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(var(--hm-fondo-rgb), 0.75), transparent 20%);
+  left: 50%;
+  margin-left: -4px;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--hm-yellow);
+  box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.15);
+  animation: hm-recorrer 3.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
-.hm-fila__img img {
+@keyframes hm-recorrer {
+  0% { transform: translateY(-4px); opacity: 0; }
+  12% { opacity: 1; }
+  75%, 100% { transform: translateY(calc(clamp(26px, 4.5vh, 50px) - 8px)); opacity: 0; }
+}
+.hm-sigue:hover .hm-sigue__linea::after { animation-duration: 2.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-sigue__linea::after { animation: none; transform: translateY(30%); }
+}
+
+/* En el apilado de telefono el hero no tiene barra abajo del todo. */
+@media (max-width: 760px) {
+  .hm-sigue { display: none; }
+}
+
+.hm-sectores {
+  scroll-margin-top: 90px;
+}
+
+.hm-sectores__cab {
+  max-width: 780px;
+  margin-bottom: clamp(32px, 4vw, 52px);
+  border-left: 4px solid var(--hm-yellow);
+  padding-left: clamp(18px, 2vw, 26px);
+}
+
+.hm-sectores__tit {
+  margin: 0;
+  font-family: var(--hm-anton);
+  font-weight: 400;
+  font-size: clamp(30px, 3.6vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.hm-sectores__bajada {
+  margin: 14px 0 0;
+  max-width: 56ch;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.6;
+  color: #47536b;
+}
+
+.hm-sectores__grilla {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 2.2vw, 30px);
+}
+
+.hm-sec {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #e2e7f0;
+  border-radius: 3px;
+  overflow: hidden;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hm-sec:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -24px rgba(7, 22, 56, 0.55);
+}
+
+.hm-sec__foto {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #dde4ef;
+}
+.hm-sec__foto img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(1.1) contrast(1.03);
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.hm-fila:hover .hm-fila__img img { transform: scale(1.06); }
+.hm-sec:hover .hm-sec__foto img { transform: scale(1.05); }
 
-/* ---------- CERTIFICACIONES ---------- */
-.hm-cert {
-  background: var(--hm-fondo-2);
-  padding: clamp(28px, 4.4vw, 44px) var(--hm-borde);
+.hm-sec__cuerpo {
   display: flex;
-  flex-wrap: wrap;
-  gap: clamp(22px, 3.6vw, 42px);
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(20px, 2vw, 28px);
+  /* Crece hasta el alto de la tarjeta mas alta: sin esto el margin-top auto
+     del link no tiene contra que empujar y los "Ver beneficios" quedan a
+     distinta altura en cada tarjeta. */
+  flex: 1;
+}
+
+.hm-sec__num {
+  font-family: var(--hm-anton);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: #97a2b8;
+}
+
+.hm-sec__tit {
+  margin: 6px 0 10px;
+  font-family: var(--hm-anton);
+  font-weight: 400;
+  font-size: clamp(21px, 1.9vw, 26px);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.hm-sec__txt {
+  margin: 0 0 18px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #47536b;
+}
+
+.hm-sec__link {
+  margin-top: auto;
+  display: inline-flex;
   align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hm-blue);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+.hm-sec__link:hover { border-bottom-color: var(--hm-yellow); }
+.hm-sec__link span { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+.hm-sec__link:hover span { transform: translateX(4px); }
+
+
+/* ---------- NORMATIVA Y ENSAYOS (superficie clara, mas gris) ----------
+   Fichas tecnicas sobrias: rubro, norma y que valida. Sin iconografia
+   decorativa, el dato es el protagonista. */
+.hm-cert {
+  background: #e8edf5;
+  color: var(--hm-navy);
+  padding: clamp(52px, 6.5vw, 88px) var(--hm-borde);
+  display: grid;
+  grid-template-columns: minmax(240px, 330px) 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.hm-cert__cab {
+  border-left: 4px solid var(--hm-yellow);
+  padding-left: clamp(16px, 1.8vw, 24px);
 }
 
 .hm-cert__tit {
+  margin: 0;
   font-family: var(--hm-anton);
   font-weight: 400;
-  font-size: clamp(20px, 2.4vw, 24px);
-  line-height: 1.1;
-  max-width: 9ch;
-  color: var(--hm-yellow);
+  font-size: clamp(28px, 3.2vw, 46px);
+  line-height: 1;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
-  margin: 0;
+  color: var(--hm-navy);
+}
+
+.hm-cert__bajada {
+  margin: 14px 0 0;
+  font-size: clamp(14px, 1.15vw, 16px);
+  line-height: 1.6;
+  color: #47536b;
 }
 
 .hm-cert__lista {
@@ -387,134 +638,171 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: clamp(18px, 2.6vw, 34px);
-  flex: 1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 24px);
 }
 
-.hm-cert__lista li {
-  display: flex;
-  gap: 13px;
-  align-items: flex-start;
+.hm-ficha {
+  background: #fff;
+  border: 1px solid #dbe2ee;
+  border-top: 2px solid var(--hm-navy);
+  border-radius: 3px;
+  padding: clamp(18px, 1.9vw, 26px);
+  transition: border-top-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.hm-cert__lista svg { flex: none; }
+.hm-ficha:hover {
+  border-top-color: var(--hm-yellow);
+  transform: translateY(-3px);
+}
 
-.hm-cert__lista h3 {
+.hm-ficha__rubro {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8a95ab;
+}
+
+.hm-ficha__tit {
+  margin: 10px 0 8px;
   font-family: var(--hm-anton);
   font-weight: 400;
-  font-size: clamp(14px, 1.4vw, 15px);
-  margin: 0 0 4px;
-  letter-spacing: 0.04em;
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 
-.hm-cert__lista p {
+.hm-ficha__txt {
   margin: 0;
-  font-size: clamp(12px, 1.25vw, 12.5px);
-  color: #b7c6e3;
+  font-size: 13.5px;
   line-height: 1.55;
-  font-weight: 300;
+  color: #47536b;
 }
 
-/* ---------- CLIENTES ---------- */
+/* ---------- CLIENTES (superficie blanca) ----------
+   Solo los logos: sin tarjetas ni cajas. Escala de grises para que ninguna
+   marca ajena compita con la identidad del sitio. */
 .hm-clientes {
-  padding: clamp(18px, 2.4vw, 24px) 0 clamp(28px, 4vw, 40px);
-  border-top: 1px solid var(--hm-tenue);
+  background: #fff;
+  padding: clamp(38px, 4.6vw, 62px) 0 clamp(42px, 5vw, 68px);
   overflow: hidden;
 }
 
 .hm-clientes__lb {
-  margin: 0 0 16px;
+  margin: 0 0 clamp(24px, 2.8vw, 36px);
   padding: 0 var(--hm-borde);
   font-family: var(--hm-body);
   font-size: 10.5px;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: #8a95ab;
   font-weight: 700;
   text-align: center;
 }
 
-/* Grilla fija, sin desplazamiento: nunca hay un punto de reinicio que
-   pueda mostrar un salto o un hueco vacío. La entrada en cascada al
-   cargar la página es la animación. */
 .hm-clientes__grid {
   list-style: none;
   margin: 0;
   padding: 0 var(--hm-borde);
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  gap: clamp(14px, 1.8vw, 20px);
+  gap: clamp(26px, 3.6vw, 54px);
 }
 
-/* Tarjeta de tamaño fijo: los logos tienen proporciones muy distintas
-   entre sí, así que cada uno se centra dentro de la misma caja en vez
-   de estirarse a una altura común. */
 .hm-cliente {
   flex: none;
-  width: clamp(108px, 11vw, 138px);
-  height: clamp(56px, 6vw, 68px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.94);
-  border-radius: 8px;
-  padding: 10px 16px;
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  transition: box-shadow 0.25s ease;
+  height: clamp(34px, 3.6vw, 46px);
 }
-.hm-cliente:hover { box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28); }
 
 .hm-cliente img {
-  max-width: 100%;
+  max-width: clamp(96px, 10vw, 130px);
   max-height: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
   filter: grayscale(1);
-  opacity: 0.82;
+  opacity: 0.55;
   transition: filter 0.25s, opacity 0.25s;
 }
 .hm-cliente:hover img { filter: none; opacity: 1; }
 
 /* ---------- RESPONSIVE ---------- */
-@media (max-width: 900px) {
-  .hm-tira { grid-template-columns: repeat(2, 1fr); }
-  .hm-tira li:nth-child(2) { border-right: 0; }
-  .hm-tira li:nth-child(-n + 2) { border-bottom: 1px solid rgba(0, 28, 74, 0.2); }
+/* ---------- HERO EN PANTALLAS MEDIAS ----------
+   El bolson sigue a la derecha pero se encuadra mas cerrado, para que no
+   quede diminuto al lado del texto. */
+@media (min-width: 761px) and (max-width: 1100px) {
+  .hm-hero { --hm-hero-alto: max(430px, calc(100svh - var(--nav-h, 0px))); }
+  /* Menos ancho para el texto: la foto arranca mas a la derecha. */
+  .hm-hero__bg { inset: 0 0 var(--hm-tira-alto) 44%; }
+}
 
-  .hm-fila {
-    grid-template-columns: clamp(56px, 12vw, 70px) 1fr;
-    align-items: start;
+/* ---------- HERO APILADO ----------
+   En telefono no hay ancho para texto y producto lado a lado: el texto va
+   sobre el navy y el bolson queda en una banda al pie, a todo el ancho. */
+@media (max-width: 760px) {
+  .hm-hero {
+    --hm-hero-banda: 68vw;
+    min-height: 0;
+    padding-bottom: var(--hm-hero-banda);
   }
-  .hm-fila__img {
-    grid-column: 1 / -1;
-    height: clamp(180px, 46vw, 280px);
+  /* La foto deja de ser el panel derecho y pasa a ser la banda del pie. */
+  .hm-hero__bg,
+  .hm-hero__velo {
+    inset: auto 0 0 0;
+    height: var(--hm-hero-banda);
   }
-  .hm-fila__img::after {
-    background: linear-gradient(0deg, rgba(var(--hm-fondo-rgb), 0.55), transparent 30%);
+  .hm-hero__velo { left: 0; }
+  .hm-hero::before,
+  .hm-hero__bg,
+  .hm-hero__velo { clip-path: none; }
+  .hm-hero__bg { background-position: 68% center; }
+  /* Los filetes en diagonal no aportan en pantalla angosta. */
+  .hm-hero__trama { display: none; }
+  .hm-hero__in::before { display: none; }
+  .hm-hero__velo {
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--hm-fondo-rgb), 0.96) 0,
+      rgba(var(--hm-fondo-rgb), 0) 20%
+    );
+  }
+  .hm-hero__in {
+    max-width: none;
+    padding-bottom: clamp(20px, 4vw, 32px);
+  }
+  .hm-tira {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 14px;
+  }
+  .hm-tira li:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
   }
 }
 
-@media (max-width: 560px) {
-  /* En vertical la foto entra muy recortada, así que se encuadra a la
-     derecha, donde están los bolsones iluminados. */
-  .hm-hero__bg { background-position: 72% center; }
+@media (max-width: 900px) {
 
-  /* El velo se aclara arriba para que la foto se vea, y se cierra abajo,
-     que es donde caen el texto y los botones. */
-  .hm-hero__velo {
-    background: linear-gradient(
-      170deg,
-      rgba(var(--hm-fondo-rgb), 0.55) 18%,
-      rgba(var(--hm-fondo-rgb), 0.88) 58%,
-      rgba(var(--hm-fondo-rgb), 0.94)
-    );
-  }
-  .hm-scroll { display: none; }
+  .hm-sectores__grilla { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hm-cert { grid-template-columns: minmax(0, 1fr); }
+  .hm-cert__lista { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .hm-sectores__grilla { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 560px) {
+  /* La foto ya se muestra entera como banda inferior (ver el bloque de
+     900px); acá solo se ajusta el aire del texto y los botones. */
+  .hm-hero__in { padding-bottom: clamp(20px, 5vw, 32px); }
   .hm-hero__acciones .hm-btn { width: 100%; }
-  .hm-cert__tit { max-width: none; }
 }
 
 /* ---------- MENOS MOVIMIENTO ---------- */
@@ -523,8 +811,7 @@
   .hm-titulo__ln > span,
   .hm-eyebrow__linea,
   .hm-hero__texto,
-  .hm-hero__acciones,
-  .hm-scroll svg {
+  .hm-hero__acciones {
     animation: none;
   }
   .hm-hero__bg { transform: none; }
@@ -533,9 +820,18 @@
   .hm-hero__texto,
   .hm-hero__acciones { opacity: 1; }
   .hm-btn,
-  .hm-fila__img img,
-  .hm-fila__num,
-  .hm-fila__link span,
+  .hm-sec,
+  .hm-sec__link span,
   .hm-cliente,
   .hm-cliente img { transition: none; }
 }
+
+
+
+
+
+
+
+
+
+
