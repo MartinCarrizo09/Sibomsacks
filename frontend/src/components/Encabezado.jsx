@@ -100,7 +100,7 @@ function Encabezado() {
 
             {/* CTA mobile dentro del menú */}
             <Link to="/contacto" className="btn-cta btn-cta--mobile" onClick={cerrarMenu}>
-              Cotizá tu pedido
+              Armá tu pedido
             </Link>
           </nav>
         </div>
@@ -108,7 +108,7 @@ function Encabezado() {
         {/* Botón hamburguesa + CTA desktop */}
         <div className="navbar__right">
           <Link to="/contacto" className="btn-cta btn-cta--desktop" onClick={cerrarMenu}>
-            Cotizá tu pedido
+            Armá tu pedido
           </Link>
 
           <button
