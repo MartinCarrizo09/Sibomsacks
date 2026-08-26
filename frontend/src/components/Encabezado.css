@@ -44,8 +44,46 @@
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
 }
+/* Al scrollear el header se vuelve translúcido: la cuña se atenúa para no
+   tapar el desenfoque. */
+.navbar.scrolled .navbar__cut { opacity: .55; }
+.navbar__cut { transition: opacity .25s ease; }
 
+/* =========================
+   Corte diagonal (misma geometría que el hero)
+   ========================= */
+/* Cuña en la misma dirección que el corte del hero (58%, tan(18deg)). Sin
+   filete: el hero ya tiene el suyo y duplicarlo acá no cierra bien, porque
+   el tramo del header es mucho más corto que el del hero. */
+.navbar {
+  /* El corte del hero ARRANCA en 58%. Como el header va encima, el suyo
+     tiene que TERMINAR ahí, así que arranca corrido a la derecha por lo
+     que la diagonal se desplaza a lo largo del alto del header. */
+  --nb-diag: calc(var(--nav-h) * 0.3249);
+  --nb-diag-x: calc(58% + var(--nb-diag));
+  position: sticky;
+  overflow: hidden;
+}
+
+/* Cuña más clara del lado del logo. */
+.navbar__cut {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, #071638 0%, #0c2c5c 100%);
+  clip-path: polygon(
+    0 0,
+    var(--nb-diag-x) 0,
+    calc(var(--nb-diag-x) - var(--nb-diag)) 100%,
+    0 100%
+  );
+}
+
+/* El contenido va por encima de las capas. */
 .navbar__container {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -212,6 +250,12 @@
 @media (max-width: 768px) {
   .navbar__toggle { display: inline-block; }
 
+  /* El menú desplegable se posiciona fuera del header: sin esto, el
+     overflow que recorta la diagonal lo dejaría invisible. En pantalla
+     angosta el corte tampoco aporta, así que se retira. */
+  .navbar { overflow: visible; }
+  .navbar__cut { display: none; }
+
   .navbar__menu {
     position: absolute;
     left: 0;
@@ -334,6 +378,7 @@
   .navbar__menu,
   .navbar__menu a,
   .navbar__menu a .underline,
+  .navbar__cut,
   .hb-line {
     transition: none !important;
     animation: none !important;

@@ -64,6 +64,10 @@ function Encabezado() {
 
   return (
     <header className={`navbar ${scrolled ? "scrolled" : ""} ${entered ? "enter" : ""}`}>
+      {/* Cuña diagonal del lado del logo, en la misma dirección que el hero.
+          Decorativa. */}
+      <span className="navbar__cut" aria-hidden="true" />
+
       <div className="navbar__container">
         {/* Logo */}
         <div className="navbar__left">

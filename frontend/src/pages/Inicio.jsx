@@ -99,7 +99,7 @@ const SECTORES = [
       "Cargas pesadas y abrasivas. Costura reforzada y tejido de alto gramaje para operación en entornos extremos.",
     img: "/images/mineria.webp",
     w: 1400,
-    h: 1050,
+    h: 933,
     alt: "Big Bag con mineral izado por la grúa de una excavadora en cantera",
     icono: (
       <svg width="28" height="28" viewBox="0 0 26 26" fill="none" stroke="#ffcc00" strokeWidth="1.6" aria-hidden="true">
@@ -115,6 +115,9 @@ const CERTIFICADOS = [
     rubro: "Estándar europeo",
     titulo: "EFIBCA 006",
     texto: "Rendimiento validado junto a laboratorios de Alemania y Escocia.",
+    img: "/images/logoCertFlex.webp",
+    w: 420,
+    h: 420,
     icono: (
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#ffcc00" strokeWidth="1.4" aria-hidden="true">
         <circle cx="15" cy="12" r="8" />
@@ -127,6 +130,9 @@ const CERTIFICADOS = [
     rubro: "Ensayo nacional",
     titulo: "INTI · ISO 7500-1",
     texto: "Certificado de calibración con anexo A validado.",
+    img: "/images/certInti.webp",
+    w: 420,
+    h: 420,
     icono: (
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#ffcc00" strokeWidth="1.4" aria-hidden="true">
         <rect x="3" y="6" width="24" height="18" />
@@ -138,6 +144,9 @@ const CERTIFICADOS = [
     rubro: "Aptitud alimentaria",
     titulo: "I.N.A.L. 870/08",
     texto: "Apto para el transporte de productos alimenticios.",
+    img: "/images/certInal.webp",
+    w: 131,
+    h: 54,
     icono: (
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#ffcc00" strokeWidth="1.4" aria-hidden="true">
         <path d="M15 2l11 5v9c0 7-5.5 10.5-11 12-5.5-1.5-11-5-11-12V7z" />
@@ -314,6 +323,14 @@ function Inicio() {
         <ul className="hm-cert__lista">
           {CERTIFICADOS.map((c) => (
             <li key={c.titulo} className="hm-ficha">
+              <img
+                className="hm-ficha__logo"
+                src={c.img}
+                alt=""
+                width={c.w}
+                height={c.h}
+                loading="lazy"
+              />
               <span className="hm-ficha__rubro">{c.rubro}</span>
               <h3 className="hm-ficha__tit">{c.titulo}</h3>
               <p className="hm-ficha__txt">{c.texto}</p>
@@ -335,13 +352,14 @@ function Inicio() {
           viewport={enVista}
         >
           {CLIENTES.map((c) => (
-            <motion.li
-              key={c.alt}
-              className="hm-cliente"
-              variants={cardVariant}
-              whileHover={reducir ? undefined : { y: -4 }}
-            >
-              <img src={c.src} alt={`Cliente ${c.alt}`} width={c.w} height={c.h} loading="lazy" />
+            <motion.li key={c.alt} className="hm-cliente" variants={cardVariant}>
+              <img
+                src={c.src}
+                alt={`Cliente ${c.alt}`}
+                width={c.w}
+                height={c.h}
+                loading="lazy"
+              />
             </motion.li>
           ))}
         </motion.ul>

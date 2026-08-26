@@ -21,18 +21,38 @@ main { flex: 1 0 auto; }
    ========================= */
 .footer {
   flex: 0 0 auto;
+  position: relative;
+  overflow: hidden;
   background-color: var(--footer-bg);
   color: var(--footer-fg);
   padding: clamp(38px, 4.5vw, 60px)
     calc(var(--site-frame, 0px) + clamp(20px, 4.2vw, 60px)) 0;
 }
 
+/* Cuña diagonal del lado de la marca, en la misma dirección que el corte
+   del hero: la página abre y cierra con la misma figura. Va detrás del
+   contenido y no intercepta clicks. */
+.footer__cut {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, #071638 0%, #0c2c5c 100%);
+  clip-path: polygon(0 0, 54% 0, 42% 100%, 0 100%);
+}
+
+/* El contenido va por encima de la cuña. */
+.footer__in,
+.footer__legal {
+  position: relative;
+  z-index: 1;
+}
+
 .footer__in {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: clamp(26px, 4vw, 60px);
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr;
+  align-items: start;
+  gap: clamp(26px, 3.4vw, 50px);
   padding-bottom: clamp(28px, 3.4vw, 44px);
 }
 
@@ -87,8 +107,8 @@ main { flex: 1 0 auto; }
   margin: 0;
   padding: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: clamp(24px, 3.4vw, 56px);
+  flex-direction: column;
+  gap: clamp(14px, 1.6vw, 20px);
 }
 
 .footer__rubro {
@@ -135,9 +155,17 @@ a.footer__dato:focus-visible { border-bottom-color: var(--footer-accent); }
 }
 .footer__legal p { margin: 0; }
 
+/* Tres columnas solo en escritorio: la marca se queda arriba y los datos
+   se reparten en dos. */
+@media (max-width: 860px) {
+  .footer__in { grid-template-columns: 1fr 1fr; }
+  .footer__marca { grid-column: 1 / -1; }
+}
+
 @media (max-width: 640px) {
-  .footer__in { flex-direction: column; gap: 28px; }
-  .footer__datos { gap: 20px 32px; }
+  /* En una columna la cuña no aporta y el contenido la tapa igual. */
+  .footer__cut { display: none; }
+  .footer__in { grid-template-columns: 1fr; gap: 28px; }
   .footer__legal { flex-direction: column; }
 }
 

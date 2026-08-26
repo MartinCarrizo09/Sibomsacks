@@ -413,7 +413,9 @@
   align-items: stretch;
   background: #f4f6fa;
   color: var(--hm-navy);
-  padding: clamp(56px, 7vw, 96px) var(--hm-borde) clamp(60px, 7.5vw, 104px);
+  /* Sin padding abajo: las franjas van a sangre y la ultima cierra la
+     seccion. Un padding ahi solo deja gris vacio. */
+  padding: clamp(38px, 4.4vw, 62px) var(--hm-borde) 0;
 }
 
 /* Indicador de scroll (variante 03): un punto con halo baja por un riel
@@ -485,7 +487,7 @@
 
 .hm-sectores__cab {
   max-width: 780px;
-  margin-bottom: clamp(32px, 4vw, 52px);
+  margin-bottom: clamp(24px, 2.8vw, 36px);
   border-left: 4px solid var(--hm-yellow);
   padding-left: clamp(18px, 2vw, 26px);
 }
@@ -508,30 +510,30 @@
   color: #47536b;
 }
 
+/* Franjas a sangre: foto y texto se turnan de lado. La fila del medio
+   lleva un gris apenas más oscuro para que se lean como bandas y no como
+   un bloque continuo. */
 .hm-sectores__grilla {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(18px, 2.2vw, 30px);
+  display: flex;
+  flex-direction: column;
+  /* Va a sangre: cancela el padding lateral de la sección. */
+  margin-inline: calc(-1 * var(--hm-borde));
 }
 
 .hm-sec {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border: 1px solid #e2e7f0;
-  border-radius: 3px;
-  overflow: hidden;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  border-top: 1px solid #dde4ef;
 }
-.hm-sec:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 40px -24px rgba(7, 22, 56, 0.55);
-}
+.hm-sec:last-child { border-bottom: 1px solid #dde4ef; }
+.hm-sec:nth-child(even) { background: #eaf0f8; }
+/* La foto cambia de lado en las filas pares. */
+.hm-sec:nth-child(even) .hm-sec__foto { order: 2; }
 
 .hm-sec__foto {
   position: relative;
-  aspect-ratio: 16 / 9;
+  min-height: clamp(210px, 24vw, 300px);
   overflow: hidden;
   background: #dde4ef;
 }
@@ -540,7 +542,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .hm-sec:hover .hm-sec__foto img { transform: scale(1.05); }
 
@@ -548,25 +550,27 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: clamp(20px, 2vw, 28px);
-  /* Crece hasta el alto de la tarjeta mas alta: sin esto el margin-top auto
-     del link no tiene contra que empujar y los "Ver beneficios" quedan a
-     distinta altura en cada tarjeta. */
-  flex: 1;
+  justify-content: center;
+  padding: clamp(24px, 3.4vw, 52px);
 }
 
+/* Número grande, en contorno: se rellena al pasar por la fila. */
 .hm-sec__num {
   font-family: var(--hm-anton);
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  color: #97a2b8;
+  font-size: clamp(34px, 3.6vw, 48px);
+  line-height: 1;
+  margin-bottom: 8px;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(30, 111, 217, 0.42);
+  transition: color 0.45s ease;
 }
+.hm-sec:hover .hm-sec__num { color: rgba(30, 111, 217, 0.12); }
 
 .hm-sec__tit {
-  margin: 6px 0 10px;
+  margin: 0 0 10px;
   font-family: var(--hm-anton);
   font-weight: 400;
-  font-size: clamp(21px, 1.9vw, 26px);
+  font-size: clamp(22px, 2.6vw, 32px);
   line-height: 1.05;
   text-transform: uppercase;
 }
@@ -574,12 +578,12 @@
 .hm-sec__txt {
   margin: 0 0 18px;
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.62;
   color: #47536b;
+  max-width: 46ch;
 }
 
 .hm-sec__link {
-  margin-top: auto;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -589,30 +593,40 @@
   text-transform: uppercase;
   color: var(--hm-blue);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  padding-bottom: 2px;
+  position: relative;
+  padding-bottom: 3px;
 }
-.hm-sec__link:hover { border-bottom-color: var(--hm-yellow); }
+.hm-sec__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: var(--hm-yellow);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hm-sec__link:hover::after { transform: scaleX(1); }
 .hm-sec__link span { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
 .hm-sec__link:hover span { transform: translateX(4px); }
 
 
 /* ---------- NORMATIVA Y ENSAYOS (superficie clara, mas gris) ----------
-   Fichas tecnicas sobrias: rubro, norma y que valida. Sin iconografia
-   decorativa, el dato es el protagonista. */
+   Etiquetas colgantes: la cinta amarilla del borde superior remite al
+   rotulo cosido al bolson. El logo del organismo es el protagonista. */
 .hm-cert {
   background: #e8edf5;
   color: var(--hm-navy);
-  padding: clamp(52px, 6.5vw, 88px) var(--hm-borde);
-  display: grid;
-  grid-template-columns: minmax(240px, 330px) 1fr;
-  gap: clamp(28px, 4vw, 64px);
-  align-items: start;
+  padding: clamp(38px, 4.4vw, 60px) var(--hm-borde);
 }
 
 .hm-cert__cab {
   border-left: 4px solid var(--hm-yellow);
   padding-left: clamp(16px, 1.8vw, 24px);
+  max-width: 640px;
+  margin-bottom: clamp(30px, 3.6vw, 48px);
 }
 
 .hm-cert__tit {
@@ -636,23 +650,52 @@
 .hm-cert__lista {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 16px 0 0; /* deja aire para la cinta que asoma arriba */
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(14px, 1.8vw, 24px);
+  gap: clamp(16px, 2.2vw, 26px);
 }
 
 .hm-ficha {
+  position: relative;
   background: #fff;
   border: 1px solid #dbe2ee;
-  border-top: 2px solid var(--hm-navy);
   border-radius: 3px;
-  padding: clamp(18px, 1.9vw, 26px);
-  transition: border-top-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: clamp(30px, 3vw, 38px) clamp(18px, 1.9vw, 26px) clamp(22px, 2.2vw, 28px);
+  text-align: center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
 }
+
+/* Cinta amarilla colgante, con la muesca inferior del rotulo. */
+.hm-ficha::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 22px;
+  background: var(--hm-yellow);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 72%, 0 100%);
+  transition: height 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .hm-ficha:hover {
-  border-top-color: var(--hm-yellow);
-  transform: translateY(-3px);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -24px rgba(7, 22, 56, 0.5);
+}
+.hm-ficha:hover::before { height: 32px; }
+
+.hm-ficha__logo {
+  width: 64px;
+  height: 64px;
+  margin: 12px auto 16px;
+  padding: 8px;
+  object-fit: contain;
+  background: #f4f6fa;
+  border: 1px solid #e2e8f2;
+  border-radius: 50%;
 }
 
 .hm-ficha__rubro {
@@ -665,7 +708,7 @@
 }
 
 .hm-ficha__tit {
-  margin: 10px 0 8px;
+  margin: 8px 0 9px;
   font-family: var(--hm-anton);
   font-weight: 400;
   font-size: clamp(17px, 1.6vw, 21px);
@@ -686,7 +729,7 @@
    marca ajena compita con la identidad del sitio. */
 .hm-clientes {
   background: #fff;
-  padding: clamp(38px, 4.6vw, 62px) 0 clamp(42px, 5vw, 68px);
+  padding: clamp(30px, 3.4vw, 46px) 0 clamp(34px, 3.8vw, 52px);
   overflow: hidden;
 }
 
@@ -706,32 +749,50 @@
   list-style: none;
   margin: 0;
   padding: 0 var(--hm-borde);
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: clamp(12px, 1.8vw, 26px);
   align-items: center;
-  justify-content: center;
-  gap: clamp(26px, 3.6vw, 54px);
 }
 
 .hm-cliente {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: clamp(34px, 3.6vw, 46px);
+  display: grid;
+  place-items: center;
+  padding: 12px 6px;
+  border-radius: 4px;
+  transition: background 0.3s ease, opacity 0.34s ease,
+    transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Foco: al señalar uno, el resto se atenúa y el elegido crece. Se apoya
+   en el hover del contenedor, así que en táctil no pasa nada raro: sin
+   puntero, todos quedan a opacidad plena. */
+.hm-clientes__grid:hover .hm-cliente { opacity: 0.34; }
+.hm-clientes__grid .hm-cliente:hover {
+  opacity: 1;
+  background: #f4f6fa;
+  transform: scale(1.09);
 }
 
 .hm-cliente img {
-  max-width: clamp(96px, 10vw, 130px);
-  max-height: 100%;
+  max-width: clamp(90px, 9.5vw, 124px);
+  max-height: clamp(34px, 3.6vw, 46px);
   width: auto;
   height: auto;
   object-fit: contain;
   filter: grayscale(1);
-  opacity: 0.55;
-  transition: filter 0.25s, opacity 0.25s;
+  transition: filter 0.34s ease;
 }
-.hm-cliente:hover img { filter: none; opacity: 1; }
+.hm-cliente:hover img { filter: none; }
+
+/* Ocho columnas solo entran en escritorio: mas abajo se reparten en
+   varias filas para que cada logo siga siendo legible. */
+@media (max-width: 1100px) {
+  .hm-clientes__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .hm-clientes__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 
 /* ---------- RESPONSIVE ---------- */
 /* ---------- HERO EN PANTALLAS MEDIAS ----------
@@ -789,13 +850,16 @@
 
 @media (max-width: 900px) {
 
-  .hm-sectores__grilla { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hm-cert { grid-template-columns: minmax(0, 1fr); }
+  /* La cabecera ya va arriba: solo se reacomodan las fichas. */
   .hm-cert__lista { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
 }
 
-@media (max-width: 620px) {
-  .hm-sectores__grilla { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 720px) {
+  /* Las franjas se apilan: foto arriba y texto abajo, siempre en ese orden
+     (el alternado de lados no tiene sentido en una sola columna). */
+  .hm-sec { grid-template-columns: minmax(0, 1fr); }
+  .hm-sec:nth-child(even) .hm-sec__foto { order: 0; }
+  .hm-sec__foto { min-height: clamp(180px, 46vw, 240px); }
 }
 
 @media (max-width: 560px) {

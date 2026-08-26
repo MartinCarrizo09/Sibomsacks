@@ -20,6 +20,10 @@ function PiePagina() {
     >
       <meta itemProp="name" content="Lindor Sacks S.R.L." />
 
+      {/* Cuña diagonal, en la misma dirección que el corte del hero: la
+          página abre y cierra con la misma figura. Decorativa. */}
+      <span className="footer__cut" aria-hidden="true" />
+
       <div className="footer__in">
         <h2 className="sr-only">Datos de contacto</h2>
 
@@ -72,12 +76,20 @@ function PiePagina() {
             </a>
           </li>
 
+        </ul>
+
+        <ul className="footer__datos">
           <li>
             <span className="footer__rubro">Horario</span>
             <p className="footer__dato footer__dato--plano">
               Lunes a viernes,{" "}
               <time dateTime="08:00">8:00 a 15:30 hs.</time>
             </p>
+          </li>
+
+          <li>
+            <span className="footer__rubro">Dónde</span>
+            <p className="footer__dato footer__dato--plano">Córdoba, Argentina</p>
           </li>
         </ul>
       </div>
