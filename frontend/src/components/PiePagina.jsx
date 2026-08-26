@@ -32,7 +32,10 @@ function PiePagina() {
               width={103}
               height={92}
             />
-            <span className="footer__nombre">Sibom Sacks</span>
+            <span className="footer__nombre">
+              Sibom Sacks
+              <small className="footer__claim-marca">Soluciones textiles</small>
+            </span>
           </span>
           <p className="footer__claim">
             Contenedores flexibles fabricados en Córdoba, para todo el país.
