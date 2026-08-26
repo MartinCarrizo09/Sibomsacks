@@ -77,13 +77,27 @@
 .navbar__logo:hover img { transform: translateY(-2px); }
 
 .navbar__brand {
+  display: flex;
+  flex-direction: column;
   font-family: Anton, "Arial Narrow", Impact, sans-serif;
   font-size: clamp(1.05rem, 2.2vw, 1.5rem);
   font-weight: 400;
+  line-height: 1;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: .02em;
   white-space: nowrap;
+}
+
+/* Bajada del logo, como en el isologotipo original: el tracking la estira
+   hasta acompanar el ancho del nombre. */
+.navbar__claim {
+  margin-top: 4px;
+  font-family: Barlow, "Segoe UI", system-ui, sans-serif;
+  font-size: clamp(7.5px, .62vw, 9px);
+  font-weight: 600;
+  letter-spacing: .34em;
+  color: rgba(255, 255, 255, .62);
 }
 
 /* ===== CTA ===== */
@@ -334,6 +348,8 @@
 /* Área táctil mínima de 44px en la navegación (WCAG 2.5.8) */
 .navbar__logo { min-height: 44px; display: inline-flex; align-items: center; }
 .navbar__menu a { min-height: 44px; display: inline-flex; align-items: center; }
+
+
 
 
 

@@ -69,7 +69,10 @@ function Encabezado() {
         <div className="navbar__left">
           <Link to="/inicio" className="navbar__logo" onClick={cerrarMenu}>
             <img src={logo} alt="Sibom Sacks Logo" width={103} height={92} />
-            <span className="navbar__brand">SIBOM SACKS</span>
+            <span className="navbar__brand">
+              SIBOM SACKS
+              <small className="navbar__claim">Soluciones textiles</small>
+            </span>
           </Link>
         </div>
 
