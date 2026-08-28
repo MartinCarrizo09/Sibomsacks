@@ -67,7 +67,6 @@ ${urls}
 // por la variable CORS_ORIGINS (separados por coma).
 const allowedOrigins = [
   "http://localhost:5173",   // frontend actual (Vite)
-  "http://localhost:5174",   // frontend-v2 (Vite)
   "http://localhost:3000",
   PUBLIC_BASE_URL,
   ...(process.env.CORS_ORIGINS || "")

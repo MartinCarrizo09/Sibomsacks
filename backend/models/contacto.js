@@ -19,13 +19,14 @@ Contacto.init(
       type: DataTypes.TEXT,
       allowNull: false
     },
+    /* Opcionales desde que el formulario de la web pide sólo lo mínimo:
+       el nombre puede venir completo en un campo y el contacto puede ser
+       correo o teléfono, no necesariamente los dos. */
     apellido: {
-      type: DataTypes.TEXT,
-      allowNull: false
+      type: DataTypes.TEXT
     },
     correo: {
-      type: DataTypes.TEXT,
-      allowNull: false
+      type: DataTypes.TEXT
     },
     telefono: {
       type: DataTypes.TEXT
@@ -40,9 +41,9 @@ Contacto.init(
       onDelete: "CASCADE",
       onUpdate: "CASCADE"
     },
+    /* La provincia se conversa después: el formulario no la pregunta. */
     id_provincia: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       references: {
         model: Provincia,
         key: "id"

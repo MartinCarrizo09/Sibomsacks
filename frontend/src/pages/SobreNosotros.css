@@ -1,293 +1,480 @@
-/* =========================
-   Hero Section
-   ========================= */
-.sn-hero-section {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+/* =========================================================
+   SOBRE NOSOTROS — "la planta como protagonista".
+   Mismos tokens y recursos que la home (Inicio.css): Anton +
+   Barlow sobre azul marino, amarillo como único acento.
+   ========================================================= */
+
+.sn {
+  --sn-navy: #001c4a;
+  --sn-fondo: #0c2c5c;
+  --sn-fondo-2: #071638;
+  --sn-blue: #1e6fd9;
+  --sn-yellow: #ffcc00;
+  --sn-texto: #d3ddf0;
+  --sn-tenue: rgba(255, 255, 255, 0.14);
+
+  --sn-anton: Anton, "Arial Narrow", Impact, sans-serif;
+  --sn-body: Barlow, "Segoe UI", system-ui, sans-serif;
+
+  /* Compensa el padding horizontal de .main-layout para ir a sangre. */
+  --sn-sangria: calc(-1 * clamp(12px, 2.5vw, 32px));
+  /* Margen lateral del contenido: el normal más el marco del sitio. */
+  --sn-borde: calc(var(--site-frame, 0px) + clamp(20px, 4.2vw, 60px));
+
+  background: var(--sn-fondo);
+  color: #fff;
+  font-family: var(--sn-body);
+  margin: 0 var(--sn-sangria);
+  margin-bottom: calc(-1 * var(--main-pb, 0px));
+}
+
+/* ---------- HERO ---------- */
+.sn-hero {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   overflow: hidden;
-  /* sin altura fija: dejamos que el contenido mande */
-  padding: 40px 0;
+  /* Más bajo que el de la home: es una página interior, el hero no tiene
+     que ocupar la pantalla entera. */
+  min-height: min(560px, calc(100svh - var(--nav-h, 0px)));
+  background: linear-gradient(105deg, #071638 0%, #0c2c5c 56%, #164a92 100%);
+  /* Alto de la franja de indicadores: la foto se corta justo arriba para que
+     los datos siempre caigan sobre navy y se puedan leer. */
+  --sn-tira-alto: clamp(64px, 5.4vw, 78px);
+  /* Tamaño de la cifra; el ícono se ata a este valor para que ambos midan
+     lo mismo y la fila quede pareja. */
+  --sn-tira-cifra: clamp(17px, 1.7vw, 22px);
+}
+
+.sn-hero__bg {
+  position: absolute;
+  /* Se detiene sobre la franja de indicadores: si la foto llegara al pie,
+     los datos quedarían ilegibles sobre los bolsones. */
+  inset: 0 0 var(--sn-tira-alto) 0;
+  /* Foto de planta en plano abierto: la hilera completa en fuga, el piso,
+     la pared y el cielo. El archivo es la toma entera, sin recortar: viene
+     en 3:2, casi la proporción de esta zona, así que `cover` apenas la
+     ajusta y no aparece el efecto de zoom sobre el bolsón delantero. */
+  background: url("/images/plantaHilera.webp") center center / cover no-repeat;
+  /* Diagonal: el plano de la foto encastra con el navy del texto. */
+  clip-path: polygon(52% 0, 100% 0, 100% 100%, 34% 100%);
+  filter: saturate(0.72);
+}
+
+.sn-hero__velo {
+  position: absolute;
+  /* Acompaña a la foto: la franja de indicadores tiene su propio fondo. */
+  inset: 0 0 var(--sn-tira-alto) 0;
+  /* Asienta el texto sobre la foto sin apagarla del todo. */
+  background: linear-gradient(
+    to right,
+    rgba(7, 22, 56, 0.97) 0,
+    rgba(7, 22, 56, 0.9) 18%,
+    rgba(7, 22, 56, 0.45) 40%,
+    rgba(7, 22, 56, 0.12) 56%,
+    rgba(7, 22, 56, 0) 68%
+  );
+}
+
+.sn-hero__in {
+  position: relative;
+  z-index: 3;
+  padding: clamp(40px, 6vw, 68px) var(--sn-borde) clamp(28px, 4vw, 44px);
+  max-width: calc(min(560px, 47vw) + var(--sn-borde) * 2);
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.sn-eyebrow {
   display: flex;
   align-items: center;
+  gap: 14px;
+  margin: 0 0 18px;
+  font-size: clamp(10px, 1.1vw, 11.5px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sn-yellow);
+  font-weight: 600;
 }
 
-.sn-hero-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(255, 213, 0, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+.sn-eyebrow__linea {
+  width: clamp(34px, 5vw, 56px);
+  height: 1px;
+  background: var(--sn-yellow);
+  flex-shrink: 0;
 }
 
-/* =========================
-   Partículas animadas
-   ========================= */
-.sn-hero-particles {
+.sn-titulo {
+  font-family: var(--sn-anton);
+  font-weight: 400;
+  /* El techo lo fija la línea más larga ("Argentina desde"): con la columna
+     de texto en 560px, más de 72px se desborda sobre la foto. */
+  font-size: clamp(38px, 5vw, 72px);
+  line-height: 0.96;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  margin: 0;
+  /* Anton es condensada pero no comprime: sin esto, en pantallas medianas
+     el navegador parte "Argentina" a mitad de palabra. */
+  text-wrap: balance;
+}
+
+.sn-titulo__ln { display: block; }
+.sn-titulo__calado { color: var(--sn-yellow); }
+
+.sn-hero__texto {
+  margin: clamp(18px, 2.6vw, 26px) 0 0;
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.65;
+  max-width: 47ch;
+  color: #cddaf0;
+  font-weight: 300;
+}
+
+.sn-hero__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  align-items: center;
+  margin-top: clamp(24px, 3.4vw, 34px);
+}
+
+/* ---------- BOTONES (mismos que la home) ---------- */
+.sn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s,
+    background-color 0.25s, color 0.25s;
+}
+
+.sn-btn--primario {
+  background: var(--sn-yellow);
+  color: var(--sn-navy);
+  font-family: var(--sn-anton);
+  font-size: clamp(13px, 1.3vw, 15px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 clamp(22px, 3vw, 32px);
+}
+
+.sn-btn--primario:hover {
+  background: #e6b800;
+  transform: translateY(-2px);
+}
+
+.sn-btn--texto {
+  color: #fff;
+  font-size: clamp(11px, 1.15vw, 12px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+}
+
+.sn-btn--texto:hover {
+  color: var(--sn-yellow);
+  border-bottom-color: var(--sn-yellow);
+}
+
+/* ---------- TIRA DE INDICADORES ---------- */
+.sn-tira {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.8vw, 26px);
+  margin: 0;
+  /* Alto FIJO, no mínimo: el corte de la foto está atado a esta misma
+     medida, así que si la franja creciera por su contenido la foto le
+     taparía el filete amarillo y lo dejaría partido. */
+  height: var(--sn-tira-alto);
+  box-sizing: border-box;
+  align-content: center;
+  padding: clamp(8px, 1vw, 12px) var(--sn-borde);
+  list-style: none;
+  /* Filete amarillo: separa el hero de los datos, mismo recurso que la
+     home usa para cortar bloques. */
+  border-top: 3px solid var(--sn-yellow);
+  /* Mismo tratamiento que la tira de la home: velo navy y desenfoque, para
+     que los datos se lean con la foto detrás. */
+  background: rgba(7, 22, 56, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  color: #fff;
+}
+
+.sn-tira li {
+  display: flex;
+  align-items: center;
+  gap: clamp(9px, 0.9vw, 12px);
+}
+
+.sn-tira li:nth-child(n + 2) {
+  padding-left: clamp(14px, 2vw, 26px);
+  border-left: 1px solid var(--sn-tenue);
+}
+
+.sn-tira__ico {
+  color: var(--sn-yellow);
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* El SVG llega con width/height fijos desde el JSX; acá se los ata a la
+   cifra para que ícono y número midan lo mismo. */
+.sn-tira__ico svg {
+  width: var(--sn-tira-cifra);
+  height: var(--sn-tira-cifra);
+  /* A este tamaño el trazo original se empasta. */
+  stroke-width: 1.5;
+}
+
+.sn-tira__txt {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.sn-tira__txt b {
+  font-family: var(--sn-anton);
+  font-weight: 400;
+  font-size: var(--sn-tira-cifra);
+  letter-spacing: 0.01em;
+}
+
+.sn-tira__txt span {
+  font-size: clamp(9.5px, 0.92vw, 10.5px);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  /* Más claro que el gris de la home: acá la franja se apoya sobre la foto
+     y ese tono quedaba ilegible. */
+  color: #b8c8e2;
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+/* ---------- PROCESO ---------- */
+.sn-proceso {
+  padding: clamp(44px, 5vw, 68px) var(--sn-borde);
+  /* Gris claro neutro, el mismo que la home usa en sus bloques claros:
+     sin el tinte celeste, deja que resalte el amarillo de la linga. */
+  background: #f4f6fa;
+  color: var(--sn-navy);
+}
+
+.sn-proceso__cab {
+  max-width: 620px;
+  margin-bottom: clamp(28px, 3.4vw, 42px);
+}
+
+.sn-proceso__tit {
+  margin: 0;
+  font-family: var(--sn-anton);
+  font-weight: 400;
+  font-size: clamp(28px, 3.2vw, 46px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.sn-proceso__bajada {
+  margin: 14px 0 0;
+  font-size: clamp(14px, 1.15vw, 16px);
+  line-height: 1.6;
+  color: #47536b;
+}
+
+/* Agrupa la fila de fichas con la linga que corre por debajo. */
+.sn-proceso__hilo {
+  position: relative;
+}
+
+/* Linga: cinta de izaje que cruza la pantalla de borde a borde.
+   Es un tramo de onda que encastra consigo mismo, repetido con `repeat-x`:
+   al ser un patrón que se repite cubre cualquier ancho por definición. El
+   enfoque anterior era un trazo con coordenadas fijas y siempre terminaba
+   antes del borde en cuanto cambiaba el tamaño de la ventana. */
+.sn-linga {
   position: absolute;
-  inset: 0;
-  overflow: hidden;
+  /* A sangre: compensa el padding lateral del bloque, ni un pixel más
+     (el `overflow-x: clip` del body recortaría cualquier desborde). */
+  left: calc(-1 * var(--sn-borde));
+  right: calc(-1 * var(--sn-borde));
+  top: 50%;
+  height: 80px;
+  transform: translateY(-50%);
+  background: url("/images/linga.svg") repeat-x left center;
+  /* Alto fijo, ancho automático: el patrón conserva su proporción y se
+     repite tantas veces como haga falta para llenar el ancho. */
+  background-size: auto 80px;
   pointer-events: none;
   z-index: 0;
 }
 
-.sn-hero-section .container {
+.sn-proceso__grilla {
   position: relative;
   z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 1.8vw, 24px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.sn-hero-title {
-  animation: sn-slideInUp 1s ease-out 0.2s both;
-  line-height: 1.1;
-  max-width: 900px;
-  margin-inline: auto;
+/* Misma ficha que la home: blanca, borde tenue y esquina apenas marcada. */
+.sn-etapa {
+  /* Translúcida: la linga se percibe cruzando por detrás de la ficha, no
+     sólo en los espacios. El texto sigue legible porque el amarillo queda
+     muy lavado bajo el blanco. */
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid #dbe2ee;
+  border-radius: 3px;
+  padding: clamp(26px, 2.6vw, 34px) clamp(20px, 2.1vw, 30px)
+    clamp(24px, 2.4vw, 30px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
-.sn-particle {
-  position: absolute;
-  border-radius: 50%;
-  animation: sn-float 8s ease-in-out infinite;
+.sn-etapa:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(12, 44, 92, 0.12);
 }
 
-/* === Configuración de cada partícula === */
-.sn-particle:nth-child(1) { width: 6px; height: 6px; background: rgba(255,213,0,0.8); top: 15%; left: 8%; animation-delay: 0s; }
-.sn-particle:nth-child(2) { width: 4px; height: 4px; background: rgba(255,213,0,0.6); top: 65%; left: 88%; animation-delay: 2s; }
-.sn-particle:nth-child(3) { width: 5px; height: 5px; background: rgba(255,213,0,0.7); top: 85%; left: 15%; animation-delay: 4s; }
-.sn-particle:nth-child(4) { width: 3px; height: 3px; background: rgba(255,213,0,0.9); top: 25%; left: 75%; animation-delay: 1s; }
-.sn-particle:nth-child(5) { width: 4px; height: 4px; background: rgba(255,213,0,0.5); top: 45%; left: 25%; animation-delay: 3s; }
-.sn-particle:nth-child(6) { width: 6px; height: 6px; background: rgba(255,213,0,0.6); top: 10%; left: 60%; animation-delay: 5s; }
-.sn-particle:nth-child(7) { width: 3px; height: 3px; background: rgba(255,213,0,0.8); top: 75%; left: 50%; animation-delay: 1.5s; }
-.sn-particle:nth-child(8) { width: 5px; height: 5px; background: rgba(255,213,0,0.4); top: 35%; left: 90%; animation-delay: 6s; }
-.sn-particle:nth-child(9) { width: 2px; height: 2px; background: rgba(255,255,255,0.7); top: 20%; left: 40%; animation-delay: 2.5s; }
-.sn-particle:nth-child(10){ width: 3px; height: 3px; background: rgba(255,255,255,0.5); top: 70%; left: 70%; animation-delay: 4.5s; }
-.sn-particle:nth-child(11){ width: 2px; height: 2px; background: rgba(255,255,255,0.8); top: 55%; left: 5%; animation-delay: 3.5s; }
-.sn-particle:nth-child(12){ width: 3px; height: 3px; background: rgba(255,255,255,0.6); top: 90%; left: 80%; animation-delay: 7s; }
-.sn-particle:nth-child(13){ width: 2px; height: 2px; background: rgba(255,213,0,0.3); top: 30%; left: 20%; animation-delay: 0.5s; }
-.sn-particle:nth-child(14){ width: 2px; height: 2px; background: rgba(255,255,255,0.4); top: 50%; left: 85%; animation-delay: 1.8s; }
-.sn-particle:nth-child(15){ width: 1px; height: 1px; background: rgba(255,213,0,0.7); top: 40%; left: 10%; animation-delay: 2.8s; }
-.sn-particle:nth-child(16){ width: 2px; height: 2px; background: rgba(255,255,255,0.5); top: 80%; left: 30%; animation-delay: 4.8s; }
-.sn-particle:nth-child(17){ width: 1px; height: 1px; background: rgba(255,213,0,0.6); top: 60%; left: 95%; animation-delay: 5.5s; }
-.sn-particle:nth-child(18){ width: 3px; height: 3px; background: rgba(255,213,0,0.4); top: 15%; left: 85%; animation-delay: 6.5s; }
-.sn-particle:nth-child(19){ width: 2px; height: 2px; background: rgba(255,255,255,0.6); top: 95%; left: 60%; animation-delay: 7.5s; }
-.sn-particle:nth-child(20){ width: 1px; height: 1px; background: rgba(255,213,0,0.8); top: 25%; left: 35%; animation-delay: 8s; }
-
-@keyframes sn-float {
-  0%, 100% { transform: translateY(0); opacity: 0.7; }
-  50% { transform: translateY(-20px); opacity: 1; }
+.sn-etapa__cab {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-/* =========================
-   Tipografía y botones del hero
-   ========================= */
-.sn-hero-badge .badge {
-  font-size: 0.9rem;
-  animation: sn-slideInDown 0.8s ease-out;
+.sn-etapa__num {
+  font-family: var(--sn-anton);
+  font-size: clamp(26px, 2.6vw, 34px);
+  line-height: 1;
+  /* Contorno como en la home, pero en el navy de la marca: sobre la ficha
+     blanca el amarillo pleno no tiene contraste suficiente. */
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 28, 74, 0.38);
+  transition: color 0.45s ease;
 }
 
-.sn-text-gradient {
-  background: linear-gradient(135deg, #FFD500, #FFA500);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.sn-etapa:hover .sn-etapa__num { color: rgba(0, 28, 74, 0.1); }
+
+.sn-etapa__linea {
+  height: 1px;
+  flex-grow: 1;
+  background: #dbe2ee;
 }
 
-/* ---- CTA group (centrado y tamaño) ---- */
-.sn-cta-group{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:1.5rem;
-  margin-top:2rem;
+.sn-etapa__tit {
+  margin: 0 0 10px;
+  font-family: var(--sn-anton);
+  font-weight: 400;
+  font-size: clamp(19px, 1.9vw, 23px);
+  line-height: 1.06;
+  text-transform: uppercase;
 }
 
-.sn-cta-primary,
-.sn-cta-secondary{
-  padding:1rem 2.5rem;      /* tamaño mayor */
-  font-size:1.1rem;
-  min-width: 240px;         /* ocupa más área visual */
+.sn-etapa__txt {
+  margin: 0;
+  font-size: clamp(13.5px, 1.05vw, 14.5px);
+  line-height: 1.6;
+  color: #47536b;
 }
 
-/* Botón principal (mantiene estilo original) */
-.sn-cta-primary {
-  background: linear-gradient(135deg, #FFD500 0%, #FFA500 100%);
-  border: none;
-  border-radius: 50px;
-  box-shadow: 0 8px 20px rgba(255, 213, 0, 0.3);
-  transition: all 0.3s ease;
-  animation: sn-slideInUp 1s ease-out 0.6s both;
-}
-.sn-cta-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(255, 213, 0, 0.4);
-  background: linear-gradient(135deg, #FFA500 0%, #FFD500 100%);
-}
-
-/* Botón secundario (versión base que ya tenías) */
-.sn-cta-secondary {
-  border-radius: 50px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  animation: sn-slideInUp 1s ease-out 0.8s both;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.28) inset; /* refuerzo visual */
-}
-.sn-cta-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 0 2px rgba(255,255,255,.45) inset;
-  transform: translateY(-3px);
+/* ---------- CIERRE ---------- */
+.sn-cierre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: clamp(24px, 3vw, 40px);
+  padding: clamp(40px, 4.6vw, 58px) var(--sn-borde);
+  background: var(--sn-fondo);
+  /* El footer arranca con su propia cuña navy: sin esta línea el cierre se
+     funde con él y se pierde el límite entre los dos bloques. */
+  border-bottom: 1px solid var(--sn-tenue);
 }
 
-/* === Opción A: Ghost/Glass (nuevo estilo para "Ver productos") === */
-.sn-cta-ghost{
-  border-radius: 50px;
-  border: 1.5px solid rgba(255,255,255,.35);
-  background: rgba(255,255,255,.06);
-  backdrop-filter: blur(8px);
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(0,0,0,.15) inset, 0 0 0 2px rgba(255,255,255,.15) inset;
-  transition: transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
-  animation: sn-slideInUp 1s ease-out 0.8s both;
-}
-.sn-cta-ghost:hover{
-  background: rgba(255,255,255,.12);
-  border-color: rgba(255,255,255,.55);
-  transform: translateY(-2px);
-}
-.sn-cta-ghost:focus-visible{
-  outline: 3px solid rgba(255,213,0,.6);
-  outline-offset: 2px;
-}
-.sn-cta-arrow{
-  display:inline-block;
-  margin-left:.5rem;
-  transform: translateX(0);
-  transition: transform .25s ease, opacity .25s ease;
-  opacity:.85;
-}
-.sn-cta-ghost:hover .sn-cta-arrow{ transform: translateX(4px); opacity:1; }
-
-/* Focus visible accesible */
-.sn-cta-primary:focus-visible,
-.sn-cta-secondary:focus-visible{
-  outline: 3px solid rgba(255,213,0,.6);
-  outline-offset: 2px;
+.sn-cierre__tit {
+  margin: 0;
+  font-family: var(--sn-anton);
+  font-weight: 400;
+  font-size: clamp(24px, 2.8vw, 38px);
+  line-height: 1.02;
+  text-transform: uppercase;
 }
 
-/* =========================
-   Stats Section
-   ========================= */
-.sn-stats-card {
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-.sn-stats-card:hover { transform: translateY(-10px); }
-
-.sn-shadow-hover:hover { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important; }
-
-.sn-icon-circle { width: 80px; height: 80px; border-radius: 50%; }
-
-.sn-stats-bar {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 4px;
-  background: linear-gradient(90deg, #1e3c72, #2a5298);
-  border-radius: 2px;
-  animation: sn-expandWidth 2s ease-out 1s both;
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .sn-proceso__grilla { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Con las fichas en dos filas la cinta horizontal deja de enhebrarlas:
+     cruzaría por el medio sin relación con el recorrido. */
+  .sn-linga { display: none; }
 }
 
-@keyframes sn-expandWidth {
-  from { width: 0; }
-  to { width: 60px; }
-}
-
-.sn-counter { font-family: 'Segoe UI', system-ui, sans-serif; }
-
-/* =========================
-   Feature Cards
-   ========================= */
-.sn-feature-card {
-  transition: all 0.3s ease;
-  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-.sn-feature-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-.sn-icon-wrapper { width: 70px; height: 70px; transition: all 0.3s ease; }
-.sn-feature-card:hover .sn-icon-wrapper { transform: scale(1.1); }
-
-/* =========================
-   Testimonials
-   ========================= */
-.sn-testimonial-card {
-  transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-.sn-testimonial-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-.sn-testimonial-avatar { width: 50px; height: 50px; }
-
-/* =========================
-   Animations
-   ========================= */
-@keyframes sn-slideInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes sn-slideInDown {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* =========================
-   Responsive
-   ========================= */
-@media (max-width: 992px) {
-  .sn-hero-section { padding: 32px 0; }
-  .sn-hero-title { font-size: 2.4rem; }
-}
-
-@media (max-width: 768px) {
-  .sn-hero-section { padding: 24px 0; }
-  .sn-hero-title { font-size: 2.2rem; }
-  .display-3 { font-size: 2.6rem; }
-
-  /* CTAs apilados y centrados en mobile */
-  .sn-cta-group{ flex-direction: column; }
-  .sn-cta-primary, .sn-cta-secondary, .sn-cta-ghost {
-    width: 100%;
-    max-width: 420px;
-    min-width: unset;
-    margin-bottom: 1rem;
+@media (max-width: 720px) {
+  /* La diagonal no aporta en pantalla angosta: la foto pasa a ser una
+     banda superior y el texto se apoya sobre el navy. */
+  .sn-hero__bg {
+    clip-path: none;
+    inset: 0 0 auto 0;
+    height: 46%;
+    /* Apaisada y sin diagonal: centrada entra la hilera completa. */
+    background-position: center center;
   }
 
-  .sn-stats-card { margin-bottom: 2rem; }
+  .sn-hero__velo {
+    /* La foto ya no llega al pie, así que el velo cubre todo el hero. */
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(7, 22, 56, 0.35) 0,
+      rgba(12, 44, 92, 0.92) 38%,
+      var(--sn-fondo) 52%
+    );
+  }
+
+  .sn-hero__in {
+    max-width: none;
+    margin-top: 42%;
+  }
+
+  .sn-tira {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    /* Apilada en una columna necesita crecer: el alto de la franja
+       apaisada la comprimiría. */
+    min-height: 0;
+    padding-top: clamp(18px, 4vw, 24px);
+    padding-bottom: clamp(18px, 4vw, 24px);
+  }
+
+  .sn-tira li:nth-child(n + 2) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .sn-hero__acciones .sn-btn { width: 100%; }
+
+  .sn-proceso__grilla { grid-template-columns: 1fr; }
+
+  /* El corte de línea del título es para la versión ancha: acá el texto
+     fluye solo y el botón toma todo el ancho. */
+  .sn-cierre__tit br { display: none; }
+  .sn-cierre .sn-btn { width: 100%; }
 }
 
-@media (max-width: 576px) {
-  .sn-hero-section { min-height: 55vh; }
-  .sn-hero-title { font-size: 1.9rem; }
-  .display-3 { font-size: 2.3rem; }
-  .sn-particle { display: none; }
-}
-
-/* Respeto a usuarios con reduced motion */
+/* Framer Motion escribe estilos inline; el hook useMotionSafe ya devuelve
+   variantes sin desplazamiento. Acá se frenan las transiciones de CSS. */
 @media (prefers-reduced-motion: reduce) {
-  .sn-hero-title,
-  .sn-cta-primary,
-  .sn-cta-secondary,
-  .sn-cta-ghost,
-  .sn-stats-bar,
-  .sn-particle {
-    animation: none !important;
-    transition: none !important;
-  }
+  .sn-btn,
+  .sn-etapa,
+  .sn-etapa__num { transition: none; }
 }

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
+  <!--
+    Un tramo de linga que encastra consigo mismo: empieza y termina a la
+    misma altura (y=40) y con la misma pendiente, así al repetirlo con
+    background-repeat: repeat-x la onda es continua y cubre cualquier ancho.
+  -->
+  <defs>
+    <pattern id="espiga" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#e6b800" stroke-opacity="0.34" stroke-width="3"/>
+    </pattern>
+  </defs>
+
+  <!-- Cuerpo de la cinta -->
+  <path d="M0 40 C 50 20, 50 20, 100 40 S 150 60, 200 40"
+        fill="none" stroke="#ffcc00" stroke-opacity="0.4" stroke-width="18"/>
+
+  <!-- Tejido en espiga por dentro -->
+  <path d="M0 40 C 50 20, 50 20, 100 40 S 150 60, 200 40"
+        fill="none" stroke="url(#espiga)" stroke-width="18"/>
+
+  <!-- Costura central -->
+  <path d="M0 40 C 50 20, 50 20, 100 40 S 150 60, 200 40"
+        fill="none" stroke="#e6b800" stroke-opacity="0.85" stroke-width="1.5"
+        stroke-dasharray="7 6" stroke-linecap="round"/>
+</svg>

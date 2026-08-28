@@ -3,5 +3,4 @@
 .gitignore
 frontend/dist
 backend/dist
-frontend-v2/dist
 **/.env

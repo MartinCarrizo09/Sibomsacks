@@ -7,3 +7,6 @@ mockups-home/
 
 # Audios de feedback del cliente (privados, no van al repo)
 audios cliente/
+
+# Respaldos que dejan las migraciones (locales, con datos de clientes)
+backend/data/*.backup-*.sqlite

@@ -1,382 +1,330 @@
-/* =========================
-   HERO (3 tarjetas)
-   ========================= */
-.hero-section {
-  height: 100vh;
-  display: flex;
-  overflow: hidden;
-  background: none; /* sin fondo sólido */
+/* =========================================================
+   BENEFICIOS — "el ambiente primero".
+   Mismos tokens que la home y Sobre Nosotros: Anton + Barlow
+   sobre azul marino, amarillo como único acento.
+   ========================================================= */
+
+.bf {
+  --bf-navy: #001c4a;
+  --bf-fondo: #0c2c5c;
+  --bf-fondo-2: #071638;
+  --bf-blue: #1e6fd9;
+  --bf-yellow: #ffcc00;
+  --bf-texto: #d3ddf0;
+  --bf-tenue: rgba(255, 255, 255, 0.14);
+
+  --bf-anton: Anton, "Arial Narrow", Impact, sans-serif;
+  --bf-body: Barlow, "Segoe UI", system-ui, sans-serif;
+
+  /* Compensa el padding horizontal de .main-layout para ir a sangre. */
+  --bf-sangria: calc(-1 * clamp(12px, 2.5vw, 32px));
+  /* Margen lateral del contenido: el normal más el marco del sitio. */
+  --bf-borde: calc(var(--site-frame, 0px) + clamp(20px, 4.2vw, 60px));
+
+  background: var(--bf-fondo);
+  color: #fff;
+  font-family: var(--bf-body);
+  margin: 0 var(--bf-sangria);
+  margin-bottom: calc(-1 * var(--main-pb, 0px));
 }
 
-.hero-card {
-  flex: 1;
+/* ---------- HERO + RUEDA ---------- */
+.bf-hero {
+  display: grid;
+  grid-template-columns: 1fr minmax(320px, 420px);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  padding: clamp(40px, 5vw, 64px) var(--bf-borde);
+  background: linear-gradient(105deg, #071638 0%, #0c2c5c 60%, #164a92 100%);
+}
+
+.bf-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 18px;
+  font-size: clamp(10px, 1.1vw, 11.5px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--bf-yellow);
+  font-weight: 600;
+}
+
+.bf-eyebrow__linea {
+  width: clamp(34px, 5vw, 56px);
+  height: 1px;
+  background: var(--bf-yellow);
+  flex-shrink: 0;
+}
+
+.bf-titulo {
+  font-family: var(--bf-anton);
+  font-weight: 400;
+  font-size: clamp(36px, 4.6vw, 62px);
+  line-height: 0.98;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.bf-titulo__ln { display: block; }
+.bf-titulo__calado { color: var(--bf-yellow); }
+
+.bf-hero__texto {
+  margin: clamp(16px, 2.2vw, 22px) 0 0;
+  font-size: clamp(15px, 1.25vw, 16.5px);
+  line-height: 1.65;
+  max-width: 48ch;
+  color: #cddaf0;
+  font-weight: 300;
+}
+
+/* Cifras verificables */
+.bf-datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(20px, 2.6vw, 34px);
+  margin: clamp(22px, 3vw, 30px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bf-datos b {
+  display: block;
+  font-family: var(--bf-anton);
+  font-weight: 400;
+  font-size: clamp(24px, 2.4vw, 32px);
+  line-height: 1;
+  color: var(--bf-yellow);
+}
+
+.bf-datos span {
+  display: block;
+  margin-top: 5px;
+  font-size: clamp(10px, 0.95vw, 11px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #b8c8e2;
+  font-weight: 600;
+}
+
+/* ---------- RUEDA ---------- */
+.bf-rueda svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.bf-arco {
+  fill: none;
+  stroke: var(--bf-yellow);
+  stroke-width: 2.5;
+  opacity: 0.9;
+  marker-end: url(#bf-flecha);
+}
+
+.bf-nodo {
+  fill: var(--bf-fondo-2);
+  stroke: var(--bf-yellow);
+  stroke-width: 1.8;
+}
+
+/* Los íconos vienen dibujados en grilla de 24 con trazo 2, que es el
+   estándar de Lucide/Feather/Material. Como se escalan a 0.92 dentro del
+   nodo, se compensa el grosor para que el trazo siga leyéndose parejo. */
+.bf-nodo__ico {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* El escalado del grupo no debe adelgazar el trazo. */
+  vector-effect: non-scaling-stroke;
+}
+
+.bf-nodo__lb {
+  text-anchor: middle;
+  font-family: var(--bf-anton);
+  font-size: 13px;
+  fill: #fff;
+  letter-spacing: 0.04em;
+}
+
+.bf-rueda__tit {
+  text-anchor: middle;
+  font-family: var(--bf-anton);
+  font-size: 24px;
+  fill: var(--bf-yellow);
+}
+
+.bf-rueda__sub {
+  text-anchor: middle;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  fill: #b8c8e2;
+}
+
+/* El bolsón lleva más detalle que los demás (cuatro asas y los listones
+   del pallet): con el trazo del resto se empasta. */
+.bf-nodo__ico--fino { stroke-width: 1.5; }
+
+/* ---------- SECTORES ---------- */
+.bf-sectores {
+  padding: clamp(44px, 5vw, 68px) var(--bf-borde);
+  /* Bloque claro, el mismo que corta el navy en la home. */
+  background: #f4f6fa;
+  color: var(--bf-navy);
+}
+
+.bf-sectores__cab {
+  max-width: 620px;
+  margin-bottom: clamp(26px, 3.2vw, 38px);
+}
+
+.bf-sectores__tit {
+  margin: 0;
+  font-family: var(--bf-anton);
+  font-weight: 400;
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.bf-sectores__bajada {
+  margin: 14px 0 0;
+  font-size: clamp(14px, 1.15vw, 16px);
+  line-height: 1.6;
+  color: #47536b;
+}
+
+.bf-sectores__grilla {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 1.8vw, 22px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bf-sector {
+  background: #fff;
+  border: 1px solid #dbe2ee;
+  border-radius: 3px;
+  padding: clamp(24px, 2.4vw, 30px) clamp(20px, 2vw, 26px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.bf-sector:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(12, 44, 92, 0.12);
+}
+
+.bf-sector__ico {
+  display: inline-flex;
+  color: var(--bf-blue);
+  margin-bottom: 12px;
+}
+
+.bf-sector__tit {
+  margin: 0 0 12px;
+  font-family: var(--bf-anton);
+  font-weight: 400;
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.06;
+  text-transform: uppercase;
+}
+
+.bf-sector__l {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bf-sector__l li {
   position: relative;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: flex-end;
-  transition: flex .5s ease;
-  cursor: pointer;
-  min-height: 100vh; /* alto pantalla desktop */
+  padding-left: 20px;
+  margin-bottom: 7px;
+  font-size: clamp(13.5px, 1.05vw, 14.5px);
+  line-height: 1.5;
+  color: #47536b;
 }
-.hero-card:hover { flex: 1.1; }
 
-.hero-card::before {
+/* Filete amarillo en lugar de viñeta: el mismo recurso del resto del sitio. */
+.bf-sector__l li::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,.12) 0%, rgba(0,0,0,.72) 100%);
-  z-index: 1;
+  left: 0;
+  top: 9px;
+  width: 10px;
+  height: 2px;
+  background: var(--bf-yellow);
 }
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-  background: rgba(0,0,0,.35);
-  backdrop-filter: blur(3px);
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 16px;
-  padding: 1.5rem 1.25rem;
-  width: min(92%, 560px);
-  margin: 0 auto 2rem;
-  color: #fff;
-  text-align: center;
-}
-
-.hero-title {
-  font-size: 2.6rem;
-  font-weight: 800;
-  letter-spacing: .2px;
-  text-shadow: 2px 2px 6px rgba(0,0,0,.55);
-  margin-bottom: .75rem;
-}
-.hero-title::after{
-  content:"";
-  display:block;
-  width:64px; height:4px;
-  margin:.5rem auto 0;
-  background:#FFD500;
-  border-radius: 2px;
-}
-
-/* Bullets del hero */
-.beneficios-list{
-  list-style: none;
-  padding-left: 0;
-  margin: .25rem auto 1.1rem;
-  text-align: left;
-}
-.beneficios-list li{
-  position: relative;
-  padding-left: 28px;
-  color: #fff;
-  font-size: 1.05rem;
-  line-height: 1.5;
-  margin-bottom: .45rem;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,.45));
-  animation: riseFade .5s ease both;
-}
-.beneficios-list li::before{
-  content:"";
-  position: absolute;
-  left: 0; top: .55em;
-  width: 10px; height: 10px;
-  background: #FFD500;
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(255,213,0,.25);
-}
-.beneficios-list li::after{
-  content:"";
-  position: absolute;
-  left: 2px; top: .38em;
-  width: 6px; height: 6px;
-  border-right: 2px solid #004AAD;
-  border-bottom: 2px solid #004AAD;
-  transform: rotate(45deg);
-}
-@keyframes riseFade{
-  from{ transform: translateY(8px); opacity: 0; }
-  to  { transform: translateY(0);   opacity: 1; }
-}
-@media (hover: hover) and (pointer: fine){
-  .beneficios-list li:hover{ transform: translateX(4px); }
-}
-
-/* Imágenes de fondo hero */
-.agricultura-bg { background-image: url("/images/agricultura.webp"); }
-.industria-bg   { background-image: url("/images/industry.webp"); }
-.mineria-bg     { background-image: url("/images/mineria.webp"); }
-
-/* =========================
-   CONTENEDOR PRINCIPAL
-   ========================= */
-.beneficios-container {
-  background: #f8f9fa;
-  background-image:
-    radial-gradient(circle at 20% 50%, rgba(0,74,173,.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255,213,0,.05) 0%, transparent 50%);
-  padding: 4rem 0;
-}
-
-.custom-badge,
-.custom-badge-alt {
-  font-size: .85rem;
-  font-weight: 600;
-  border-radius: 20px;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  padding: 8px 16px;
-  display: inline-block;
-  margin-bottom: 1rem;
-}
-.custom-badge { background:#ffd500; color:#004aad; }
-.custom-badge-alt { background:rgba(0,74,173,.1); color:#004aad; }
-
-.custom-title {
-  color: #2c3e50;
-  font-size: 2.2rem;
-  line-height: 1.2;
-  font-weight: 700;
-  margin-bottom: 2rem;
-}
-
-.description-text { color:#6c757d; line-height:1.7; font-size:1.1rem; margin-bottom:3rem; }
-
-/* =========================
-   LISTA: ¿Por qué Big Bags?
-   ========================= */
-.porque-item {
+/* ---------- CIERRE ---------- */
+.bf-cierre {
   display: flex;
-  align-items: start;
-  margin-bottom: 1rem;
-  padding: 12px;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  cursor: default;
-  background: transparent;
-  border: 1px solid transparent;
-}
-.porque-item:hover {
-  background: rgba(255, 255, 255, 0.7);
-  transform: translateX(8px);
-  border-color: rgba(0, 74, 173, 0.1);
-  box-shadow: 0 4px 15px rgba(0,0,0,.08);
-}
-.porque-icon {
-  width: 24px; height: 24px;
-  background: #ffd500; border-radius: 50%;
-  margin-right: 12px; margin-top: 4px;
-  flex-shrink: 0; position: relative;
-}
-.porque-icon::after {
-  content: "✓";
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  color: #004aad; font-weight: 700; font-size: 12px;
-}
-.porque-text { color:#4a5568; line-height:1.5; font-weight:500; }
-
-/* =========================
-   CTA lateral
-   ========================= */
-.cta-box {
-  background: linear-gradient(135deg, #004aad 0%, #0066cc 100%);
-  box-shadow: 0 15px 40px rgba(0, 74, 173, 0.25);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 20px;
-  padding: 2rem;
-  margin-top: 2rem;
-  position: relative;
-  overflow: hidden;
-  color: #fff;
-}
-.cta-decoration-1 {
-  position: absolute; top: 0; right: 0;
-  width: 120px; height: 120px;
-  background: linear-gradient(45deg, #ffd500, #ffa500);
-  border-radius: 50%;
-  transform: translate(40px, -40px);
-  opacity: .1;
-}
-.cta-decoration-2 {
-  position: absolute; bottom: 0; left: 0;
-  width: 80px; height: 80px;
-  background: #ffd500; border-radius: 50%;
-  transform: translate(-20px, 20px);
-  opacity: .05;
-}
-.cta-content { position: relative; z-index: 1; }
-.cta-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; }
-.cta-text { line-height: 1.6; font-size: .95rem; opacity: .9; margin-bottom: 1.5rem; }
-.cta-button {
-  background: #ffd500; color: #004aad; font-size: 1.1rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .5px; border: 0; border-radius: 12px;
-  padding: 12px 24px; width: 100%; transition: all .3s ease;
-  box-shadow: 0 6px 20px rgba(255,213,0,.4); cursor: pointer;
-}
-.cta-button:hover { background:#e6be00; transform:translateY(-3px); box-shadow:0 8px 25px rgba(255,213,0,.5); }
-
-/* =========================
-   VENTAJAS (cards)
-   ========================= */
-.ventaja-card {
-  display:flex; align-items:center; padding:1.5rem; border-radius:12px; height:100%;
-  position:relative; overflow:hidden; background:#fff; border:2px solid #f1f3f4; min-height:100px;
-  transition:all .4s cubic-bezier(.4,0,.2,1); cursor:default; box-shadow:0 4px 15px rgba(0,0,0,.04);
-}
-.ventaja-card:hover { transform:translateY(-5px); box-shadow:0 15px 35px rgba(0,74,173,.15); }
-.ventaja-card:nth-child(even):hover { border-color:#004aad; }
-.ventaja-card:nth-child(odd):hover  { border-color:#ffd500; }
-.ventaja-gradient { position:absolute; inset:0; opacity:.03; }
-.ventaja-card:nth-child(even) .ventaja-gradient { background:linear-gradient(135deg,#004aad 0%,transparent 60%); }
-.ventaja-card:nth-child(odd)  .ventaja-gradient { background:linear-gradient(135deg,#ffd500 0%,transparent 60%); }
-.ventaja-icon {
-  width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-  margin-right:1rem; flex-shrink:0; position:relative; z-index:1;
-}
-.ventaja-card:nth-child(even) .ventaja-icon { background:rgba(0,74,173,.1); border:2px solid rgba(0,74,173,.2); }
-.ventaja-card:nth-child(odd)  .ventaja-icon { background:rgba(255,213,0,.2); border:2px solid rgba(255,213,0,.4); }
-.ventaja-icon::after { content:"✓"; font-weight:700; font-size:18px; }
-.ventaja-card:nth-child(even) .ventaja-icon::after { color:#004aad; }
-.ventaja-card:nth-child(odd)  .ventaja-icon::after { color:#ca8a04; }
-.ventaja-text { color:#374151; font-weight:500; line-height:1.5; flex-grow:1; position:relative; z-index:1; }
-
-/* =========================
-   STATS (alineadas)
-   ========================= */
-.stats-row > [class*="col-"] {
-  display: flex;                 /* estira la card al alto de la columna */
-}
-
-.stats-card {
-  width: 100%;
-  height: 100%;
-  min-height: 180px;             /* piso común */
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;       /* centra vertical */
-  text-align:center;
-  padding:2rem;
-  border-radius:20px;
-  background:#fff;
-  box-shadow:0 8px 25px rgba(0,0,0,.06);
-  border:1px solid rgba(0,74,173,.1);
-  transition:all .3s ease;
-}
-.stats-card:hover { transform:translateY(-5px); box-shadow:0 15px 40px rgba(0,0,0,.12); }
-.stats-card.yellow-accent { border:1px solid rgba(255,213,0,.2); }
-.stats-card.yellow-accent:hover { box-shadow:0 15px 40px rgba(255,213,0,.15); }
-
-.stats-icon {
-  width:70px; height:70px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
-  margin-bottom:12px; border:3px solid rgba(0,74,173,.1);
-  background:linear-gradient(135deg,rgba(0,74,173,.1) 0%, rgba(0,74,173,.2) 100%); position:relative;
-}
-.stats-icon::after { font-size:28px; font-weight:700; }
-.stats-icon.shield::after { content:"🛡️"; }   /* podés cambiar el emoji */
-
-.stats-number  { color:#004aad; font-size:2.5rem; font-weight:700; line-height:1; margin-bottom:8px; }
-.stats-text    { color:#6c757d; font-weight:500; margin-bottom:0; min-height: 2.8em; display:flex; align-items:center; }
-
-/* =========================
-   Sticky izquierda
-   ========================= */
-.sticky-content { position: sticky; top: 2rem; }
-
-/* =========================
-   RESPONSIVE
-   ========================= */
-@media (max-width: 992px) {
-  .hero-section {
-    height: auto;
-    flex-direction: column; /* apiladas */
-  }
-  .hero-card {
-    min-height: 75vh;
-    width: 100%;
-  }
-  .hero-card + .hero-card { margin-top: 14px; }
-  .hero-title { font-size: 2.2rem; }
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: clamp(20px, 3vw, 40px);
+  padding: clamp(38px, 4.4vw, 56px) var(--bf-borde);
+  background: var(--bf-fondo-2);
+  /* El footer arranca con su propia cuña navy: sin esto se funden. */
+  border-bottom: 1px solid var(--bf-tenue);
 }
 
-@media (max-width: 768px) {
-  .hero-card { min-height: 70vh; padding: 10px 10px 0; }
-  .hero-card:hover { flex: 1; } /* sin zoom para evitar salto */
-  .hero-content{
-    background: rgba(0,0,0,.55);
-    width: 92%;
-    padding: 16px 14px;
-    border-radius: 18px;
-    margin: 0 auto 18px;
-    box-shadow: 0 12px 28px rgba(0,0,0,.28);
-  }
-  .hero-title { font-size: 2rem; }
-  .beneficios-list li { font-size: 1rem; }
-  .beneficios-list li:nth-child(n+7){ display: none; } /* mostrar 6 bullets */
-  .sticky-content { position: static; }
-  .custom-title { font-size: 1.8rem; }
-  .cta-box { margin-top: 1rem; }
-
-  .stats-card { min-height: 150px; }
-  .stats-text { min-height: 2.2em; }
+.bf-cierre__tit {
+  margin: 0;
+  font-family: var(--bf-anton);
+  font-weight: 400;
+  font-size: clamp(24px, 2.8vw, 36px);
+  line-height: 1.05;
+  text-transform: uppercase;
 }
 
-/* Safe areas (iOS/Android con notch) */
-@supports (padding: max(0px)) {
-  .hero-content { padding-bottom: max(18px, env(safe-area-inset-bottom)); }
+/* Mismo botón que el resto del sitio. */
+.bf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 clamp(22px, 3vw, 32px);
+  background: var(--bf-yellow);
+  color: var(--bf-navy);
+  font-family: var(--bf-anton);
+  font-size: clamp(13px, 1.3vw, 15px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.25s;
 }
 
-/* Suavidad de scroll (opcional global) */
-html { scroll-behavior: smooth; }
-/* ==== CTA + Stats alineadas en misma línea base ==== */
-.beneficios-metrics-row{
-  display: grid;
-  grid-template-columns: minmax(280px, 380px) 1fr;
-  gap: 1.5rem;
-  align-items: end;
+.bf-btn:hover {
+  background: #e6b800;
+  transform: translateY(-2px);
 }
 
-.beneficios-metrics-row .col-cta{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 980px) {
+  /* La rueda pasa debajo del texto y se centra. */
+  .bf-hero { grid-template-columns: 1fr; }
+  .bf-rueda { max-width: 380px; margin: 0 auto; }
+  .bf-sectores__grilla { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-.beneficios-metrics-row .col-stats{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(200px, 1fr));
-  gap: 1.5rem;
+@media (max-width: 620px) {
+  .bf-sectores__grilla { grid-template-columns: 1fr; }
+  .bf-datos { gap: 18px 24px; }
+  .bf-cierre .bf-btn { width: 100%; }
 }
 
-.stats-card.micro{
-  padding: 1rem;
-  min-height: auto;
-  border-radius: 14px;
+/* Framer Motion escribe estilos inline; el hook useMotionSafe ya devuelve
+   variantes sin desplazamiento. Acá se frenan las transiciones de CSS. */
+@media (prefers-reduced-motion: reduce) {
+  .bf-btn,
+  .bf-sector { transition: none; }
 }
-.stats-card.micro .stats-icon{ width: 56px; height: 56px; }
-.stats-card.micro .stats-number{ font-size: 1.4rem; margin-bottom: 2px; }
-.stats-card.micro .stats-text{ font-size: .95rem; min-height: auto; }
-
-.stats-icon.space::after { content: "📦"; }
-.stats-icon.time::after  { content: "⏱️"; }
-.stats-icon.shield::after{ content: "🛡️"; }
-.stats-icon.star::after  { content: "⭐"; }
-
-@media (max-width: 992px){
-  .beneficios-metrics-row{
-    grid-template-columns: 1fr;
-    align-items: stretch;
-  }
-  .beneficios-metrics-row .col-stats{
-    grid-template-columns: 1fr;
-  }
-}
-@media (min-width: 993px) and (max-width: 1200px){
-  .beneficios-metrics-row .col-stats{
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-  }
-}
-
-

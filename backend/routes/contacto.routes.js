@@ -18,8 +18,17 @@ router.post("/", async (req, res) => {
       mensaje
     } = req.body;
 
-    if (!nombre || !apellido || !correo || !id_sector || !id_provincia || !mensaje) {
+    /* El formulario de la web pide lo mínimo para poder responder: nombre,
+       una vía de contacto, sector y mensaje. La provincia se conversa
+       después, y el contacto puede ser correo O teléfono, no ambos. */
+    if (!nombre || !id_sector || !mensaje) {
       return res.status(400).json({ error: "Faltan campos obligatorios" });
+    }
+
+    if (!correo && !telefono) {
+      return res
+        .status(400)
+        .json({ error: "Hace falta un correo o un teléfono" });
     }
 
     // Guardar en DB

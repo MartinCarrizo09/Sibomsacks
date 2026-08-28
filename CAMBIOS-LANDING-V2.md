@@ -1,7 +1,7 @@
 # Cambios a la landing — feedback del cliente
 
 > **Código a modificar:** carpeta `frontend/` (la que construye `Dockerfile`, sin sufijo).
-> Es el servicio de Railway que el cliente revisó y eligió. **No** confundir con `frontend-v2/` (`Dockerfile.v2`), que es el otro servicio desplegado en paralelo.
+> Es el servicio de Railway que el cliente revisó y eligió. (En su momento existió un `frontend-v2/` con su `Dockerfile.v2`, desplegado en paralelo para comparar; se eliminó del repo el 2026-08-27 por quedar descartado.)
 >
 > **Fuente:** 13 audios de WhatsApp en `audios cliente/`, transcriptos con Whisper (`faster-whisper`, modelo `medium`, español). Fecha: 2026-08-25.
 > Las transcripciones textuales están en el anexo, al final.
