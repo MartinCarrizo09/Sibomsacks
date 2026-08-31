@@ -760,18 +760,26 @@
   place-items: center;
   padding: 12px 6px;
   border-radius: 4px;
+  /* Caja despareja: los logos van de 2:1 (Caima) a 1:1 (Pirquitas). Sin un
+     alto comun cada fila se acomodaba al logo mas alto y la linea de base
+     saltaba de una celda a otra. */
+  min-height: calc(clamp(34px, 3.6vw, 46px) + 24px);
   transition: background 0.3s ease, opacity 0.34s ease,
     transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Foco: al señalar uno, el resto se atenúa y el elegido crece. Se apoya
-   en el hover del contenedor, así que en táctil no pasa nada raro: sin
-   puntero, todos quedan a opacidad plena. */
-.hm-clientes__grid:hover .hm-cliente { opacity: 0.34; }
-.hm-clientes__grid .hm-cliente:hover {
-  opacity: 1;
-  background: #f4f6fa;
-  transform: scale(1.09);
+/* Foco: al señalar uno, el resto se atenúa y el elegido crece. Va detrás de
+   `hover: hover` para dejarlo solo en equipos con puntero: en un táctil el
+   navegador emula el hover al tocar y el efecto quedaba pegado —el logo
+   tocado ampliado y los otros siete lavados— hasta tocar en otro lado. */
+@media (hover: hover) and (pointer: fine) {
+  .hm-clientes__grid:hover .hm-cliente { opacity: 0.34; }
+  .hm-clientes__grid .hm-cliente:hover {
+    opacity: 1;
+    background: #f4f6fa;
+    transform: scale(1.09);
+  }
+  .hm-cliente:hover img { filter: none; }
 }
 
 .hm-cliente img {
@@ -783,15 +791,35 @@
   filter: grayscale(1);
   transition: filter 0.34s ease;
 }
-.hm-cliente:hover img { filter: none; }
 
 /* Ocho columnas solo entran en escritorio: mas abajo se reparten en
-   varias filas para que cada logo siga siendo legible. */
+   varias filas para que cada logo siga siendo legible. Los cortes van
+   siempre a un divisor de 8 (4 y 2) para que las filas queden completas:
+   con 3 columnas la ultima fila quedaba con dos logos sueltos y centrados,
+   desalineados respecto de las de arriba. */
 @media (max-width: 1100px) {
   .hm-clientes__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+
 @media (max-width: 560px) {
-  .hm-clientes__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hm-clientes__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* Con dos columnas hay lugar de sobra a lo ancho: el aire que separa
+       las filas pasa a ser el que ordena la lista. */
+    gap: clamp(18px, 5vw, 26px) clamp(12px, 3vw, 20px);
+  }
+
+  /* A dos columnas cada celda es mucho mas ancha, asi que el logo puede
+     crecer sin invadir al vecino. El tope de alto sube en la misma
+     proporcion para que los apaisados no queden diminutos. */
+  .hm-cliente img {
+    max-width: min(150px, 34vw);
+    max-height: 52px;
+  }
+
+  /* Acompana el nuevo tope de alto: si no, la celda sigue midiendo lo del
+     bloque ancho y recorta el aire alrededor del logo. */
+  .hm-cliente { min-height: 76px; }
 }
 
 /* ---------- RESPONSIVE ---------- */

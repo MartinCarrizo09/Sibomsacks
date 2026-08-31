@@ -422,36 +422,56 @@
 @media (max-width: 720px) {
   /* La diagonal no aporta en pantalla angosta: la foto pasa a ser una
      banda superior y el texto se apoya sobre el navy. */
+  /* Alto de la banda de foto. Lo comparten el recorte de la imagen y el
+     margen superior del texto, para que no se despeguen si se retoca. */
+  .sn-hero {
+    --sn-banda: clamp(190px, 40vh, 300px);
+    /* Apilado el hero mide lo que miden foto + texto. El piso de 560px del
+       bloque ancho dejaba un hueco navy debajo de los botones. */
+    min-height: 0;
+  }
+
   .sn-hero__bg {
     clip-path: none;
     inset: 0 0 auto 0;
-    height: 46%;
+    height: var(--sn-banda);
     /* Apaisada y sin diagonal: centrada entra la hilera completa. */
     background-position: center center;
   }
 
   .sn-hero__velo {
-    /* La foto ya no llega al pie, así que el velo cubre todo el hero. */
+    /* La foto ya no llega al pie, así que el velo cubre todo el hero. Los
+       cortes se miden contra la banda —no en `%` del hero— para que el navy
+       cierre justo donde termina la imagen, sea cual sea el alto. */
     inset: 0;
     background: linear-gradient(
       to bottom,
       rgba(7, 22, 56, 0.35) 0,
-      rgba(12, 44, 92, 0.92) 38%,
-      var(--sn-fondo) 52%
+      rgba(12, 44, 92, 0.92) calc(var(--sn-banda) - 40px),
+      var(--sn-fondo) var(--sn-banda)
     );
   }
 
   .sn-hero__in {
     max-width: none;
-    margin-top: 42%;
+    /* El texto arranca donde termina la banda de foto. Se ata a la misma
+       variable y no a un `%`, que se resuelve sobre el ANCHO del hero: en un
+       teléfono apaisado empujaba el texto fuera de cuadro y en uno angosto lo
+       montaba sobre la foto. Los `auto` del bloque ancho se anulan, si no
+       compiten con este margen y el texto vuelve a centrarse sobre la foto. */
+    margin-top: var(--sn-banda);
+    margin-bottom: 0;
+    padding-top: clamp(24px, 5vw, 36px);
   }
 
   .sn-tira {
     grid-template-columns: 1fr;
     gap: 14px;
-    /* Apilada en una columna necesita crecer: el alto de la franja
-       apaisada la comprimiría. */
-    min-height: 0;
+    /* Apilada en una columna necesita crecer. El alto base es `height`
+       FIJO —la foto se corta contra esa misma medida—, así que acá hay que
+       liberarlo con `height: auto`: un `min-height` no alcanza para vencer
+       una altura fija y la franja quedaba con las tres filas aplastadas. */
+    height: auto;
     padding-top: clamp(18px, 4vw, 24px);
     padding-bottom: clamp(18px, 4vw, 24px);
   }
@@ -469,6 +489,28 @@
      fluye solo y el botón toma todo el ancho. */
   .sn-cierre__tit br { display: none; }
   .sn-cierre .sn-btn { width: 100%; }
+}
+
+/* Teléfono angosto: mismo corte que usan el resto de las páginas. */
+@media (max-width: 560px) {
+  .sn {
+    /* El margen lateral se calcula sobre `vw` y a este ancho se comía la
+       caja de texto. --site-frame ya vale 0 acá, así que sólo queda el aire
+       mínimo para despegar del borde. */
+    --sn-borde: clamp(16px, 5vw, 22px);
+  }
+
+  /* El techo de 5vw no baja lo suficiente en pantallas chicas y
+     "Argentina desde" se desbordaba del ancho útil. */
+  .sn-titulo { font-size: clamp(30px, 8.6vw, 40px); }
+
+  /* Sin `min-width: 0` una palabra larga estira la celda y el texto se
+     escapa del ancho de la grilla. */
+  .sn-tira__txt { min-width: 0; }
+  .sn-tira__txt span { overflow-wrap: anywhere; }
+
+  .sn-proceso__bajada,
+  .sn-etapa__txt { text-wrap: pretty; }
 }
 
 /* Framer Motion escribe estilos inline; el hook useMotionSafe ya devuelve
