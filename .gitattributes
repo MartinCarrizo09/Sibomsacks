@@ -1,0 +1,8 @@
+# Los scripts que corren dentro del contenedor Linux deben conservar
+# finales de linea LF. Con core.autocrlf=true (por defecto en Windows) git
+# los dejaba en CRLF al hacer checkout, y como `railway up` sube el
+# directorio de trabajo, el shebang viajaba como `#!/bin/sh\r`: Linux
+# buscaba un interprete llamado `sh\r` y el contenedor no arrancaba.
+*.sh text eol=lf
+docker-entrypoint.sh text eol=lf
+Dockerfile text eol=lf
