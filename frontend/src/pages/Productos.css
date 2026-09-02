@@ -135,3 +135,330 @@
   object-fit: cover;
   max-height: 260px;
 }
+
+/* =========================================================
+   DESTACADOS — los dos productos estrella
+   Mismo lenguaje que la home: navy a sangre, amarillo de acento
+   y Anton para los títulos.
+   ========================================================= */
+
+.productos-page {
+  /* Red de seguridad: el bloque destacado va a sangre con margenes
+     negativos, asi que ningun hijo debe poder generar scroll lateral. */
+  overflow-x: clip;
+}
+
+.pd-destacados {
+  --pd-navy: #071638;
+  --pd-navy-2: #0c2c5c;
+  --pd-yellow: #ffcc00;
+  --pd-texto: #d3ddf0;
+
+  /* Compensa el padding lateral de .main-layout para ir a sangre, igual
+     que hace la home con --hm-sangria. .main-layout no tiene padding
+     superior, asi que arriba no hay nada que compensar. */
+  --pd-sangria: calc(-1 * clamp(12px, 2.5vw, 32px));
+  /* El contenido respeta el marco del sitio: en monitores anchos el fondo
+     llega al borde pero el texto no se estira. */
+  --pd-borde: calc(var(--site-frame, 0px) + clamp(20px, 4.2vw, 60px));
+
+  margin: 0 var(--pd-sangria);
+  /* La regla global `section { max-width:100% }` limita el ancho al del
+     contenido del padre; con margenes negativos el bloque es mas ancho que
+     eso y el texto se desbordaba. Se fija el ancho explicitamente. */
+  width: auto;
+  max-width: none;
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--pd-borde) clamp(3rem, 7vw, 5rem);
+  background: linear-gradient(180deg, var(--pd-navy) 0%, var(--pd-navy-2) 100%);
+  color: #fff;
+}
+
+/* ---------- Cabecera ---------- */
+.pd-destacados__cab {
+  max-width: 60ch;
+  margin: 0 auto clamp(2rem, 5vw, 3.25rem);
+  text-align: center;
+}
+
+.pd-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pd-yellow);
+}
+
+.pd-eyebrow__linea {
+  display: block;
+  width: clamp(24px, 5vw, 46px);
+  height: 2px;
+  background: var(--pd-yellow);
+}
+
+.pd-destacados__tit {
+  margin: 0 0 0.85rem;
+  font-family: Anton, "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.9rem, 5.4vw, 3.1rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.pd-destacados__bajada {
+  margin: 0;
+  color: var(--pd-texto);
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* ---------- Bloque de cada estrella ---------- */
+.pd-estrella {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.pd-estrella + .pd-estrella {
+  margin-top: clamp(3rem, 7vw, 5.5rem);
+  padding-top: clamp(3rem, 7vw, 5.5rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* El segundo bloque invierte el orden para romper la simetría. */
+.pd-estrella--invertida .pd-estrella__media {
+  order: 2;
+}
+
+.pd-estrella__media {
+  min-width: 0;
+}
+
+.pd-estrella__texto {
+  min-width: 0;
+}
+
+/* ---------- Chip / título / intro ---------- */
+.pd-chip {
+  display: inline-block;
+  margin-bottom: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0b1220;
+  background: var(--pd-yellow);
+  border-radius: 999px;
+}
+
+.pd-estrella__tit {
+  margin: 0 0 0.85rem;
+  font-family: Anton, "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(1.55rem, 4vw, 2.35rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.pd-estrella__tit em {
+  font-style: normal;
+  color: var(--pd-yellow);
+}
+
+.pd-estrella__intro {
+  margin: 0 0 1.1rem;
+  color: var(--pd-texto);
+  font-size: clamp(1rem, 2.1vw, 1.08rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* Pista que enlaza el texto con el botón del visor. */
+.pd-estrella__tip {
+  margin: 0 0 1.4rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #fff;
+  background: rgba(30, 111, 217, 0.22);
+  border-left: 3px solid var(--pd-yellow);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.pd-estrella__tip strong {
+  color: var(--pd-yellow);
+}
+
+/* ---------- Lista de puntos ---------- */
+.pd-puntos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.1rem 1.4rem;
+  margin: 0 0 1.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.pd-puntos li {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+/* Marca de viñeta: filete amarillo, el mismo recurso que usa la home. */
+.pd-puntos li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.35rem;
+  width: 3px;
+  height: 1.05rem;
+  background: var(--pd-yellow);
+  border-radius: 2px;
+}
+
+.pd-puntos h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.pd-puntos p {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: var(--pd-texto);
+  text-wrap: pretty;
+}
+
+/* ---------- Nota al pie del bloque ---------- */
+.pd-nota {
+  margin: 0 0 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #b8c8e2;
+  text-wrap: pretty;
+}
+
+/* ---------- CTA ---------- */
+.pd-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 1.35rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #0b1220;
+  background: var(--pd-yellow);
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.pd-cta:hover {
+  color: #0b1220;
+  background: #ffd633;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+}
+
+.pd-cta:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9);
+}
+
+/* ---------- Foto del SlingBag ---------- */
+.pd-foto {
+  margin: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.pd-foto img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pd-foto figcaption {
+  padding: 0.7rem 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #b8c8e2;
+}
+
+/* ---------- Fallback del visor mientras carga el chunk ---------- */
+.pd-visor-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 560px;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #0f2f61 0%, #071638 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #d3ddf0;
+  font-size: 0.95rem;
+}
+
+/* ---------- Cabecera de los modelos de serie ---------- */
+.pd-serie {
+  padding-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+.pd-serie__cab {
+  max-width: 62ch;
+  margin: 0 auto clamp(1.75rem, 4vw, 2.5rem);
+  text-align: center;
+}
+
+.pd-serie__bajada {
+  margin: 0.5rem 0 0;
+  color: #47536b;
+  font-size: clamp(0.98rem, 2.1vw, 1.05rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .pd-estrella {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  /* En una columna, la imagen siempre va primero: el orden invertido sólo
+     tiene sentido cuando hay dos columnas. */
+  .pd-estrella--invertida .pd-estrella__media {
+    order: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .pd-puntos {
+    grid-template-columns: 1fr;
+    gap: 0.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-cta {
+    transition: none;
+  }
+  .pd-cta:hover {
+    transform: none;
+  }
+}
