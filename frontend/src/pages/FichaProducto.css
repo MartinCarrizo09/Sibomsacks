@@ -310,3 +310,75 @@
     transform: none;
   }
 }
+
+/* ---------- Galería de producto ---------- */
+.fp-galeria {
+  max-width: 1180px;
+  padding: clamp(2rem, 5vw, 3rem) 0;
+  border-top: 1px solid var(--fp-tenue);
+}
+
+.fp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fp-grid figure {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  border-radius: 0.9rem;
+  overflow: hidden;
+  /* Las fotos vienen con fondo blanco de catálogo: se les da una base clara
+     para que no floten sobre el navy con un recorte duro. */
+  background: #f4f6fa;
+  border: 1px solid var(--fp-tenue);
+}
+
+.fp-grid img {
+  display: block;
+  width: 100%;
+  height: 230px;
+  object-fit: contain;
+  padding: 0.75rem;
+  background: #fff;
+}
+
+.fp-grid figcaption {
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  font-weight: 500;
+  color: #0c2c5c;
+  background: #f4f6fa;
+  /* El pie empuja hacia abajo para que todas las tarjetas cierren parejo. */
+  margin-top: auto;
+}
+
+@media (max-width: 560px) {
+  .fp-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+  }
+  .fp-grid img {
+    height: 150px;
+  }
+  .fp-grid figcaption {
+    font-size: 0.78rem;
+    padding: 0.5rem 0.6rem;
+  }
+}
+
+/* El enlace de la miga y los CTA del pie: area tactil minima en movil. */
+@media (max-width: 768px) {
+  .fp-miga a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}

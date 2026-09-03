@@ -16,6 +16,7 @@ const Contacto = lazy(() => import("./pages/Contacto"));
 const ProductoDetalle = lazy(() => import("./pages/DetalleProductos"));
 const BolsonCompartimentado = lazy(() => import("./pages/BolsonCompartimentado"));
 const EslingasIzaje = lazy(() => import("./pages/EslingasIzaje"));
+const BigBagsCordoba = lazy(() => import("./pages/BigBagsCordoba"));
 
 import "./App.css";
 import Cargando from "./components/Cargando.jsx";
@@ -33,6 +34,8 @@ function App() {
             <Route path="/inicio" element={<Inicio />} />
             <Route path="/sobre-nosotros" element={<SobreNosotros />} />
             <Route path="/productos" element={<Productos />} />
+            {/* Aterrizaje para la busqueda local "big bags cordoba". */}
+            <Route path="/big-bags-cordoba" element={<BigBagsCordoba />} />
             <Route path="/beneficios" element={<Beneficios />} />
             <Route path="/contacto" element={<Contacto />} />
             <Route

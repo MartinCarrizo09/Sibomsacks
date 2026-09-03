@@ -173,3 +173,15 @@ a.footer__dato:focus-visible { border-bottom-color: var(--footer-accent); }
 
 
 
+
+/* Los enlaces del pie (telefono, WhatsApp) quedaban en 21px de alto: muy
+   poco para el dedo. Se les da area tactil sin cambiar como se ven. */
+@media (max-width: 768px) {
+  .footer a[href^="tel:"],
+  .footer a[href*="wa.me"],
+  .footer a[href^="mailto:"] {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}

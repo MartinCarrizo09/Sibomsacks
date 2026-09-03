@@ -1,9 +1,8 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
+import Carrusel from "../components/Carrusel.jsx";
 import "./FichaProducto.css";
-
-const VisorBolson3D = lazy(() => import("../components/VisorBolson3D.jsx"));
 
 /*
   Ficha del bolsón compartimentado.
@@ -47,6 +46,39 @@ const CARACTERISTICAS = [
     titulo: "Polipropileno con tratamiento UV",
     texto:
       "Misma tela y mismos controles que el resto de la producción, con protección UV para el que se almacena a la intemperie.",
+  },
+];
+
+/* Vistas de producto: la de esquinas es la que mejor explica el
+   producto, porque muestra los cuatro tabiques formando el octogono. */
+const GALERIA = [
+  {
+    src: "/images/compartimentado-vista-general.webp",
+    alt: "Big Bag compartimentado abierto, con los tabiques internos visibles desde arriba y las cuatro eslingas de izaje.",
+    pie: "Bolsón completo con los tabiques a la vista",
+    w: 900,
+    h: 1070,
+  },
+  {
+    src: "/images/compartimentado-interior-superior.webp",
+    alt: "Vista cenital del interior: los cuatro tabiques cosidos en las esquinas forman una sección octogonal.",
+    pie: "Los cuatro tabiques, vistos desde arriba",
+    w: 878,
+    h: 724,
+  },
+  {
+    src: "/images/compartimentado-tabiques-esquinas.webp",
+    alt: "Interior del bolsón en perspectiva, donde se ven los tabiques que unen cada esquina con las paredes.",
+    pie: "Cómo se cosen a las paredes",
+    w: 900,
+    h: 685,
+  },
+  {
+    src: "/images/compartimentado-lateral.webp",
+    alt: "Vista lateral del bolsón compartimentado vacío, con las costuras verticales y las eslingas.",
+    pie: "Vista lateral, vacío",
+    w: 823,
+    h: 1262,
   },
 ];
 
@@ -120,18 +152,9 @@ const BolsonCompartimentado = () => {
       {/* ---------- Visor + puntos ---------- */}
       <section className="fp-bloque" aria-labelledby="fp-como-tit">
         <div className="fp-bloque__media">
-          <Suspense
-            fallback={
-              <div className="fp-visor-fallback" role="status">
-                Cargando modelo 3D…
-              </div>
-            }
-          >
-            <VisorBolson3D />
-          </Suspense>
+          <Carrusel imagenes={GALERIA} etiqueta="Fotos del Big Bag compartimentado" />
           <p className="fp-pie">
-            Modelo 3D interactivo. Tocá <strong>“Ver por dentro”</strong> para
-            ver los tabiques que dividen el bolsón.
+            Cuatro vistas del bolsón vacío. Deslizá para verlas todas.
           </p>
         </div>
 

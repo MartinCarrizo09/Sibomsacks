@@ -26,6 +26,8 @@ const COLOR_ESLINGA = 0x1e6fd9;
 const COLOR_COSTURA = 0x0c2c5c;
 
 const clasificar = (nombre) => {
+  // Los tabiques van en las cuatro esquinas, como en el producto real: el
+  // nodo se llama internal_partition_corners.
   if (nombre.startsWith("internal_partition")) return "tabique";
   if (nombre.startsWith("top_cross")) return "tabique";
   if (nombre.startsWith("loop_")) return "eslinga";
@@ -52,7 +54,7 @@ const VisorBolson3D = ({ className = "" }) => {
     escena.background = null;
 
     const camara = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-    camara.position.set(2.6, -2.9, 2.1);
+    camara.position.set(2.35, -1.85, 1.95);
 
     let renderer;
     try {
@@ -79,7 +81,7 @@ const VisorBolson3D = ({ className = "" }) => {
     controles.enableDamping = true;
     controles.dampingFactor = 0.08;
     controles.enablePan = false;
-    controles.minDistance = 2.2;
+    controles.minDistance = 1.6;
     controles.maxDistance = 7;
     // Se limita la órbita vertical para que no se pueda mirar desde abajo del piso.
     controles.minPolarAngle = 0.15;
@@ -191,7 +193,7 @@ const VisorBolson3D = ({ className = "" }) => {
       materiales,
       controles,
       reencuadrar: () => {
-        camara.position.set(2.6, -2.9, 2.1);
+        camara.position.set(2.35, -1.85, 1.95);
         controles.update();
       },
     };

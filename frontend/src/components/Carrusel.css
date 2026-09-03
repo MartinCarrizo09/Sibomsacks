@@ -1,0 +1,182 @@
+/* =========================================================
+   Carrusel de fotos de producto
+   Scroll nativo con snap: el gesto en móvil es el del sistema
+   y las fotos siguen siendo navegables sin JS.
+   ========================================================= */
+
+.carr {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.carr__pista {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.carr__pista::-webkit-scrollbar {
+  display: none;
+}
+
+.carr__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  margin: 0;
+  min-width: 0;
+  background: #fff;
+}
+
+.carr__slide img {
+  display: block;
+  width: 100%;
+  /* Las fotos son de catálogo, con fondo blanco y proporciones distintas:
+     contain las muestra enteras sin recortar el bolsón. */
+  height: clamp(260px, 42vw, 440px);
+  object-fit: contain;
+  padding: 1rem;
+  background: #fff;
+}
+
+.carr__slide figcaption {
+  padding: 0.7rem 1rem 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  font-weight: 500;
+  color: #0c2c5c;
+  background: #f4f6fa;
+  text-align: center;
+}
+
+/* ---------- Flechas ---------- */
+.carr__nav {
+  position: absolute;
+  top: calc(50% - 1.4rem);
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #0b1220;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(12, 44, 92, 0.18);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+.carr__nav:hover:not(:disabled) {
+  background: #ffcc00;
+}
+.carr__nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.carr__nav:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.9);
+}
+
+.carr__nav--prev {
+  left: 0.6rem;
+}
+.carr__nav--next {
+  right: 0.6rem;
+}
+
+/* ---------- Puntos ---------- */
+.carr__puntos {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3.1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.carr__puntos button {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(12, 44, 92, 0.5);
+  background: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.carr__puntos button.is-activo {
+  background: #ffcc00;
+  border-color: #0c2c5c;
+  transform: scale(1.25);
+}
+.carr__puntos button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.9);
+}
+
+@media (max-width: 560px) {
+  .carr__nav {
+    width: 34px;
+    height: 34px;
+    font-size: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carr__pista {
+    scroll-behavior: auto;
+  }
+  .carr__nav,
+  .carr__puntos button {
+    transition: none;
+  }
+}
+
+/* ---------- Area tactil en pantallas chicas ----------
+   Las flechas y los puntos se ven igual, pero la zona que responde al dedo
+   llega al minimo recomendado de 44px. */
+@media (max-width: 768px) {
+  .carr__nav {
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+  }
+
+  .carr__puntos {
+    gap: 0.15rem;
+  }
+  /* El punto sigue midiendo 9px; lo que crece es el area clickeable. */
+  .carr__puntos button {
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: none;
+    position: relative;
+  }
+  .carr__puntos button::after {
+    content: "";
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 1px solid rgba(12, 44, 92, 0.5);
+    background: rgba(255, 255, 255, 0.85);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .carr__puntos button.is-activo::after {
+    background: #ffcc00;
+    border-color: #0c2c5c;
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+}

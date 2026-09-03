@@ -145,3 +145,11 @@
     transition: none;
   }
 }
+
+/* Los botones del visor quedaban en 36px de alto en movil. */
+@media (max-width: 768px) {
+  .visor3d__btn {
+    min-height: 44px;
+    padding: 0.55rem 1rem;
+  }
+}

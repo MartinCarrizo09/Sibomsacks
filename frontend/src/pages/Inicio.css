@@ -26,9 +26,11 @@
   color: #fff;
   font-family: var(--hm-body);
   margin: 0 var(--hm-sangria);
-  /* La sección de clientes ya trae su propio padding inferior; se cancela
-     el de .main-layout para que el navy llegue justo hasta el footer. */
+  /* La ultima seccion (FAQ) trae su propio padding inferior; se cancela el
+     de .main-layout para que el navy llegue justo hasta el footer y no
+     quede una franja blanca. */
   margin-bottom: calc(-1 * var(--main-pb, 0px));
+  padding-bottom: 0;
 }
 
 /* ---------- HERO ---------- */
@@ -53,8 +55,14 @@
   /* Ocupa la pantalla completa menos el header: ahora que hay indicador de
      scroll, el corte del hero deja de ser la pista de que sigue habiendo
      pagina. 100svh usa el viewport real del navegador movil. */
-  --hm-hero-alto: max(460px, calc(100svh - var(--nav-h, 0px)));
+  /* La foto es cuadrada: el alto sale de su proporcion para que entre
+     completa, con topes para que no domine toda la pantalla. */
+  /* La foto es 3:2 (1536x1024): el alto sale de esa proporcion para que
+     entre entera, sin franjas. Se resta el navbar porque arranca detras. */
+  --hm-hero-alto: calc(clamp(400px, 66.7vw, 720px) - var(--nav-h, 0px));
   min-height: var(--hm-hero-alto);
+  /* La foto ocupa solo la mitad derecha: el navy lo pone el hero. */
+  background-color: #071638;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,86 +74,40 @@
   inset: 0;
 }
 
-/* Hilera de bolsones: fondo del bloque de texto, cortada en diagonal justo
-   sobre el primer filete amarillo. Sin el logo estampado (se borro en el
-   procesado de la imagen). */
-.hm-hero::before {
-  content: "";
+/* Hilera de bolsones a todo el ancho: una sola foto de fondo, sin el corte
+   diagonal que antes partia el hero en dos planos. */
+.hm-hero__bg {
   position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      105deg,
-      rgba(7, 22, 56, 0.76) 0%,
-      rgba(12, 44, 92, 0.62) 60%,
-      rgba(22, 74, 146, 0.46) 100%
-    ),
-    url("/images/fondoHilera.webp") left center / cover no-repeat;
-  clip-path: polygon(
-    0 0,
-    var(--hm-diag-x) 0,
-    calc(var(--hm-diag-x) - var(--hm-diag)) 100%,
-    0 100%
-  );
+  /* Sube por detras del navbar: sin esto quedaba una franja navy entre el
+     menu y la foto. El navbar es translucido, asi que la imagen se ve. */
+  inset: calc(-1 * var(--nav-h, 0px)) 0 0 0;
+  /* La imagen va ENTERA, sin recortar: contain la muestra completa. El hero
+     toma la proporcion de la foto (ver --hm-hero-alto) para que no queden
+     franjas vacias arriba ni abajo. */
+  background: url("/images/heroHilera.webp") right center / contain no-repeat;
+  transform: scale(1.02);
+  animation: hm-asentar 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* El velo acompaña a la foto, con el mismo recorte diagonal. */
+/* Velo suave: la foto se ve completa y el texto va sobre la zona izquierda,
+   que en esta toma es fondo oscuro. */
 .hm-hero__velo {
   position: absolute;
-  inset: 0;
-  clip-path: polygon(
-    var(--hm-diag-x) 0,
-    100% 0,
-    100% 100%,
-    calc(var(--hm-diag-x) - var(--hm-diag)) 100%
+  /* Acompana a la foto por detras del navbar. */
+  inset: calc(-1 * var(--nav-h, 0px)) 0 0 0;
+  background: linear-gradient(
+    100deg,
+    rgba(7, 22, 56, 0.97) 0%,
+    rgba(7, 22, 56, 0.93) 26%,
+    rgba(7, 22, 56, 0.55) 40%,
+    rgba(7, 22, 56, 0) 55%
   );
 }
 
-.hm-hero__bg {
-  position: absolute;
-  inset: 0;
-  /* Empieza justo donde termina la hilera: los dos planos encastran sobre la
-     diagonal, sin solaparse. */
-  clip-path: polygon(
-    var(--hm-diag-x) 0,
-    100% 0,
-    100% 100%,
-    calc(var(--hm-diag-x) - var(--hm-diag)) 100%
-  );
-}
-
-.hm-hero__bg {
-  /* Foto de producto anclada a la derecha, encuadrada por altura: el bolson
-     entra entero y el texto se queda con el navy de la izquierda. */
-  background: url("/images/heroBag.webp") right center / auto 100% no-repeat;
-  filter: saturate(0.72);
-  /* El asentado arranca apenas fuera de cuadro: con contain, un scale
-     grande recortaria la foto durante la animacion. */
-  transform: scale(1.035);
-  animation: hm-asentar 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
 @keyframes hm-asentar {
   to { transform: scale(1); }
 }
 
-.hm-hero__velo {
-  /* Dos capas: una lateral que asienta el texto sobre el navy de la foto y
-     otra al pie que le da contraste a los indicadores. */
-  background:
-    linear-gradient(
-      to top,
-      rgba(7, 22, 56, 0.5) 0,
-      rgba(7, 22, 56, 0) 140px
-    ),
-    linear-gradient(
-      to right,
-      rgba(7, 22, 56, 0.97) 0,
-      rgba(7, 22, 56, 0.9) 16%,
-      rgba(7, 22, 56, 0.45) 38%,
-      rgba(7, 22, 56, 0.12) 55%,
-      rgba(7, 22, 56, 0) 66%
-    );
-}
 
 .hm-hero__trama {
   background: repeating-linear-gradient(
@@ -156,36 +118,10 @@
   overflow: hidden;
 }
 
-/* Los dos filetes amarillos en diagonal del frame: -18 grados, arrancando
-   al 69% del ancho. Van por encima de la foto. */
-.hm-hero__trama::before,
-.hm-hero__trama::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
+/* Los filetes amarillos en diagonal se quitaron: cruzaban la foto de la
+   hilera y le restaban protagonismo. La trama sutil de lineas se conserva. */
 
-/* Filete principal: banda diagonal apoyada exactamente sobre el corte. */
-.hm-hero__trama::before {
-  background: rgba(255, 204, 0, 0.55);
-  clip-path: polygon(
-    calc(var(--hm-diag-x) - var(--hm-filete)) 0,
-    var(--hm-diag-x) 0,
-    calc(var(--hm-diag-x) - var(--hm-diag)) 100%,
-    calc(var(--hm-diag-x) - var(--hm-diag) - var(--hm-filete)) 100%
-  );
-}
 
-/* Filete secundario: la misma diagonal, corrida 26px a la derecha. */
-.hm-hero__trama::after {
-  background: rgba(255, 204, 0, 0.24);
-  clip-path: polygon(
-    calc(var(--hm-diag-x) + 25px) 0,
-    calc(var(--hm-diag-x) + 26px) 0,
-    calc(var(--hm-diag-x) - var(--hm-diag) + 26px) 100%,
-    calc(var(--hm-diag-x) - var(--hm-diag) + 25px) 100%
-  );
-}
 
 .hm-hero__in {
   position: relative;
@@ -350,6 +286,8 @@
   min-height: var(--hm-tira-alto);
   align-content: center;
   padding: clamp(12px, 1.6vw, 18px) var(--hm-borde);
+  /* Deja libre la esquina del boton flotante de WhatsApp. */
+  padding-right: calc(var(--hm-borde) + clamp(60px, 6vw, 88px));
   border-top: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(7, 22, 56, 0.55);
   backdrop-filter: blur(2px);
@@ -828,8 +766,15 @@
    quede diminuto al lado del texto. */
 @media (min-width: 761px) and (max-width: 1100px) {
   .hm-hero { --hm-hero-alto: max(430px, calc(100svh - var(--nav-h, 0px))); }
-  /* Menos ancho para el texto: la foto arranca mas a la derecha. */
-  .hm-hero__bg { inset: 0 0 var(--hm-tira-alto) 44%; }
+  /* La foto ocupa todo el hero: solo se corre el encuadre para que la
+     hilera no quede tapada por el bloque de texto. */
+  /* Entre 761 y 1100px contain dejaba una franja navy a la derecha: cover
+     llena el alto y se encuadra en la hilera. */
+  .hm-hero__bg {
+    inset: calc(-1 * var(--nav-h, 0px)) 0 0 0;
+    background-position: 62% center;
+    background-size: cover;
+  }
 }
 
 /* ---------- HERO APILADO ----------
@@ -837,29 +782,39 @@
    sobre el navy y el bolson queda en una banda al pie, a todo el ancho. */
 @media (max-width: 760px) {
   .hm-hero {
-    --hm-hero-banda: 68vw;
-    min-height: 0;
-    padding-bottom: var(--hm-hero-banda);
+    /* Ya no hay banda de foto al pie: el hero vuelve a ser una sola pieza
+       con la imagen de fondo, asi que solo se acota el alto. */
+    --hm-hero-alto: max(560px, calc(100svh - var(--nav-h, 0px)));
+    padding-bottom: clamp(2rem, 8vw, 3.5rem);
   }
-  /* La foto deja de ser el panel derecho y pasa a ser la banda del pie. */
+  /* Tambien en vertical la imagen se ve ENTERA: se apoya abajo y el texto
+     queda arriba, sobre el navy. Sube detras del navbar igual que en
+     escritorio: con inset:0 volvia a aparecer la franja navy bajo el menu. */
   .hm-hero__bg,
   .hm-hero__velo {
-    inset: auto 0 0 0;
-    height: var(--hm-hero-banda);
+    inset: calc(-1 * var(--nav-h, 0px)) 0 0 0;
+    clip-path: none;
   }
-  .hm-hero__velo { left: 0; }
-  .hm-hero::before,
-  .hm-hero__bg,
-  .hm-hero__velo { clip-path: none; }
-  .hm-hero__bg { background-position: 68% center; }
+  .hm-hero__bg {
+    /* En vertical contain dejaba la foto como una franja fina: la imagen es
+       3:2 y el hero angosto. cover la llena y se encuadra en los bolsones. */
+    background-position: 42% center;
+    background-size: cover;
+  }
   /* Los filetes en diagonal no aportan en pantalla angosta. */
   .hm-hero__trama { display: none; }
   .hm-hero__in::before { display: none; }
+  /* La foto ahora ocupa el hero entero, asi que el velo tiene que cubrir
+     toda la zona del texto y no solo la franja de arriba. */
+  /* En vertical el velo va de arriba hacia abajo: el horizontal del desktop
+     tapaba casi toda la foto. Cubre la zona del texto y deja ver la imagen. */
   .hm-hero__velo {
     background: linear-gradient(
       to bottom,
       rgba(var(--hm-fondo-rgb), 0.96) 0,
-      rgba(var(--hm-fondo-rgb), 0) 20%
+      rgba(var(--hm-fondo-rgb), 0.90) 42%,
+      rgba(var(--hm-fondo-rgb), 0.25) 58%,
+      rgba(var(--hm-fondo-rgb), 0.10) 100%
     );
   }
   .hm-hero__in {
@@ -869,6 +824,9 @@
   .hm-tira {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px 14px;
+    /* Reserva el lugar del boton flotante de WhatsApp: sin esto tapaba el
+       ultimo indicador en pantallas angostas. */
+    padding-bottom: clamp(64px, 18vw, 84px);
   }
   .hm-tira li:nth-child(odd) {
     padding-left: 0;
@@ -927,3 +885,135 @@
 
 
 
+
+/* Enlaces de texto del home: area tactil minima en movil. */
+@media (max-width: 768px) {
+  .hm-btn--texto,
+  .hm-sec__link,
+  .hm-sigue {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+/* =========================================================
+   CAPACIDADES — reemplaza a la seccion de certificados
+   ========================================================= */
+.hm-cap {
+  padding: clamp(3rem, 7vw, 5rem) var(--hm-borde);
+  background: var(--hm-fondo);
+}
+
+.hm-cap__cab {
+  max-width: 62ch;
+  margin: 0 auto clamp(2rem, 5vw, 3rem);
+  text-align: center;
+}
+
+.hm-cap__tit {
+  margin: 0 0 0.8rem;
+  font-family: var(--hm-anton);
+  font-size: clamp(1.7rem, 4.6vw, 2.6rem);
+  line-height: 1.08;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.hm-cap__bajada {
+  margin: 0;
+  color: var(--hm-texto);
+  font-size: clamp(1rem, 2.1vw, 1.08rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.hm-cap__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.hm-cap__item {
+  padding-top: 1.1rem;
+  border-top: 2px solid var(--hm-yellow);
+}
+
+.hm-cap__num {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--hm-anton);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--hm-yellow);
+}
+
+.hm-cap__item-tit {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.hm-cap__item-txt {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--hm-texto);
+  text-wrap: pretty;
+}
+
+/* =========================================================
+   PREGUNTAS FRECUENTES
+   ========================================================= */
+.hm-faq {
+  padding: clamp(3rem, 7vw, 5rem) var(--hm-borde) clamp(3.5rem, 8vw, 5.5rem);
+  background: var(--hm-fondo-2);
+}
+
+.hm-faq__tit {
+  max-width: 1180px;
+  margin: 0 auto clamp(1.75rem, 4vw, 2.5rem);
+  font-family: var(--hm-anton);
+  font-size: clamp(1.7rem, 4.6vw, 2.6rem);
+  line-height: 1.08;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.hm-faq__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(1.1rem, 2.6vw, 1.8rem) clamp(1.5rem, 4vw, 3rem);
+  max-width: 1180px;
+  margin: 0;
+}
+
+.hm-faq__item dt {
+  margin-bottom: 0.4rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.hm-faq__item dd {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.62;
+  color: var(--hm-texto);
+  text-wrap: pretty;
+}
+
+@media (max-width: 560px) {
+  .hm-cap__lista,
+  .hm-faq__lista {
+    grid-template-columns: 1fr;
+  }
+}

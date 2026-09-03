@@ -111,61 +111,60 @@ const SECTORES = [
   },
 ];
 
-const CERTIFICADOS = [
+/* Capacidades de fabricacion: reemplazan a la seccion de certificados. */
+const CAPACIDADES = [
   {
-    rubro: "Estándar europeo",
-    titulo: "EFIBCA 006",
-    texto: "Rendimiento validado junto a laboratorios de Alemania y Escocia.",
-    img: "/images/logoCertFlex.webp",
-    w: 420,
-    h: 420,
-    icono: (
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#ffcc00" strokeWidth="1.4" aria-hidden="true">
-        <circle cx="15" cy="12" r="8" />
-        <path d="M10 19l-2 9 7-3.4 7 3.4-2-9" />
-        <path d="M11 12l3 3 5-5.5" stroke="#fff" strokeWidth="2" />
-      </svg>
-    ),
+    num: "01",
+    titulo: "A medida, no de catálogo",
+    texto:
+      "Medidas, capacidad, tipo de boca de carga y de descarga se definen según lo que movés y cómo lo manipulás.",
   },
   {
-    rubro: "Ensayo nacional",
-    titulo: "INTI · ISO 7500-1",
-    texto: "Certificado de calibración con anexo A validado.",
-    img: "/images/certInti.webp",
-    w: 420,
-    h: 420,
-    icono: (
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#ffcc00" strokeWidth="1.4" aria-hidden="true">
-        <rect x="3" y="6" width="24" height="18" />
-        <path d="M9 19l5-6 3.5 3.5L22 10" stroke="#fff" strokeWidth="2" />
-      </svg>
-    ),
+    num: "02",
+    titulo: "Tejido propio",
+    texto:
+      "La tela de rafia de polipropileno se produce en planta, con tratamiento UV para el bolsón que se almacena a la intemperie.",
   },
   {
-    rubro: "Aptitud alimentaria",
-    titulo: "I.N.A.L. 870/08",
-    texto: "Apto para el transporte de productos alimenticios.",
-    img: "/images/certInal.webp",
-    w: 131,
-    h: 54,
-    icono: (
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#ffcc00" strokeWidth="1.4" aria-hidden="true">
-        <path d="M15 2l11 5v9c0 7-5.5 10.5-11 12-5.5-1.5-11-5-11-12V7z" />
-        <path d="M10 15l3.5 3.5L21 10" stroke="#fff" strokeWidth="2" />
-      </svg>
-    ),
+    num: "03",
+    titulo: "Control por lote",
+    texto:
+      "Cada partida sale identificada y con su ensayo hecho, para que puedas trazarla si algo hay que revisar.",
+  },
+  {
+    num: "04",
+    titulo: "Desarrollos propios",
+    texto:
+      "El compartimentado y las eslingas de izaje nacieron de pedidos que el bolsón estándar no resolvía.",
   },
 ];
 
-const CLIENTES = [
-  { src: "/images/egran.webp", w: 153, h: 98, alt: "Egran" },
-  { src: "/images/caima.webp", w: 155, h: 77, alt: "Caima" },
-  { src: "/images/plasticosbv.webp", w: 162, h: 163, alt: "Plásticos BV" },
-  { src: "/images/pirquitas.webp", w: 200, h: 200, alt: "Pirquitas" },
-  { src: "/images/biofarma.webp", w: 83, h: 88, alt: "Biofarma" },
-  { src: "/images/donadelmo.webp", w: 127, h: 104, alt: "Don Adelmo" },
-  { src: "/images/tapi.webp", w: 139, h: 80, alt: "Tapi" },
-  { src: "/images/cerrito.webp", w: 171, h: 147, alt: "Cerrito" },
+/* Preguntas que hace el comprador antes de pedir presupuesto. */
+const FAQ = [
+  {
+    q: "¿Qué es un Big Bag y para qué sirve?",
+    a: "Es un contenedor flexible de rafia de polipropileno que mueve alrededor de una tonelada en un solo bulto. Reemplaza decenas de bolsas chicas: menos manipuleo, menos envase y menos tiempo de carga.",
+  },
+  {
+    q: "¿Qué capacidad tienen?",
+    a: "Lo más pedido ronda los 1000 kg, pero la medida y la capacidad se definen para cada operación. No hay un tamaño único: depende del producto y de cómo lo cargues.",
+  },
+  {
+    q: "¿Se fabrican a medida?",
+    a: "Sí, es la forma habitual de trabajo. Se define el ancho, el alto, el tipo de boca superior y el fondo según el producto y el equipo con el que se manipula.",
+  },
+  {
+    q: "¿Sirven para productos alimenticios?",
+    a: "Sí, contamos con certificación para el transporte de productos alimenticios. Contanos de qué producto se trata y te confirmamos el modelo que corresponde.",
+  },
+  {
+    q: "¿Hacen envíos fuera de Córdoba?",
+    a: "Sí, despachamos a todo el país. La planta está en Córdoba Capital y desde ahí sale la mercadería.",
+  },
+  {
+    q: "¿Cuál es la diferencia entre boca abierta y válvula de carga?",
+    a: "La boca abierta permite cargar a mayor caudal y es más fácil de llenar; la válvula cierra mejor y protege el producto del ambiente. La elección depende de con qué equipo llenás el bolsón.",
+  },
 ];
 
 function Inicio() {
@@ -198,7 +197,19 @@ function Inicio() {
 
         ruta="/inicio"
 
-      />
+      >
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: FAQ.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          })}
+        </script>
+      </Seo>
     <div className="home">
       {/* ================= HERO ================= */}
       <section className="hm-hero">
@@ -315,68 +326,56 @@ function Inicio() {
         </motion.div>
       </section>
 
-      {/* ================= CERTIFICACIONES ================= */}
+      {/* ================= CAPACIDADES ================= */}
+      {/* Reemplaza a certificaciones y clientes: el cliente prefiere no
+          exponer todavia ni los logos de clientes ni los certificados. */}
       <motion.section
-        className="hm-cert"
-        aria-labelledby="hm-cert-tit"
+        className="hm-cap"
+        aria-labelledby="hm-cap-tit"
         variants={subir}
         initial="hidden"
         whileInView="show"
         viewport={enVista}
       >
-        <div className="hm-cert__cab">
-          <h2 id="hm-cert-tit" className="hm-cert__tit">
-            Normativa y ensayos
+        <div className="hm-cap__cab">
+          <h2 id="hm-cap-tit" className="hm-cap__tit">
+            Cómo trabajamos
           </h2>
-          <p className="hm-cert__bajada">
-            Ensayado, no prometido: cada lote pasa por controles técnicos que
-            respaldan el rendimiento estructural del contenedor.
+          <p className="hm-cap__bajada">
+            Planta propia en Córdoba: el bolsón se teje, se cose y se controla
+            bajo el mismo techo, con la medida y la terminación que pide cada
+            operación.
           </p>
         </div>
 
-        <ul className="hm-cert__lista">
-          {CERTIFICADOS.map((c) => (
-            <li key={c.titulo} className="hm-ficha">
-              <img
-                className="hm-ficha__logo"
-                src={c.img}
-                alt=""
-                width={c.w}
-                height={c.h}
-                loading="lazy"
-              />
-              <span className="hm-ficha__rubro">{c.rubro}</span>
-              <h3 className="hm-ficha__tit">{c.titulo}</h3>
-              <p className="hm-ficha__txt">{c.texto}</p>
+        <ul className="hm-cap__lista">
+          {CAPACIDADES.map((c) => (
+            <li key={c.titulo} className="hm-cap__item">
+              <span className="hm-cap__num" aria-hidden="true">
+                {c.num}
+              </span>
+              <h3 className="hm-cap__item-tit">{c.titulo}</h3>
+              <p className="hm-cap__item-txt">{c.texto}</p>
             </li>
           ))}
         </ul>
       </motion.section>
 
-      {/* ================= CLIENTES ================= */}
-      <section className="hm-clientes" aria-labelledby="hm-clientes-tit">
-        <h2 id="hm-clientes-tit" className="hm-clientes__lb">
-          Confían en nuestra capacidad operativa
+      {/* ================= PREGUNTAS FRECUENTES ================= */}
+      {/* Responden lo que se busca antes de pedir presupuesto. Van con
+          datos estructurados para que Google pueda desplegarlas. */}
+      <section className="hm-faq" aria-labelledby="hm-faq-tit">
+        <h2 id="hm-faq-tit" className="hm-faq__tit">
+          Preguntas frecuentes
         </h2>
-        <motion.ul
-          className="hm-clientes__grid"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={enVista}
-        >
-          {CLIENTES.map((c) => (
-            <motion.li key={c.alt} className="hm-cliente" variants={cardVariant}>
-              <img
-                src={c.src}
-                alt={`Cliente ${c.alt}`}
-                width={c.w}
-                height={c.h}
-                loading="lazy"
-              />
-            </motion.li>
+        <dl className="hm-faq__lista">
+          {FAQ.map((f) => (
+            <div key={f.q} className="hm-faq__item">
+              <dt>{f.q}</dt>
+              <dd>{f.a}</dd>
+            </div>
           ))}
-        </motion.ul>
+        </dl>
       </section>
     </div>
 

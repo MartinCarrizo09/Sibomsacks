@@ -39,6 +39,8 @@ Sitemap: ${PUBLIC_BASE_URL}/sitemap.xml`);
 const RUTAS_SITEMAP = [
   { ruta: "/", prioridad: "1.0", frecuencia: "weekly" },
   { ruta: "/productos", prioridad: "0.9", frecuencia: "weekly" },
+  // Aterrizaje local: es la pagina que pelea "big bags cordoba".
+  { ruta: "/big-bags-cordoba", prioridad: "0.9", frecuencia: "monthly" },
   // Fichas de los dos productos estrella: son las busquedas con mas
   // intencion de compra, por eso van con prioridad alta.
   { ruta: "/productos/bolson-compartimentado", prioridad: "0.9", frecuencia: "monthly" },

@@ -247,3 +247,13 @@
   .ct-btn,
   .ct-directo a { transition: none; }
 }
+
+/* Enlaces alternativos (WhatsApp directo): area tactil minima en movil. */
+@media (max-width: 768px) {
+  .ct a[href*="wa.me"],
+  .ct a[href^="tel:"] {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}

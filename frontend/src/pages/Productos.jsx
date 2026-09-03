@@ -27,26 +27,18 @@ const dimensionesPorModelo = {
 
 /* Puntos de cada estrella. Se mantienen fuera del JSX para que el bloque
    destacado se lea de un vistazo y sea fácil ajustarlos con el cliente. */
+/* Resumen de cada estrella. El desarrollo completo vive en su ficha:
+   repetirlo aca duplicaria contenido y las dos URLs competirian entre si. */
 const PUNTOS_COMPARTIMENTADO = [
   {
     titulo: "Mantiene la forma cúbica",
     texto:
-      "Los tabiques cosidos en las cuatro esquinas atan las paredes entre sí y frenan el pandeo. Cargado queda cuadrado, no con forma de barril.",
+      "Los tabiques cosidos en las cuatro esquinas atan las paredes entre sí y frenan el pandeo: cargado queda cuadrado, no con forma de barril.",
   },
   {
-    titulo: "Se apila y no se inclina",
+    titulo: "Se apila y aprovecha el contenedor",
     texto:
-      "Al no deformarse, los bolsones se apoyan parejos y se pueden estibar en altura. Un bolsón común, cargado, no lo permite.",
-  },
-  {
-    titulo: "Aprovecha el contenedor",
-    texto:
-      "La base cuadrada elimina los huecos que quedan entre bolsones panzones: entra más producto en el mismo piso de contenedor o depósito.",
-  },
-  {
-    titulo: "Llega parejo a las esquinas",
-    texto:
-      "Los tabiques se calan con aberturas para que el producto pase de un compartimento al otro y llene las esquinas parejo, sin bolsones de aire.",
+      "Al no deformarse se estiba en altura, y la base cuadrada elimina los huecos que quedan entre bolsones panzones.",
   },
 ];
 
@@ -54,22 +46,12 @@ const PUNTOS_SLINGBAG = [
   {
     titulo: "No es un bolsón: es un portador",
     texto:
-      "La eslinga no se llena con producto suelto. Se cargan bolsas ya envasadas de 25 a 50 kg sobre la tela y se izan todas juntas en un solo movimiento.",
+      "Se cargan bolsas ya envasadas de 25 a 50 kg sobre la tela y se izan todas juntas, en un solo movimiento de grúa.",
   },
   {
     titulo: "Se preeslinga en origen",
     texto:
-      "Las eslingas se colocan bajo la carga en el puerto de embarque y viajan puestas. En destino se engancha y sale la unidad completa, sin rearmar nada.",
-  },
-  {
-    titulo: "Menos ciclos de grúa",
-    texto:
-      "Cada izaje mueve el equivalente a decenas de bolsas sueltas. Se reduce la manipulación manual dentro de la bodega y las bolsas llegan enteras.",
-  },
-  {
-    titulo: "Bolsas cruzadas y trabadas",
-    texto:
-      "Se estiban en camadas cruzadas para que se traben entre sí y después se aseguran con las fajas transversales antes de levantar.",
+      "Las eslingas se colocan bajo la carga en el puerto de embarque y viajan puestas: en destino se engancha y sale la unidad completa.",
   },
 ];
 
@@ -122,119 +104,110 @@ const Productos = () => {
           </p>
         </header>
 
-        {/* ---- Compartimentado: visor 3D ---- */}
-        <article className="pd-estrella">
-          <div className="pd-estrella__media">
-            <Suspense
-              fallback={
-                <div className="pd-visor-fallback" role="status">
-                  Cargando modelo 3D…
-                </div>
-              }
-            >
-              <VisorBolson3D />
-            </Suspense>
-          </div>
+        {/* Las dos estrellas van lado a lado y con la misma altura: apiladas
+            ocupaban media pagina y quedaba aire muerto entre una y otra. */}
+        <div className="pd-duo">
+          {/* ---- Compartimentado: visor 3D ---- */}
+          <article className="pd-card">
+            <div className="pd-card__media">
+              <Suspense
+                fallback={
+                  <div className="pd-visor-fallback" role="status">
+                    Cargando modelo 3D…
+                  </div>
+                }
+              >
+                <VisorBolson3D />
+              </Suspense>
+            </div>
 
-          <div className="pd-estrella__texto">
-            <span className="pd-chip">Big Bag compartimentado</span>
-            <h2 className="pd-estrella__tit">
-              El que <em>no</em> se deforma con la carga
-            </h2>
-            <p className="pd-estrella__intro">
-              Un bolsón común, al llenarse, se hincha y toma forma de barril: se
-              pierde espacio entre bolsón y bolsón, y no se puede apilar. El
-              compartimentado lleva tabiques internos que sostienen las paredes
-              desde adentro y lo mantienen cuadrado, lleno o vacío.
-            </p>
+            <div className="pd-card__cuerpo">
+              <span className="pd-chip">Big Bag compartimentado</span>
+              <h2 className="pd-card__tit">
+                El que <em>no</em> se deforma con la carga
+              </h2>
+              <p className="pd-card__intro">
+                Un bolsón común se hincha al llenarse y toma forma de barril. El
+                compartimentado lleva tabiques cosidos en las cuatro esquinas
+                que lo mantienen cuadrado, lleno o vacío.
+              </p>
 
-            <p className="pd-estrella__tip">
-              Tocá <strong>“Ver por dentro”</strong> en el modelo para ver los
-              tabiques internos, marcados en amarillo.
-            </p>
+              <ul className="pd-puntos">
+                {PUNTOS_COMPARTIMENTADO.map((punto) => (
+                  <li key={punto.titulo}>
+                    <h3>{punto.titulo}</h3>
+                    <p>{punto.texto}</p>
+                  </li>
+                ))}
+              </ul>
 
-            <ul className="pd-puntos">
-              {PUNTOS_COMPARTIMENTADO.map((p) => (
-                <li key={p.titulo}>
-                  <h3>{p.titulo}</h3>
-                  <p>{p.texto}</p>
-                </li>
-              ))}
-            </ul>
+              <Link
+                to="/productos/bolson-compartimentado"
+                className="pd-cta pd-card__cta"
+              >
+                Ver ficha completa <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </article>
 
-            <p className="pd-nota">
-              Recomendado para productos secos de buen escurrimiento: granos,
-              semillas, harinas, resinas y químicos. Para materiales gruesos o
-              que no fluyen bien, conviene evaluar un modelo de serie.
-            </p>
+          {/* ---- SlingBag: foto real de operación en puerto ---- */}
+          <article className="pd-card">
+            <div className="pd-card__media">
+              <figure className="pd-foto">
+                <img
+                  src="/images/slingbag.webp"
+                  alt="Grúa portuaria izando un bloque de bolsas de 50 kg sostenido por eslingas, con eslingas vacías preparadas sobre el muelle."
+                  width={1160}
+                  height={653}
+                  loading="lazy"
+                />
+              </figure>
+            </div>
 
-            <Link to="/productos/bolson-compartimentado" className="pd-cta">
-              Ver ficha del compartimentado <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </article>
+            <div className="pd-card__cuerpo">
+              <span className="pd-chip">SlingBag</span>
+              <h2 className="pd-card__tit">Eslingas de izaje para muelle</h2>
+              <p className="pd-card__intro">
+                El sistema con el que se mueve mercadería embolsada entre el
+                muelle y la bodega del buque: levanta la carga completa de una
+                vez, en lugar de bolsa por bolsa.
+              </p>
 
-        {/* ---- SlingBag: foto real de operación en puerto ---- */}
-        <article className="pd-estrella pd-estrella--invertida">
-          <div className="pd-estrella__media">
-            <figure className="pd-foto">
-              <img
-                src="/images/slingbag.webp"
-                alt="Grúa portuaria izando un bloque de bolsas de 50 kg sostenido por eslingas, con eslingas vacías preparadas sobre el muelle."
-                width={1160}
-                height={653}
-                loading="lazy"
-              />
-              <figcaption>
-                Izaje de bolsas trabadas con eslingas durante la carga de un
-                buque.
-              </figcaption>
-            </figure>
-          </div>
+              <ul className="pd-puntos">
+                {PUNTOS_SLINGBAG.map((punto) => (
+                  <li key={punto.titulo}>
+                    <h3>{punto.titulo}</h3>
+                    <p>{punto.texto}</p>
+                  </li>
+                ))}
+              </ul>
 
-          <div className="pd-estrella__texto">
-            <span className="pd-chip">SlingBag</span>
-            <h2 className="pd-estrella__tit">
-              Eslingas de izaje para carga y descarga en muelle
-            </h2>
-            <p className="pd-estrella__intro">
-              Es el sistema con el que se mueve mercadería embolsada entre el
-              muelle y la bodega del buque. Tela de polipropileno con fajas de
-              izaje cosidas, que levanta la carga completa de una sola vez en
-              lugar de bolsa por bolsa.
-            </p>
+              <Link
+                to="/productos/eslingas-de-izaje"
+                className="pd-cta pd-card__cta"
+              >
+                Ver ficha completa <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </article>
+        </div>
 
-            <ul className="pd-puntos">
-              {PUNTOS_SLINGBAG.map((p) => (
-                <li key={p.titulo}>
-                  <h3>{p.titulo}</h3>
-                  <p>{p.texto}</p>
-                </li>
-              ))}
-            </ul>
-
-            <p className="pd-nota">
-              Se usa habitualmente con cemento, fertilizantes, granos, arroz y
-              azúcar. La capacidad se define según el equipo de izaje del puerto
-              y el peso de bolsa con el que trabaje la operación.
-            </p>
-
-            <Link to="/productos/eslingas-de-izaje" className="pd-cta">
-              Ver ficha de eslingas <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </article>
       </section>
 
       {/* ================= MODELOS DE SERIE ================= */}
       <section className="container pb-5 pd-serie" aria-labelledby="pd-serie-tit">
         <header className="pd-serie__cab">
+          <p className="pd-serie__eyebrow">Línea de serie</p>
           <h2 id="pd-serie-tit" className="productos-titulo fw-bold">
-            Busquemos el modelo adecuado para tus necesidades
+            Los seis modelos de Big Bag
           </h2>
           <p className="pd-serie__bajada">
-            Seis configuraciones de serie según cómo cargues y descargues. Todas
-            se fabrican a medida de tu operación.
+            Fabricamos en <Link to="/big-bags-cordoba">Córdoba</Link> y
+            despachamos a todo el país. Se diferencian por cómo se carga
+            arriba y cómo se descarga abajo:
+            válvula, pollera de cierre o boca abierta en la parte superior, y
+            válvula de descarga o fondo ciego en la inferior. Todos se fabrican
+            a la medida de tu operación.
           </p>
         </header>
 

@@ -1,0 +1,14 @@
+{
+  "name": "Sibom Sacks — Big Bags industriales",
+  "short_name": "Sibom Sacks",
+  "description": "Fábrica de Big Bags industriales en Córdoba, Argentina.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c2c5c",
+  "theme_color": "#0c2c5c",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

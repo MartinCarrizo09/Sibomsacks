@@ -2,7 +2,15 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/images/icono.ico" />
+    <!-- Iconos: Google necesita un favicon cuadrado de al menos 48px para
+         mostrarlo junto al resultado de busqueda. -->
+    <link rel="icon" href="/images/icono.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/icon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/icon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0c2c5c" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- ✅ Verificación Google Search Console -->
@@ -95,7 +103,12 @@
         "name": "Sibom Sacks",
         "legalName": "Lindor Sacks S.R.L.",
         "url": "https://www.sibomsacks.com.ar/",
-        "logo": "https://www.sibomsacks.com.ar/images/logo.png",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.sibomsacks.com.ar/icon-512.png",
+          "width": 512,
+          "height": 512
+        },
         "image": "https://www.sibomsacks.com.ar/images/og-sibomsacks.jpg",
         "foundingDate": "2007",
         "description": "Fábrica de Big Bags industriales de rafia de polipropileno con tratamiento UV para agricultura, industria y minería. Producción a medida en Córdoba, Argentina.",
@@ -167,8 +180,8 @@
         "publisher": { "@id": "https://www.sibomsacks.com.ar/#empresa" }
       }
     </script>
-    <script type="module" crossorigin src="/assets/index-Bfk3MP2z.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-B2TR8Ty3.css">
+    <script type="module" crossorigin src="/assets/index-Yb9Mjh23.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Dbyb6V_7.css">
   </head>
 
   <body>
