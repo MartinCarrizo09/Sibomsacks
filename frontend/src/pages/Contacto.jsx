@@ -3,6 +3,7 @@ import axios from "../services/axios.config";
 import { motion } from "framer-motion";
 import { useMotionSafe } from "../hooks/useMotionSafe.js";
 import "./Contacto.css";
+import Seo from "../components/Seo.jsx";
 
 /**
  * Contacto — formulario mínimo.
@@ -160,6 +161,19 @@ const Contacto = () => {
       };
 
   return (
+
+
+    <>
+
+      <Seo
+
+        titulo="Cotizá tus Big Bags en Córdoba | Contacto Sibom Sacks"
+
+        descripcion="Pedí presupuesto de Big Bags a medida. Respondemos por WhatsApp al 351 662-2764 o por el formulario. Envíos a todo el país desde Córdoba."
+
+        ruta="/contacto"
+
+      />
     <div className="ct">
       <section className="ct-panel">
         <motion.div
@@ -301,6 +315,8 @@ const Contacto = () => {
         </motion.div>
       </section>
     </div>
+
+    </>
   );
 };
 

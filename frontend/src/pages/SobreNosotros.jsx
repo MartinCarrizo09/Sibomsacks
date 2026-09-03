@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMotionSafe } from "../hooks/useMotionSafe.js";
 import "./SobreNosotros.css";
+import Seo from "../components/Seo.jsx";
 
 /**
  * Sobre Nosotros — "la planta como protagonista".
@@ -146,6 +147,19 @@ const SobreNosotros = () => {
       };
 
   return (
+
+
+    <>
+
+      <Seo
+
+        titulo="Fábrica de Big Bags en Córdoba desde 2007 | Sibom Sacks"
+
+        descripcion="Lindor Sacks S.R.L. fabrica contenedores flexibles en Córdoba desde 2007. Planta propia, producción a medida y asesoramiento técnico para cada operación."
+
+        ruta="/sobre-nosotros"
+
+      />
     <div className="sn">
       {/* ================= HERO ================= */}
       <section className="sn-hero">
@@ -266,6 +280,8 @@ const SobreNosotros = () => {
         </Link>
       </section>
     </div>
+
+    </>
   );
 };
 

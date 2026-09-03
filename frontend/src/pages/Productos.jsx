@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useEffect, useState } from "react";
 import productoService from "../services/productos.service.js";
 import { Link } from "react-router-dom";
 import "./Productos.css";
+import Seo from "../components/Seo.jsx";
 
 // El visor arrastra three.js: se carga sólo cuando esta página se monta.
 const VisorBolson3D = lazy(() => import("../components/VisorBolson3D.jsx"));
@@ -89,6 +90,19 @@ const Productos = () => {
   }, []);
 
   return (
+
+
+    <>
+
+      <Seo
+
+        titulo="Modelos de Big Bag y bolsón compartimentado | Sibom Sacks Córdoba"
+
+        descripcion="Seis modelos de Big Bag a medida: válvula de carga, pollera de cierre, boca abierta y fondo ciego. Además bolsón compartimentado y eslingas de izaje, desarrollos propios de la planta."
+
+        ruta="/productos"
+
+      />
     <div className="productos-page">
       {/* ================= DESTACADOS ================= */}
       {/* Los dos desarrollos propios van arriba: son el diferencial de la
@@ -268,6 +282,8 @@ const Productos = () => {
         </div>
       </section>
     </div>
+
+    </>
   );
 };
 

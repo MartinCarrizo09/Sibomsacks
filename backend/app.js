@@ -37,22 +37,35 @@ Sitemap: ${PUBLIC_BASE_URL}/sitemap.xml`);
 
 // sitemap.xml dinámico
 const RUTAS_SITEMAP = [
-  "/",
-  "/productos",
-  "/productos/1",
-  "/productos/2",
-  "/productos/3",
-  "/productos/4",
-  "/productos/5",
-  "/productos/6",
-  "/contacto",
-  "/sobre-nosotros",
-  "/beneficios"
+  { ruta: "/", prioridad: "1.0", frecuencia: "weekly" },
+  { ruta: "/productos", prioridad: "0.9", frecuencia: "weekly" },
+  { ruta: "/sobre-nosotros", prioridad: "0.7", frecuencia: "monthly" },
+  { ruta: "/beneficios", prioridad: "0.7", frecuencia: "monthly" },
+  { ruta: "/contacto", prioridad: "0.8", frecuencia: "monthly" },
+  { ruta: "/productos/1", prioridad: "0.6", frecuencia: "monthly" },
+  { ruta: "/productos/2", prioridad: "0.6", frecuencia: "monthly" },
+  { ruta: "/productos/3", prioridad: "0.6", frecuencia: "monthly" },
+  { ruta: "/productos/4", prioridad: "0.6", frecuencia: "monthly" },
+  { ruta: "/productos/5", prioridad: "0.6", frecuencia: "monthly" },
+  { ruta: "/productos/6", prioridad: "0.6", frecuencia: "monthly" }
 ];
 
 app.get('/sitemap.xml', (req, res) => {
+  // lastmod ayuda a que Google priorice recrawlear lo que cambio.
+  const hoy = new Date().toISOString().split("T")[0];
+
   const urls = RUTAS_SITEMAP
-    .map((ruta) => `  <url><loc>${PUBLIC_BASE_URL}${ruta === "/" ? "/" : ruta}</loc></url>`)
+    .map(({ ruta, prioridad, frecuencia }) => {
+      const loc = `${PUBLIC_BASE_URL}${ruta === "/" ? "/" : ruta}`;
+      return [
+        "  <url>",
+        `    <loc>${loc}</loc>`,
+        `    <lastmod>${hoy}</lastmod>`,
+        `    <changefreq>${frecuencia}</changefreq>`,
+        `    <priority>${prioridad}</priority>`,
+        "  </url>",
+      ].join("\n");
+    })
     .join("\n");
 
   res.type('application/xml');

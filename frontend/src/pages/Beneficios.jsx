@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMotionSafe } from "../hooks/useMotionSafe.js";
 import "./Beneficios.css";
+import Seo from "../components/Seo.jsx";
 
 /**
  * Beneficios — eficiencia por tonelada y beneficios por industria.
@@ -115,6 +116,19 @@ const Beneficios = () => {
       };
 
   return (
+
+
+    <>
+
+      <Seo
+
+        titulo="Ventajas de los Big Bags de polipropileno | Sibom Sacks"
+
+        descripcion="Resistencia, tratamiento UV, apto alimenticio y trazabilidad. Por qué conviene un Big Bag fabricado a medida frente a uno estándar para tu carga."
+
+        ruta="/beneficios"
+
+      />
     <div className="bf">
       {/* ================= HERO + RUEDA ================= */}
       <section className="bf-hero">
@@ -307,6 +321,8 @@ const Beneficios = () => {
         </Link>
       </section>
     </div>
+
+    </>
   );
 };
 

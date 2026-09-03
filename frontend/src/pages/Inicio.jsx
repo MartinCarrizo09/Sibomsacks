@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMotionSafe } from "../hooks/useMotionSafe.js";
 import "./Inicio.css";
+import Seo from "../components/Seo.jsx";
 
 /**
  * Indicadores integrados al pie del hero.
@@ -185,6 +186,19 @@ function Inicio() {
       };
 
   return (
+
+
+    <>
+
+      <Seo
+
+        titulo="Big Bags en Córdoba | Fábrica de bolsones industriales — Sibom Sacks"
+
+        descripcion="Fabricamos Big Bags industriales en Córdoba desde 2007. Bolsones de polipropileno con tratamiento UV para agro, industria y minería. Certificación INTI e INAL. Pedí tu cotización."
+
+        ruta="/inicio"
+
+      />
     <div className="home">
       {/* ================= HERO ================= */}
       <section className="hm-hero">
@@ -365,6 +379,8 @@ function Inicio() {
         </motion.ul>
       </section>
     </div>
+
+    </>
   );
 }
 
