@@ -168,8 +168,8 @@ const Productos = () => {
               que no fluyen bien, conviene evaluar un modelo de serie.
             </p>
 
-            <Link to="/contacto" className="pd-cta">
-              Consultar por el compartimentado <span aria-hidden="true">→</span>
+            <Link to="/productos/bolson-compartimentado" className="pd-cta">
+              Ver ficha del compartimentado <span aria-hidden="true">→</span>
             </Link>
           </div>
         </article>
@@ -219,8 +219,8 @@ const Productos = () => {
               y el peso de bolsa con el que trabaje la operación.
             </p>
 
-            <Link to="/contacto" className="pd-cta">
-              Consultar por eslingas <span aria-hidden="true">→</span>
+            <Link to="/productos/eslingas-de-izaje" className="pd-cta">
+              Ver ficha de eslingas <span aria-hidden="true">→</span>
             </Link>
           </div>
         </article>

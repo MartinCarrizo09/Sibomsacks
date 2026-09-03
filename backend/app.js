@@ -39,6 +39,10 @@ Sitemap: ${PUBLIC_BASE_URL}/sitemap.xml`);
 const RUTAS_SITEMAP = [
   { ruta: "/", prioridad: "1.0", frecuencia: "weekly" },
   { ruta: "/productos", prioridad: "0.9", frecuencia: "weekly" },
+  // Fichas de los dos productos estrella: son las busquedas con mas
+  // intencion de compra, por eso van con prioridad alta.
+  { ruta: "/productos/bolson-compartimentado", prioridad: "0.9", frecuencia: "monthly" },
+  { ruta: "/productos/eslingas-de-izaje", prioridad: "0.9", frecuencia: "monthly" },
   { ruta: "/sobre-nosotros", prioridad: "0.7", frecuencia: "monthly" },
   { ruta: "/beneficios", prioridad: "0.7", frecuencia: "monthly" },
   { ruta: "/contacto", prioridad: "0.8", frecuencia: "monthly" },

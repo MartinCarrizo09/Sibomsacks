@@ -14,6 +14,8 @@ const Productos = lazy(() => import("./pages/Productos"));
 const Beneficios = lazy(() => import("./pages/Beneficios"));
 const Contacto = lazy(() => import("./pages/Contacto"));
 const ProductoDetalle = lazy(() => import("./pages/DetalleProductos"));
+const BolsonCompartimentado = lazy(() => import("./pages/BolsonCompartimentado"));
+const EslingasIzaje = lazy(() => import("./pages/EslingasIzaje"));
 
 import "./App.css";
 import Cargando from "./components/Cargando.jsx";
@@ -33,6 +35,14 @@ function App() {
             <Route path="/productos" element={<Productos />} />
             <Route path="/beneficios" element={<Beneficios />} />
             <Route path="/contacto" element={<Contacto />} />
+            <Route
+              path="/productos/bolson-compartimentado"
+              element={<BolsonCompartimentado />}
+            />
+            <Route
+              path="/productos/eslingas-de-izaje"
+              element={<EslingasIzaje />}
+            />
             <Route path="/productos/:id" element={<ProductoDetalle />} />
             </Routes>
           </Suspense>
