@@ -118,8 +118,8 @@ const BigBagsCordoba = () => {
             <span>Fabricando en Córdoba</span>
           </li>
           <li>
-            <b>6</b>
-            <span>Modelos de serie</span>
+            <b>8</b>
+            <span>Modelos disponibles</span>
           </li>
           <li>
             <b>A medida</b>
@@ -153,10 +153,10 @@ const BigBagsCordoba = () => {
           Qué fabricamos
         </h2>
         <p className="bbc-texto">
-          Seis modelos de serie que se diferencian por cómo se carga arriba
-          (válvula, pollera de cierre o boca abierta) y cómo se descarga abajo
-          (válvula de descarga o fondo ciego). Además, dos desarrollos propios
-          para operaciones que el bolsón estándar no resuelve.
+          Ocho modelos en total. Seis de serie, que se diferencian por cómo se
+          carga arriba (válvula, pollera de cierre o boca abierta) y cómo se
+          descarga abajo (válvula de descarga o fondo ciego). Y dos desarrollos
+          propios para operaciones que el bolsón estándar no resuelve.
         </p>
 
         <div className="bbc-enlaces">

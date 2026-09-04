@@ -80,7 +80,7 @@ const Productos = () => {
 
         titulo="Modelos de Big Bag y bolsón compartimentado | Sibom Sacks Córdoba"
 
-        descripcion="Seis modelos de Big Bag a medida: válvula de carga, pollera de cierre, boca abierta y fondo ciego. Además bolsón compartimentado y eslingas de izaje, desarrollos propios de la planta."
+        descripcion="Ocho modelos de Big Bag a medida: seis de serie con válvula de carga, pollera de cierre, boca abierta y fondo ciego, más el bolsón compartimentado y las eslingas de izaje, desarrollos propios de la planta."
 
         ruta="/productos"
 

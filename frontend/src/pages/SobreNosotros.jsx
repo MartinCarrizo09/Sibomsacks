@@ -34,8 +34,8 @@ const ico = {
  */
 const DATOS = [
   {
-    valor: "6",
-    detalle: "Modelos de serie",
+    valor: "8",
+    detalle: "Modelos disponibles",
     // Bolsón sobre pallet: el mismo ícono que la home usa para el catálogo.
     icono: (
       <svg {...ico} strokeWidth={1.4}>

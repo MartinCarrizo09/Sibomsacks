@@ -782,27 +782,58 @@
    sobre el navy y el bolson queda en una banda al pie, a todo el ancho. */
 @media (max-width: 760px) {
   .hm-hero {
-    /* Ya no hay banda de foto al pie: el hero vuelve a ser una sola pieza
-       con la imagen de fondo, asi que solo se acota el alto. */
-    --hm-hero-alto: max(520px, calc(94svh - var(--nav-h, 0px)));
-    /* Sin padding abajo: la tira de indicadores es la que cierra el hero,
-       y cualquier padding extra dejaba asomar la foto por debajo. */
+    /* Mismo criterio que el hero de Sobre Nosotros: la foto ocupa una banda
+       arriba y el texto va debajo, sobre navy limpio. Asi la hilera se ve sin
+       velo encima y el titular no compite con la imagen.
+       El alto de la banda lo comparten el recorte de la foto y el margen del
+       texto, para que no se despeguen si se retoca. */
+    --hm-banda: clamp(240px, 46vh, 360px);
+    /* Apilado, el hero mide lo que miden banda + texto + tira. */
+    --hm-hero-alto: 0px;
+    min-height: 0;
     padding-bottom: 0;
   }
-  /* Tambien en vertical la imagen se ve ENTERA: se apoya abajo y el texto
-     queda arriba, sobre el navy. Sube detras del navbar igual que en
-     escritorio: con inset:0 volvia a aparecer la franja navy bajo el menu. */
-  .hm-hero__bg,
+
+  /* La foto queda arriba, a todo el ancho, subiendo detras del navbar. */
+  .hm-hero__bg {
+    inset: calc(-1 * var(--nav-h, 0px)) 0 auto 0;
+    height: calc(var(--hm-banda) + var(--nav-h, 0px));
+    clip-path: none;
+    /* Alejada para que entren mas bolsones, pero con cover: con un ancho
+       mayor al 100% la foto no llenaba el alto de la banda y se veia el navy
+       del hero por detras, que era lo que la apagaba. */
+    background-size: cover;
+    background-position: center 58%;
+    /* El hero base lleva su propio degradado navy (linea 50). Si la foto no
+       lo tapa por completo, ese azul se cuela y la apaga: se le da un fondo
+       neutro propio y se fuerza la capa. */
+    background-color: #0a0f1c;
+    background-blend-mode: normal;
+    filter: brightness(1.08) saturate(1.05);
+    z-index: 1;
+  }
+
+  /* El velo casi no toca la banda: solo cierra contra el navy al pie de la
+     foto, para que la union no marque un corte duro. */
   .hm-hero__velo {
     inset: calc(-1 * var(--nav-h, 0px)) 0 0 0;
     clip-path: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(7, 22, 56, 0) 0,
+      rgba(7, 22, 56, 0) calc(var(--hm-banda) - 70px),
+      rgba(12, 44, 92, 0.75) calc(var(--hm-banda) - 8px),
+      #0c2c5c calc(var(--hm-banda) + var(--nav-h, 0px))
+    );
   }
-  .hm-hero__bg {
-    /* En vertical contain dejaba la foto como una franja fina: la imagen es
-       3:2 y el hero angosto. cover la llena y se encuadra en los bolsones. */
-    background-position: 42% center;
-    background-size: cover;
+
+  /* El texto arranca donde termina la banda: se ata a la misma variable y no
+     a un porcentaje, que se resuelve sobre el ANCHO y descoloca el bloque. */
+  .hm-hero__in {
+    margin-top: var(--hm-banda);
+    padding-top: clamp(20px, 5vw, 32px);
   }
+
   /* Los filetes en diagonal no aportan en pantalla angosta. */
   .hm-hero__trama { display: none; }
   .hm-hero__in::before { display: none; }
