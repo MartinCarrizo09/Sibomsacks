@@ -60,7 +60,7 @@ function App() {
 function WhatsAppButton() {
   const DEFAULT_WA_MSG =
     "Hola, me gustaría recibir asesoramiento sobre Big Bags. Los contacto desde la web. ¡Gracias!";
-  const PHONE = "5493516622764";
+  const PHONE = "5493515081014";
   const href = `https://wa.me/${PHONE}?text=${encodeURIComponent(DEFAULT_WA_MSG)}`;
 
   return (

@@ -2,7 +2,7 @@ import "../components/PiePagina.css";
 
 const year = new Date().getFullYear();
 
-const WHATSAPP_TEL = "5493516622764";
+const WHATSAPP_TEL = "5493515081014";
 const WHATSAPP_MSG =
   "Hola, me gustaría recibir asesoramiento sobre Big Bags. Los contacto desde la web. ¡Gracias!";
 
@@ -55,11 +55,11 @@ function PiePagina() {
             <span className="footer__rubro">Teléfono</span>
             <address className="not-italic">
               <a
-                href="tel:+543511155081014"
+                href="tel:+5493515081014"
                 className="footer__dato"
                 itemProp="telephone"
               >
-                (0351) 155 081 014
+                351 508-1014
               </a>
             </address>
           </li>

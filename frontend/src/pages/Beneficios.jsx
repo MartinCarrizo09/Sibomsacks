@@ -14,7 +14,7 @@ import Seo from "../components/Seo.jsx";
  *
  * Sobre los datos: sólo se afirma lo verificable.
  *   · 1000 kg / 25 kg = 40 bolsas: es aritmética.
- *   · Las tres certificaciones (EFIBCA 006, INTI ISO 7500-1, INAL 870/08)
+ *   · Los datos de produccion, sin afirmar certificaciones
  *     son las que ya exhibe la home.
  * El eje de reciclado quedó fuera a propósito: la empresa todavía no tiene
  * armado el circuito, así que la página no lo promete. Cuando exista, la
@@ -35,7 +35,7 @@ const ico = {
 const DATOS = [
   { valor: "1000 kg", detalle: "En un solo bulto" },
   { valor: "40", detalle: "Bolsas de 25 kg que reemplaza" },
-  { valor: "3", detalle: "Certificaciones vigentes" },
+  { valor: "A medida", detalle: "Según tu operación" },
 ];
 
 /** Beneficios por sector, tal como los definió el cliente. */

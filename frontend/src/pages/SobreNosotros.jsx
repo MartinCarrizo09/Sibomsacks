@@ -27,7 +27,7 @@ const ico = {
 
 /**
  * Indicadores del hero. Solo cifras verificables: los modelos son los que
- * devuelve la API de productos y las certificaciones ya están publicadas en
+ * devuelve la API de productos, sin afirmar certificaciones que no estan
  * la home. El año de fundación no se repite acá: ya es el remate del título.
  * [PENDIENTE] Confirmar producción anual y superficie de planta para sumar
  * un cuarto indicador.
@@ -55,8 +55,8 @@ const DATOS = [
     ),
   },
   {
-    valor: "3",
-    detalle: "Certificaciones vigentes",
+    valor: "Control",
+    detalle: "Ensayo por partida",
     // Escudo con tilde: los ensayos que respaldan cada partida.
     icono: (
       <svg {...ico}>

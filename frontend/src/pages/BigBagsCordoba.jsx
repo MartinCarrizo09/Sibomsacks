@@ -48,7 +48,7 @@ const PREGUNTAS = [
   },
   {
     q: "¿Sirven para producto alimenticio?",
-    a: "Sí. Contamos con certificación para el transporte de productos alimenticios; contanos de qué producto se trata y te confirmamos el modelo adecuado.",
+    a: "Sí. Contanos de qué producto se trata y te confirmamos el modelo y la tela que corresponden para uso alimenticio.",
   },
   {
     q: "¿Qué capacidad tienen?",
@@ -103,7 +103,7 @@ const BigBagsCordoba = () => {
             Pedir cotización
           </Link>
           <a
-            href="https://wa.me/5493516622764"
+            href="https://wa.me/5493515081014"
             className="bbc-btn bbc-btn--texto"
             target="_blank"
             rel="noopener noreferrer"
@@ -214,10 +214,10 @@ const BigBagsCordoba = () => {
             Pedir cotización
           </Link>
           <a
-            href="tel:+5493511550810"
+            href="tel:+5493515081014"
             className="bbc-btn bbc-btn--texto"
           >
-            (0351) 155 081 014
+            351 508-1014
           </a>
         </div>
       </section>

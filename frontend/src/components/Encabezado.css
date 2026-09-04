@@ -256,30 +256,57 @@
   .navbar { overflow: visible; }
   .navbar__cut { display: none; }
 
+  /* Apertura escalonada: el panel se despliega y los enlaces entran de a uno
+     desde la izquierda. La altura sale de grid-template-rows en vez de un
+     max-height fijo, asi el panel mide lo que mide su contenido y nunca
+     recorta el boton de pedido. */
   .navbar__menu {
     position: absolute;
     left: 0;
     top: var(--nav-h);
     width: 100%;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     background-color: #071638;
-    padding: 0 clamp(16px, 4vw, 24px); /* Más padding para el botón */
+    padding: 0 clamp(16px, 4vw, 24px);
     border-radius: 0 0 12px 12px;
     box-shadow: 0 12px 22px rgba(0,0,0,.18);
     max-height: 0;
-    opacity: 0;
     overflow: hidden;
-    transform: translateY(-8px);
-    transition: opacity .25s ease, transform .25s ease, max-height .3s ease;
+    transition: max-height .34s cubic-bezier(.4, 0, .2, 1);
     z-index: 999;
     pointer-events: none;              /* evita clicks cuando está oculto */
   }
   .navbar__menu.show {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 70vh; /* Más altura para que quepa el botón */
+    max-height: 80vh;
     pointer-events: auto;
+  }
+
+  /* Cada enlace entra corrido y se acomoda con su propio retardo: es lo que
+     arma la cascada de arriba hacia abajo. */
+  .navbar__menu a,
+  .navbar__menu .btn-cta--mobile {
+    opacity: 0;
+    transform: translateX(-14px);
+    transition: opacity .3s ease, transform .35s cubic-bezier(.3, 1.1, .5, 1);
+  }
+  .navbar__menu.show a,
+  .navbar__menu.show .btn-cta--mobile {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .navbar__menu.show a:nth-of-type(1) { transition-delay: .10s; }
+  .navbar__menu.show a:nth-of-type(2) { transition-delay: .16s; }
+  .navbar__menu.show a:nth-of-type(3) { transition-delay: .22s; }
+  .navbar__menu.show a:nth-of-type(4) { transition-delay: .28s; }
+  .navbar__menu.show a:nth-of-type(5) { transition-delay: .34s; }
+  .navbar__menu.show .btn-cta--mobile { transition-delay: .40s; }
+
+  /* Al cerrar no hay cascada: todo se va junto, que es lo que se espera. */
+  .navbar__menu:not(.show) a,
+  .navbar__menu:not(.show) .btn-cta--mobile {
+    transition-delay: 0s;
   }
 
   .navbar__menu a {

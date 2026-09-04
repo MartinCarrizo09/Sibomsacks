@@ -19,7 +19,7 @@ import Seo from "../components/Seo.jsx";
  */
 
 /** El WhatsApp del sitio, el mismo del header y el footer. */
-const WHATSAPP = "5493516622764";
+const WHATSAPP = "5493515081014";
 
 const FORM_VACIO = {
   nombre: "",
@@ -46,15 +46,25 @@ function validar(d) {
   return e;
 }
 
-/** Arma el texto del pedido; omite lo que no se completó. */
+/** Arma el texto de la consulta que se manda por WhatsApp.
+ *  Es el unico canal: no se envia correo, asi que el mensaje tiene que
+ *  llevar todo lo necesario para responder sin volver a preguntar. */
 function armarMensaje(d, sectorNombre) {
-  const l = ["*Nuevo pedido desde la web*", ""];
+  const esCorreo = /@/.test(d.contacto);
+  const fecha = new Date().toLocaleDateString("es-AR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+
+  const l = ["*NUEVA CONSULTA — sibomsacks.com.ar*", ""];
   l.push(`*Nombre:* ${d.nombre}`);
-  l.push(`*Contacto:* ${d.contacto}`);
+  l.push(`*${esCorreo ? "Correo" : "Teléfono"}:* ${d.contacto}`);
   if (sectorNombre) l.push(`*Sector:* ${sectorNombre}`);
+  l.push(`*Fecha:* ${fecha}`);
   l.push("");
   l.push("*Qué necesita:*");
-  l.push(d.mensaje);
+  l.push(d.mensaje.trim());
   return l.join("\n");
 }
 
@@ -111,32 +121,9 @@ const Contacto = () => {
       sectores.find((s) => String(s.id) === String(form.id_sector))?.nombre ||
       "";
 
-    setEstado({ tipo: "enviando", texto: "Enviando…" });
-
-    /* 1) Guardar. El nombre viene en un solo campo, así que se parte para
-       encajar en el modelo, que espera nombre y apellido por separado. */
-    /* El nombre viene en un solo campo; se parte para el modelo, que
-       guarda nombre y apellido por separado. */
-    const [nombre, ...resto] = form.nombre.trim().split(/\s+/);
-    const esCorreo = /@/.test(form.contacto);
-
-    try {
-      await axios.post("/api/contacto", {
-        nombre,
-        apellido: resto.join(" "),
-        correo: esCorreo ? form.contacto : "",
-        telefono: esCorreo ? "" : form.contacto,
-        id_sector: form.id_sector,
-        /* Sin provincia: el formulario no la pregunta y el backend ya la
-           acepta vacía. El dato se conversa por WhatsApp. */
-        mensaje: form.mensaje,
-      });
-    } catch (_) {
-      /* Se ignora a propósito: el pedido no se pierde porque igual se abre
-         WhatsApp. El aviso al usuario es el mismo en los dos casos. */
-    }
-
-    /* 2) Abrir WhatsApp con el pedido escrito. */
+    /* La consulta va por WhatsApp, que es el canal que usa la empresa.
+       No se guarda en la base ni se manda correo: si el mensaje no llegara
+       a salir, queda en el WhatsApp del propio visitante y puede reenviarlo. */
     const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
       armarMensaje(form, sectorNombre)
     )}`;
@@ -144,7 +131,7 @@ const Contacto = () => {
 
     setEstado({
       tipo: "listo",
-      texto: "Se abrió WhatsApp con tu pedido. Tocá enviar y nos llega.",
+      texto: "Se abrió WhatsApp con tu consulta. Tocá enviar y nos llega.",
     });
     setForm(FORM_VACIO);
   };

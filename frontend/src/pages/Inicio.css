@@ -784,8 +784,10 @@
   .hm-hero {
     /* Ya no hay banda de foto al pie: el hero vuelve a ser una sola pieza
        con la imagen de fondo, asi que solo se acota el alto. */
-    --hm-hero-alto: max(560px, calc(100svh - var(--nav-h, 0px)));
-    padding-bottom: clamp(2rem, 8vw, 3.5rem);
+    --hm-hero-alto: max(520px, calc(94svh - var(--nav-h, 0px)));
+    /* Sin padding abajo: la tira de indicadores es la que cierra el hero,
+       y cualquier padding extra dejaba asomar la foto por debajo. */
+    padding-bottom: 0;
   }
   /* Tambien en vertical la imagen se ve ENTERA: se apoya abajo y el texto
      queda arriba, sobre el navy. Sube detras del navbar igual que en
@@ -811,10 +813,13 @@
   .hm-hero__velo {
     background: linear-gradient(
       to bottom,
-      rgba(var(--hm-fondo-rgb), 0.96) 0,
-      rgba(var(--hm-fondo-rgb), 0.90) 42%,
-      rgba(var(--hm-fondo-rgb), 0.25) 58%,
-      rgba(var(--hm-fondo-rgb), 0.10) 100%
+      /* Arriba se afloja para que la hilera se vea: ahi no hay texto. El
+         tramo denso arranca donde empieza el titular. */
+      rgba(var(--hm-fondo-rgb), 0.62) 0,
+      rgba(var(--hm-fondo-rgb), 0.80) 18%,
+      rgba(var(--hm-fondo-rgb), 0.88) 46%,
+      rgba(var(--hm-fondo-rgb), 0.30) 62%,
+      rgba(var(--hm-fondo-rgb), 0.12) 100%
     );
   }
   .hm-hero__in {
@@ -823,10 +828,12 @@
   }
   .hm-tira {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 14px;
-    /* Reserva el lugar del boton flotante de WhatsApp: sin esto tapaba el
-       ultimo indicador en pantallas angostas. */
-    padding-bottom: clamp(64px, 18vw, 84px);
+    gap: 18px 14px;
+    /* El boton de WhatsApp es fijo a la pantalla, no al final de la tira:
+       alcanza con despegar la ultima fila de su recorrido, sin dejar el
+       hueco grande que quedaba antes. */
+    padding-top: clamp(18px, 5vw, 26px);
+    padding-bottom: clamp(26px, 7vw, 38px);
   }
   .hm-tira li:nth-child(odd) {
     padding-left: 0;
@@ -886,11 +893,12 @@
 
 
 
-/* Enlaces de texto del home: area tactil minima en movil. */
+/* Enlaces de texto del home: area tactil minima en movil.
+   .hm-sigue queda fuera a proposito: en telefono esta oculto y volver a
+   darle display lo reactivaba encima de la tira de indicadores. */
 @media (max-width: 768px) {
   .hm-btn--texto,
-  .hm-sec__link,
-  .hm-sigue {
+  .hm-sec__link {
     display: inline-flex;
     align-items: center;
     min-height: 44px;

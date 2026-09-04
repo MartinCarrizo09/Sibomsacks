@@ -1,7 +1,6 @@
 // contacto.routes.js
 import express from "express";
 import ContactoService from "../services/contactoService.js";
-import { enviarCorreoContacto } from "../utils/email.js";
 
 const router = express.Router();
 
@@ -43,18 +42,8 @@ router.post("/", async (req, res) => {
       mensaje
     });
 
-    // Enviar el correo
-    console.log("Llamando a enviarCorreoContacto...");
-    await enviarCorreoContacto({
-      empresa,
-      nombre,
-      apellido,
-      correo,
-      telefono,
-      id_sector,
-      id_provincia,
-      mensaje
-    });
+    // No se envia correo: las consultas llegan por WhatsApp. El registro en
+    // la base se conserva por si mas adelante hace falta consultarlo.
 
     res.status(201).json({ mensaje: "Mensaje recibido correctamente" });
   } catch (error) {

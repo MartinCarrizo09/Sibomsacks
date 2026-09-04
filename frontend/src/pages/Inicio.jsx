@@ -7,7 +7,7 @@ import Seo from "../components/Seo.jsx";
 
 /**
  * Indicadores integrados al pie del hero.
- * Solo cifras verificables contra el catálogo y las certificaciones reales.
+ * Solo cifras verificables contra el catálogo.
  */
 const ico = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none",
   stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round",
@@ -26,8 +26,8 @@ const DATOS = [
     ),
   },
   {
-    valor: "3",
-    detalle: "Certificaciones",
+    valor: "2007",
+    detalle: "Fabricando en Córdoba",
     // Roseta trazada del archivo del cliente: medalla, sello y las dos cintas.
     icono: (
       <svg {...ico} strokeWidth={1.3}>
@@ -155,7 +155,7 @@ const FAQ = [
   },
   {
     q: "¿Sirven para productos alimenticios?",
-    a: "Sí, contamos con certificación para el transporte de productos alimenticios. Contanos de qué producto se trata y te confirmamos el modelo que corresponde.",
+    a: "Sí. Contanos de qué producto se trata y te confirmamos el modelo y la tela que corresponden para uso alimenticio.",
   },
   {
     q: "¿Hacen envíos fuera de Córdoba?",
@@ -193,7 +193,7 @@ function Inicio() {
 
         titulo="Big Bags en Córdoba | Fábrica de bolsones industriales — Sibom Sacks"
 
-        descripcion="Fabricamos Big Bags industriales en Córdoba desde 2007. Bolsones de polipropileno con tratamiento UV para agro, industria y minería. Certificación INTI e INAL. Pedí tu cotización."
+        descripcion="Fabricamos Big Bags industriales en Córdoba desde 2007. Bolsones de polipropileno con tratamiento UV para agro, industria y minería, hechos a la medida de tu carga. Pedí tu cotización."
 
         ruta="/inicio"
 
