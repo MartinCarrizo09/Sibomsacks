@@ -55,6 +55,39 @@ const PUNTOS_SLINGBAG = [
   },
 ];
 
+/* Fotos de produccion real: dan credibilidad que ningun render alcanza.
+   Van al cierre de la pagina, despues de los modelos de serie. */
+const PRODUCCION = [
+  {
+    src: "/images/prod-bolson-egran.webp",
+    alt: "Bolsón cargado con garbanzos, impreso a dos colores para el cliente, con la etiqueta de Sibom Sacks colgando.",
+    pie: "Impresión a medida del cliente",
+    w: 1200,
+    h: 900,
+  },
+  {
+    src: "/images/prod-mineria-izaje.webp",
+    alt: "Bolsón izado por una excavadora en cantera, cargado con áridos.",
+    pie: "En operación: minería y áridos",
+    w: 1264,
+    h: 842,
+  },
+  {
+    src: "/images/prod-bolson-mani.webp",
+    alt: "Bolsón de boca abierta cargado con maní, con eslingas azules, apoyado sobre pallet en depósito.",
+    pie: "Boca abierta, cargado y sobre pallet",
+    w: 1200,
+    h: 900,
+  },
+  {
+    src: "/images/prod-despacho-camion.webp",
+    alt: "Camión cargado con fardos de bolsones listos para despachar.",
+    pie: "Despacho a todo el país",
+    w: 1400,
+    h: 1050,
+  },
+];
+
 const Productos = () => {
   const [productos, setProductos] = useState([]);
 
@@ -252,6 +285,36 @@ const Productos = () => {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* ---------- Producción real ---------- */}
+      <section className="pd-produccion" aria-labelledby="pd-prod-tit">
+        <div className="container">
+          <p className="pd-serie__eyebrow">De la planta</p>
+          <h2 id="pd-prod-tit" className="productos-titulo fw-bold">
+            Producción real
+          </h2>
+          <p className="pd-serie__bajada">
+            Bolsones fabricados en Córdoba, cargados y en operación.
+          </p>
+
+          <ul className="pd-fotos">
+            {PRODUCCION.map((f) => (
+              <li key={f.src}>
+                <figure>
+                  <img
+                    src={f.src}
+                    alt={f.alt}
+                    width={f.w}
+                    height={f.h}
+                    loading="lazy"
+                  />
+                  <figcaption>{f.pie}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </div>

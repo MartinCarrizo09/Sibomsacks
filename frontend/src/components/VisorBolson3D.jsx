@@ -5,7 +5,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import "./VisorBolson3D.css";
 
 /*
-  Visor del bolsón compartimentado.
+  Visor 3D de bolsones. Sirve para cualquiera de los modelos: la URL del GLB
+  entra por prop y el corte se ofrece solo donde hay algo adentro que mostrar.
 
   El GLB viene de trimesh: malla en Z-up, sin materiales ni texturas, pero con
   cada pieza nombrada (front_shell, internal_partition_x, loop_top_0, ...). Esos
@@ -17,7 +18,7 @@ import "./VisorBolson3D.css";
   al compartimentado de un bolsón común.
 */
 
-const MODELO_URL = "/models/bolson_compartimentado_fibc.glb";
+const MODELO_POR_DEFECTO = "/models/bolson_compartimentado_fibc.glb";
 
 // Paleta alineada con el resto del sitio (navy + amarillo institucional).
 const COLOR_TELA = 0xf2f4f8;
@@ -30,13 +31,14 @@ const clasificar = (nombre) => {
   // nodo se llama internal_partition_corners.
   if (nombre.startsWith("internal_partition")) return "tabique";
   if (nombre.startsWith("top_cross")) return "tabique";
+  if (nombre.startsWith("accesorio_")) return "tela";
   if (nombre.startsWith("loop_")) return "eslinga";
   if (nombre.includes("seam")) return "costura";
   if (nombre.endsWith("_rim")) return "costura";
   return "tela";
 };
 
-const VisorBolson3D = ({ className = "" }) => {
+const VisorBolson3D = ({ className = "", modelo = MODELO_POR_DEFECTO, corteDisponible = true }) => {
   const contenedorRef = useRef(null);
   const apiRef = useRef(null);
   const [corte, setCorte] = useState(false);
@@ -128,7 +130,7 @@ const VisorBolson3D = ({ className = "" }) => {
 
     const loader = new GLTFLoader();
     loader.load(
-      MODELO_URL,
+      modelo,
       (gltf) => {
         if (cancelado) return;
 
@@ -211,7 +213,7 @@ const VisorBolson3D = ({ className = "" }) => {
       renderer.domElement.remove();
       apiRef.current = null;
     };
-  }, []);
+  }, [modelo]);
 
   // Corte: las paredes se vuelven translúcidas para dejar ver los tabiques.
   useEffect(() => {
@@ -262,14 +264,18 @@ const VisorBolson3D = ({ className = "" }) => {
           </p>
 
           <div className="visor3d__acciones">
-            <button
-              type="button"
-              className={`visor3d__btn ${corte ? "is-activo" : ""}`}
-              onClick={() => setCorte((v) => !v)}
-              aria-pressed={corte}
-            >
-              {corte ? "Ver cerrado" : "Ver por dentro"}
-            </button>
+            {/* El corte solo se ofrece donde hay algo adentro que mostrar:
+                en los modelos de serie no aporta nada. */}
+            {corteDisponible && (
+              <button
+                type="button"
+                className={`visor3d__btn ${corte ? "is-activo" : ""}`}
+                onClick={() => setCorte((v) => !v)}
+                aria-pressed={corte}
+              >
+                {corte ? "Ver cerrado" : "Ver por dentro"}
+              </button>
+            )}
             <button
               type="button"
               className="visor3d__btn visor3d__btn--suave"

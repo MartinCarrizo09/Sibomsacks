@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
+import Carrusel from "../components/Carrusel.jsx";
 import "./FichaProducto.css";
 
 /*
@@ -45,6 +46,32 @@ const CARACTERISTICAS = [
     titulo: "La mercadería llega entera",
     texto:
       "Al manipularse en bloque y no bolsa por bolsa, se reduce el maltrato de los envases durante la carga y la descarga.",
+  },
+];
+
+/* Fotos de operaciones reales: el preeslingado en deposito y el izaje al
+   buque. Dan mas credibilidad que un render. */
+const GALERIA = [
+  {
+    src: "/images/sling-izaje-buque.webp",
+    alt: "Grúa de buque izando un bloque completo de bolsas sostenido por eslingas, con estibadores y eslingas vacías sobre el muelle.",
+    pie: "Izaje del bloque completo hacia la bodega",
+    w: 1160,
+    h: 653,
+  },
+  {
+    src: "/images/sling-preeslingado.webp",
+    alt: "Bolsas apiladas en camadas cruzadas con las eslingas ya colocadas debajo, listas para izar.",
+    pie: "Preeslingado: las eslingas se colocan antes de cargar",
+    w: 768,
+    h: 1024,
+  },
+  {
+    src: "/images/slingbag.webp",
+    alt: "Eslingas de izaje elevando bolsas trabadas entre sí para cargar un buque.",
+    pie: "Las bolsas viajan trabadas entre sí",
+    w: 1160,
+    h: 653,
   },
 ];
 
@@ -115,17 +142,10 @@ const EslingasIzaje = () => {
 
       <section className="fp-bloque" aria-labelledby="fp-como-tit">
         <div className="fp-bloque__media">
-          <figure className="fp-foto">
-            <img
-              src="/images/slingbag.webp"
-              alt="Grúa portuaria izando un bloque de bolsas sostenido por eslingas, con eslingas vacías preparadas sobre el muelle."
-              width={1160}
-              height={653}
-            />
-            <figcaption>
-              Izaje de bolsas trabadas con eslingas durante la carga de un buque.
-            </figcaption>
-          </figure>
+          <Carrusel imagenes={GALERIA} etiqueta="Fotos de la operación con eslingas" />
+          <p className="fp-pie">
+            Fotos de operaciones reales. Deslizá para verlas todas.
+          </p>
         </div>
 
         <div className="fp-bloque__texto">

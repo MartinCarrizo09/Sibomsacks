@@ -69,3 +69,26 @@
   .cta-title { font-size: clamp(1.1rem, 4.5vw, 1.35rem); }
   .cta-subtitle { font-size: clamp(.95rem, 3.8vw, 1.05rem); }
 }
+
+/* ---------- Visor 3D en la ficha de cada modelo ---------- */
+.detalle-visor-carga {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 460px;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #0f2f61 0%, #071638 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #d3ddf0;
+  font-size: 0.95rem;
+}
+
+.detalle-visor-pie {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #47536b;
+  text-align: center;
+}

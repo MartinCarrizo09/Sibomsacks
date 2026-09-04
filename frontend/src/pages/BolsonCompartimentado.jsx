@@ -74,6 +74,13 @@ const GALERIA = [
     h: 685,
   },
   {
+    src: "/images/prod-apilado-deposito.webp",
+    alt: "Bolsones apilados en tres niveles sobre pallets en depósito, manteniendo la forma sin inclinarse.",
+    pie: "Estiba en altura: no se deforman ni se inclinan",
+    w: 1200,
+    h: 1200,
+  },
+  {
     src: "/images/compartimentado-lateral.webp",
     alt: "Vista lateral del bolsón compartimentado vacío, con las costuras verticales y las eslingas.",
     pie: "Vista lateral, vacío",
