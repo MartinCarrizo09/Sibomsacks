@@ -1,9 +1,19 @@
 node_modules
-.git
 **/node_modules
+.git
+
+# Compilados: el contenedor los regenera con npm run build, subirlos solo
+# alarga el snapshot.
+frontend/dist
+backend/dist
 
 # Fuentes de diseno: no forman parte de la app desplegada
 imagenes originales/
 audios cliente/
 mockups-home/
 mockups-sobre-nosotros/
+
+# Entregables y respaldos que viven en la carpeta pero no en el servidor
+*.pdf
+menues-hamburguesa.html
+Compartimentado.png
