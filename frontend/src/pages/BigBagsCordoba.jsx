@@ -94,7 +94,7 @@ const BigBagsCordoba = () => {
 
         <p className="bbc-bajada">
           Fabricamos bolsones industriales de rafia de polipropileno en Córdoba
-          desde 2007. Planta propia: el bolsón se teje, se cose y se controla
+          desde 2007. Planta propia: el bolsón se corta, se cose y se controla
           bajo el mismo techo, y se hace a la medida de lo que movés.
         </p>
 

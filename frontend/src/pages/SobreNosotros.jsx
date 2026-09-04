@@ -180,7 +180,7 @@ const SobreNosotros = () => {
 
           <p className="sn-hero__texto">
             Producimos Big Bags con planta propia: cada bolsón se diseña sobre
-            el proceso real del cliente, se teje, se cose y se controla bajo el
+            el proceso real del cliente, se corta, se cose y se controla bajo el
             mismo techo.
           </p>
 

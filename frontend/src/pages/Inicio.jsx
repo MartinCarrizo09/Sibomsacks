@@ -121,9 +121,9 @@ const CAPACIDADES = [
   },
   {
     num: "02",
-    titulo: "Tejido propio",
+    titulo: "Tela seleccionada",
     texto:
-      "La tela de rafia de polipropileno se produce en planta, con tratamiento UV para el bolsón que se almacena a la intemperie.",
+      "Se elige el gramaje y la terminación de la rafia según la carga, con tratamiento UV para el bolsón que se almacena a la intemperie.",
   },
   {
     num: "03",
@@ -331,7 +331,7 @@ function Inicio() {
             Cómo trabajamos
           </h2>
           <p className="hm-cap__bajada">
-            Planta propia en Córdoba: el bolsón se teje, se cose y se controla
+            Planta propia en Córdoba: el bolsón se corta, se cose y se controla
             bajo el mismo techo, con la medida y la terminación que pide cada
             operación.
           </p>
@@ -363,7 +363,7 @@ function Inicio() {
             La fábrica, funcionando
           </h2>
           <p className="hm-planta__bajada">
-            Del tejido de la rafia a la costura de las fajas, todo pasa bajo el
+            Del corte de la tela a la costura de las fajas, todo pasa bajo el
             mismo techo. Estas son fotos de la planta y de bolsones nuestros en
             operación.
           </p>
