@@ -1,23 +1,9 @@
-import React, { Suspense, lazy, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import productoService from "../services/productos.service.js"; // ← con .js
 import "./DetalleProducto.css";
 import Cargando from "../components/Cargando.jsx";
-
-// El visor arrastra three.js: se carga solo cuando se abre un detalle.
-const VisorBolson3D = lazy(() => import("../components/VisorBolson3D.jsx"));
-
-/* Cada modelo de serie tiene su GLB: se diferencian por la boca de carga
-   y el tipo de fondo. */
-const modelo3DPorTipo = {
-  1: "/models/modelo-valvula-carga-descarga.glb",
-  2: "/models/modelo-pollera-valvula-descarga.glb",
-  3: "/models/modelo-boca-abierta-valvula.glb",
-  4: "/models/modelo-valvula-carga-ciego.glb",
-  5: "/models/modelo-pollera-ciego.glb",
-  6: "/models/modelo-boca-abierta-ciego.glb",
-};
 
 const imagenesPorModelo = {
   1: "valvuladecargaydescarga.webp",
@@ -90,34 +76,13 @@ const ProductoDetalle = () => {
           <h1 className="mb-2 mt-0 detalle-titulo" style={{ color: "#004aad" }}>
             MODELO SS {modelo}
           </h1>
-          {/* El 3D reemplaza al dibujo: se puede girar y se ve la boca de
-              carga y el fondo, que es lo que distingue a cada modelo. */}
-          <div className="mb-3">
-            <Suspense
-              fallback={
-                <div className="detalle-visor-carga" role="status">
-                  Cargando modelo 3D…
-                </div>
-              }
-            >
-              <VisorBolson3D
-                modelo={modelo3DPorTipo[modelo]}
-                corteDisponible={false}
-              />
-            </Suspense>
-            <p className="detalle-visor-pie">
-              Arrastrá para girar el bolsón y ver la boca de carga y el fondo.
-            </p>
-          </div>
-
-          {/* La foto del catálogo queda como referencia de la ficha. */}
           <div className="text-center mb-4">
             <motion.img
               src={imagenSrc}
               alt={producto.caracteristicasGenerales?.producto_nombre}
               width={dim.w}
               height={dim.h}
-              style={{ maxHeight: "260px", objectFit: "contain", width: "100%", maxWidth: "280px", height: "auto" }}
+              style={{ maxHeight: "400px", objectFit: "contain", width: "100%", maxWidth: "400px", height: "auto" }}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}

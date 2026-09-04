@@ -66,13 +66,6 @@ const GALERIA = [
     w: 768,
     h: 1024,
   },
-  {
-    src: "/images/slingbag.webp",
-    alt: "Eslingas de izaje elevando bolsas trabadas entre sí para cargar un buque.",
-    pie: "Las bolsas viajan trabadas entre sí",
-    w: 1160,
-    h: 653,
-  },
 ];
 
 const CARGAS = [

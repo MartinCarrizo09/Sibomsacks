@@ -139,33 +139,34 @@ const CAPACIDADES = [
   },
 ];
 
-/* Preguntas que hace el comprador antes de pedir presupuesto. */
-const FAQ = [
+
+/* La planta trabajando: es lo que respalda todo lo que dice el sitio.
+   Fotos propias, no de banco. */
+const PLANTA = [
   {
-    q: "¿Qué es un Big Bag y para qué sirve?",
-    a: "Es un contenedor flexible de rafia de polipropileno que mueve alrededor de una tonelada en un solo bulto. Reemplaza decenas de bolsas chicas: menos manipuleo, menos envase y menos tiempo de carga.",
+    src: "/images/plantaHilera.webp",
+    alt: "Fardos de bolsones terminados alineados junto al galpón de la planta, listos para despacho.",
+    pie: "Producción terminada, lista para despacho",
+    w: 1712,
+    h: 1142,
+    ancha: true,
   },
   {
-    q: "¿Qué capacidad tienen?",
-    a: "Lo más pedido ronda los 1000 kg, pero la medida y la capacidad se definen para cada operación. No hay un tamaño único: depende del producto y de cómo lo cargues.",
+    src: "/images/prod-bolson-egran.webp",
+    alt: "Bolsón cargado con garbanzos, impreso a dos colores para el cliente, con la etiqueta de Sibom Sacks.",
+    pie: "Impresión a medida de cada cliente",
+    w: 1200,
+    h: 900,
   },
   {
-    q: "¿Se fabrican a medida?",
-    a: "Sí, es la forma habitual de trabajo. Se define el ancho, el alto, el tipo de boca superior y el fondo según el producto y el equipo con el que se manipula.",
-  },
-  {
-    q: "¿Sirven para productos alimenticios?",
-    a: "Sí. Contanos de qué producto se trata y te confirmamos el modelo y la tela que corresponden para uso alimenticio.",
-  },
-  {
-    q: "¿Hacen envíos fuera de Córdoba?",
-    a: "Sí, despachamos a todo el país. La planta está en Córdoba Capital y desde ahí sale la mercadería.",
-  },
-  {
-    q: "¿Cuál es la diferencia entre boca abierta y válvula de carga?",
-    a: "La boca abierta permite cargar a mayor caudal y es más fácil de llenar; la válvula cierra mejor y protege el producto del ambiente. La elección depende de con qué equipo llenás el bolsón.",
+    src: "/images/prod-despacho-camion.webp",
+    alt: "Camión cargado con fardos de bolsones listos para salir a destino.",
+    pie: "Despacho a todo el país",
+    w: 1400,
+    h: 1050,
   },
 ];
+
 
 function Inicio() {
   const { reducir, cardVariant, staggerContainer } = useMotionSafe();
@@ -197,19 +198,7 @@ function Inicio() {
 
         ruta="/inicio"
 
-      >
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: FAQ.map((f) => ({
-              "@type": "Question",
-              name: f.q,
-              acceptedAnswer: { "@type": "Answer", text: f.a },
-            })),
-          })}
-        </script>
-      </Seo>
+      />
     <div className="home">
       {/* ================= HERO ================= */}
       <section className="hm-hero">
@@ -361,22 +350,43 @@ function Inicio() {
         </ul>
       </motion.section>
 
-      {/* ================= PREGUNTAS FRECUENTES ================= */}
-      {/* Responden lo que se busca antes de pedir presupuesto. Van con
-          datos estructurados para que Google pueda desplegarlas. */}
-      <section className="hm-faq" aria-labelledby="hm-faq-tit">
-        <h2 id="hm-faq-tit" className="hm-faq__tit">
-          Preguntas frecuentes
-        </h2>
-        <dl className="hm-faq__lista">
-          {FAQ.map((f) => (
-            <div key={f.q} className="hm-faq__item">
-              <dt>{f.q}</dt>
-              <dd>{f.a}</dd>
-            </div>
+      {/* ================= LA PLANTA ================= */}
+      {/* Reemplaza a las preguntas frecuentes, que se mudaron a productos:
+          en la portada rinde mas mostrar la fabrica funcionando. */}
+      <section className="hm-planta" aria-labelledby="hm-planta-tit">
+        <div className="hm-planta__cab">
+          <p className="hm-eyebrow">
+            <span className="hm-eyebrow__linea" aria-hidden="true" />
+            Planta propia en Córdoba
+          </p>
+          <h2 id="hm-planta-tit" className="hm-planta__tit">
+            La fábrica, funcionando
+          </h2>
+          <p className="hm-planta__bajada">
+            Del tejido de la rafia a la costura de las fajas, todo pasa bajo el
+            mismo techo. Estas son fotos de la planta y de bolsones nuestros en
+            operación.
+          </p>
+        </div>
+
+        <ul className="hm-planta__grid">
+          {PLANTA.map((f) => (
+            <li key={f.src} className={f.ancha ? "es-ancha" : undefined}>
+              <figure>
+                <img
+                  src={f.src}
+                  alt={f.alt}
+                  width={f.w}
+                  height={f.h}
+                  loading="lazy"
+                />
+                <figcaption>{f.pie}</figcaption>
+              </figure>
+            </li>
           ))}
-        </dl>
+        </ul>
       </section>
+
     </div>
 
     </>

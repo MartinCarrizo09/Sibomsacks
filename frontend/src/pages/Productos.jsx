@@ -88,6 +88,38 @@ const PRODUCCION = [
   },
 ];
 
+/* Preguntas que hace el comprador antes de pedir presupuesto. Viven aca,
+   con los productos, que es donde surgen. */
+
+/* Preguntas que hace el comprador antes de pedir presupuesto. Viven aca,
+   con los productos, que es donde surgen. */
+const FAQ = [
+  {
+    q: "¿Qué es un Big Bag y para qué sirve?",
+    a: "Es un contenedor flexible de rafia de polipropileno que mueve alrededor de una tonelada en un solo bulto. Reemplaza decenas de bolsas chicas: menos manipuleo, menos envase y menos tiempo de carga.",
+  },
+  {
+    q: "¿Qué capacidad tienen?",
+    a: "Lo más pedido ronda los 1000 kg, pero la medida y la capacidad se definen para cada operación. No hay un tamaño único: depende del producto y de cómo lo cargues.",
+  },
+  {
+    q: "¿Se fabrican a medida?",
+    a: "Sí, es la forma habitual de trabajo. Se define el ancho, el alto, el tipo de boca superior y el fondo según el producto y el equipo con el que se manipula.",
+  },
+  {
+    q: "¿Sirven para productos alimenticios?",
+    a: "Sí. Contanos de qué producto se trata y te confirmamos el modelo y la tela que corresponden para uso alimenticio.",
+  },
+  {
+    q: "¿Hacen envíos fuera de Córdoba?",
+    a: "Sí, despachamos a todo el país. La planta está en Córdoba Capital y desde ahí sale la mercadería.",
+  },
+  {
+    q: "¿Cuál es la diferencia entre boca abierta y válvula de carga?",
+    a: "La boca abierta permite cargar a mayor caudal y es más fácil de llenar; la válvula cierra mejor y protege el producto del ambiente. La elección depende de con qué equipo llenás el bolsón.",
+  },
+];
+
 const Productos = () => {
   const [productos, setProductos] = useState([]);
 
@@ -117,7 +149,21 @@ const Productos = () => {
 
         ruta="/productos"
 
-      />
+      >
+        {/* Google puede mostrar estas preguntas desplegadas bajo el
+            resultado, lo que gana espacio en pantalla. */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: FAQ.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          })}
+        </script>
+      </Seo>
     <div className="productos-page">
       {/* ================= DESTACADOS ================= */}
       {/* Los dos desarrollos propios van arriba: son el diferencial de la
@@ -317,6 +363,24 @@ const Productos = () => {
           </ul>
         </div>
       </section>
+
+      {/* ---------- Preguntas frecuentes ---------- */}
+      <section className="pd-faq" aria-labelledby="pd-faq-tit">
+        <div className="container">
+          <h2 id="pd-faq-tit" className="productos-titulo fw-bold">
+            Preguntas frecuentes
+          </h2>
+          <dl className="pd-faq__lista">
+            {FAQ.map((f) => (
+              <div key={f.q} className="pd-faq__item">
+                <dt>{f.q}</dt>
+                <dd>{f.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
     </div>
 
     </>
